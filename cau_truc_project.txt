@@ -20,6 +20,8 @@ SMS_PROJECT/
 │   ├── lecturer.html
 │   ├── attendance.html
 │   ├── score.html
+│   ├── change_password.html
+│   ├── forgot_password.html
 │   ├── admin_student.html
 │   ├── admin_lecturer.html
 │   ├── admin_subject.html
