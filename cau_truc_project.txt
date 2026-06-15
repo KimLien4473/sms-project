@@ -1,0 +1,35 @@
+Cấu trúc project chung:
+SMS_PROJECT/
+│
+├── app.py
+├── config.py
+├── database.py
+│
+├── routes/
+│   ├── auth.py
+│   ├── admin.py
+│   ├── student.py
+│   ├── lecturer.py
+│   ├── attendance.py
+│   └── score.py
+│
+├── templates/
+│   ├── login.html
+│   ├── dashboard.html
+│   ├── student.html
+│   ├── lecturer.html
+│   ├── attendance.html
+│   ├── score.html
+│   ├── admin_student.html
+│   ├── admin_lecturer.html
+│   ├── admin_subject.html
+│   └── base.html
+│
+├── static/
+│   ├── style.css
+│   └── script.js
+│
+├── database/
+│   └── sms.sql
+│
+└── README.md
