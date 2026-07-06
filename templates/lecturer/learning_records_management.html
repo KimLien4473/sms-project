@@ -1,0 +1,649 @@
+<!doctype html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Lecturer Portal - Learning Records Management</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap");
+    </style>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#e7e8ea",
+              "on-background": "#191c1e",
+              "on-primary-container": "#eeefff",
+              "secondary-fixed-dim": "#bcc7de",
+              "secondary-container": "#d5e0f8",
+              "on-primary-fixed": "#00174b",
+              "inverse-on-surface": "#f0f1f3",
+              "primary-container": "#2563eb",
+              "on-secondary-fixed": "#111c2d",
+              "tertiary-fixed-dim": "#c0c1ff",
+              "on-tertiary-fixed-variant": "#2f2ebe",
+              "on-tertiary-container": "#f1eeff",
+              "on-surface": "#191c1e",
+              "error-container": "#ffdad6",
+              surface: "#f8f9fb",
+              outline: "#737686",
+              "outline-variant": "#c3c6d7",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed": "#d8e3fb",
+              "on-secondary-fixed-variant": "#3c475a",
+              "surface-container": "#edeef0",
+              "on-primary": "#ffffff",
+              "inverse-surface": "#2e3132",
+              primary: "#004ac6",
+              "primary-fixed-dim": "#b4c5ff",
+              "on-error": "#ffffff",
+              error: "#ba1a1a",
+              tertiary: "#3e3fcc",
+              secondary: "#545f73",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed": "#dbe1ff",
+              "on-tertiary-fixed": "#07006c",
+              "on-secondary": "#ffffff",
+              "tertiary-container": "#585be6",
+              "surface-container-highest": "#e1e2e4",
+              "tertiary-fixed": "#e1e0ff",
+              "surface-dim": "#d9dadc",
+              "surface-tint": "#0053db",
+              "surface-bright": "#f8f9fb",
+              "surface-variant": "#e1e2e4",
+              "surface-container-low": "#f3f4f6",
+              "on-surface-variant": "#434655",
+              "on-secondary-container": "#586377",
+              "on-primary-fixed-variant": "#003ea8",
+              background: "#f8f9fb",
+              "inverse-primary": "#b4c5ff",
+              "on-error-container": "#93000a",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              stack_lg: "24px",
+              container_padding: "32px",
+              sidebar_width: "260px",
+              gutter: "24px",
+              stack_sm: "8px",
+              stack_md: "16px",
+              topbar_height: "70px",
+            },
+            fontFamily: {
+              code: ["Inter"],
+              "headline-md": ["Inter"],
+              "display-lg": ["Inter"],
+              "body-md": ["Inter"],
+              "headline-sm": ["Inter"],
+              "body-lg": ["Inter"],
+              "label-md": ["Inter"],
+              "display-lg-mobile": ["Inter"],
+            },
+            fontSize: {
+              code: ["13px", { lineHeight: "18px", fontWeight: "400" }],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "display-lg": [
+                "36px",
+                {
+                  lineHeight: "44px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "headline-sm": [
+                "20px",
+                { lineHeight: "28px", fontWeight: "600" },
+              ],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "display-lg-mobile": [
+                "28px",
+                {
+                  lineHeight: "34px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+  </head>
+
+  <body
+    class="bg-background text-on-background min-h-screen font-sans antialiased overflow-hidden flex"
+  >
+    <!-- SideNavBar -->
+    <nav
+      class="bg-inverse-surface text-primary-fixed fixed left-0 top-0 h-screen w-[260px] flex flex-col py-6 shadow-sm z-30"
+    >
+      <div class="px-6 mb-8 flex items-center gap-4">
+        <div
+          class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center shrink-0"
+        >
+          <span
+            class="material-symbols-outlined text-white"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >school</span
+          >
+        </div>
+        <div>
+          <h1
+            class="font-headline-sm text-headline-sm font-bold text-white leading-tight"
+          >
+            HỆ THỐNG QUẢN LÝ SINH VIÊN
+          </h1>
+          <p
+            class="font-label-md text-label-md text-secondary-fixed-dim mt-1 opacity-80"
+          >
+            University Management
+          </p>
+        </div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto px-3 space-y-1">
+        <a
+          class="flex items-center gap-3 px-3 py-2 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors cursor-pointer duration-200"
+          href="/lecturer/profile"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 0"
+            >account_circle</span
+          >
+          <span class="font-body-md text-body-md">Personal Profile</span>
+        </a>
+
+        <a
+          class="flex items-center gap-3 px-3 py-2 rounded-lg text-white bg-white/10 border-l-4 border-white cursor-pointer duration-200"
+          href="/lecturer/learning_records"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >book</span
+          >
+          <span class="font-body-md text-body-md font-medium"
+            >Learning Records Management</span
+          >
+        </a>
+
+        <a
+          class="flex items-center gap-3 px-3 py-2 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors cursor-pointer duration-200"
+          href="/lecturer/change_password"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 0"
+            >lock_reset</span
+          >
+          <span class="font-body-md text-body-md">Change Password</span>
+        </a>
+      </div>
+
+      <div class="mt-auto px-3 pt-4 border-t border-white/10">
+        <form action="/lecturer/logout" method="POST" style="display: inline">
+          <button
+            type="submit"
+            class="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          >
+            <span class="material-symbols-outlined">logout</span>
+            <span>Logout</span>
+          </button>
+        </form>
+      </div>
+    </nav>
+
+    <div class="flex-1 pl-[260px] flex flex-col min-h-screen w-full">
+      <!-- TopNavBar -->
+      <header
+        class="bg-surface-container-lowest border-b border-outline-variant fixed top-0 right-0 h-[70px] w-[calc(100%-260px)] flex justify-between items-center px-8 z-20"
+      >
+        <div class="flex items-center">
+          <span
+            class="font-headline-md text-headline-md font-semibold text-on-surface"
+            >Lecturer Portal</span
+          >
+        </div>
+
+        <div class="flex items-center space-x-4">
+          <button
+            class="p-2 text-primary hover:bg-surface-container-high transition-all rounded-full flex items-center justify-center"
+          >
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: &quot;FILL&quot; 0"
+              >notifications</span
+            >
+          </button>
+
+          <div
+            class="flex items-center gap-3 pl-4 border-l border-outline-variant"
+          >
+            <div class="text-right hidden sm:block">
+              <p
+                class="font-body-md text-body-md font-semibold text-on-surface"
+              >
+                {{ user_name }}
+              </p>
+              <p class="font-label-md text-label-md text-on-surface-variant">
+                Lecturer
+              </p>
+            </div>
+
+            <img
+              alt="User Avatar"
+              class="w-10 h-10 rounded-full object-cover border border-outline-variant"
+              data-alt="..."
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuCgRzkhCyxyPQ2blUt-il8KeIY1XvXLkVt1n0xiISDWmiUSXlQV_5HA5V49W04qJ6xzRQblYqQG9LxQvdfE2Ca5MOOaacCjFzJgowsj9-tJhO4ITAORnRsliVzWaPD8VDWJ1biu82RkYZSRIWIeMEezQKtMxqPOo4O9qs8DPGRk1qpoV6s6v4oFvAiL7rtkBp3vocgf9CkOiJHlPMt90Q5cPVfNS3OPbeFB8vVEhWsHkaoBM1aF6XDwjHFQSlwdXiQ_xbI4kJRIl1O4"
+            />
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main
+        class="pt-[70px] h-screen overflow-y-auto bg-background p-container_padding"
+      >
+        <div class="max-w-7xl mx-auto space-y-gutter">
+          <!-- Header -->
+          <div
+            class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-stack_lg"
+          >
+            <div>
+              <h2 class="font-headline-md text-headline-md text-on-surface">
+                Learning Records Management
+              </h2>
+              <p class="font-body-md text-body-md text-on-surface-variant mt-1">
+                Manage course sections, attendance, and grades for the current
+                semester.
+              </p>
+            </div>
+          </div>
+
+          <!-- Assigned Course Sections -->
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+            <div
+              class="lg:col-span-3 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0px_1px_3px_rgba(0,0,0,0.1)] p-stack_lg"
+            >
+              <div class="flex justify-between items-center mb-stack_md">
+                <h3
+                  class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2"
+                >
+                  <span
+                    class="material-symbols-outlined text-primary"
+                    style="font-variation-settings: &quot;FILL&quot; 1"
+                    >class</span
+                  >
+                  Assigned Course Sections
+                </h3>
+                <button
+                  class="text-primary font-label-md text-label-md hover:underline flex items-center gap-1"
+                  onclick="alert('Past semesters feature coming soon.')"
+                >
+                  View Past Semesters
+                  <span class="material-symbols-outlined text-[16px]"
+                    >arrow_forward</span
+                  >
+                </button>
+              </div>
+              <div
+                class="overflow-x-auto rounded-lg border border-outline-variant"
+              >
+                <table class="w-full text-left border-collapse">
+                  <thead
+                    class="bg-surface font-label-md text-label-md text-on-surface-variant border-b border-outline-variant"
+                  >
+                    <tr>
+                      <th class="px-4 py-3 font-semibold">Section Code</th>
+                      <th class="px-4 py-3 font-semibold">Course</th>
+                      <th class="px-4 py-3 font-semibold">Semester</th>
+                      <th class="px-4 py-3 font-semibold text-center">
+                        Number of Students
+                      </th>
+                      <th class="px-4 py-3 font-semibold text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    class="font-body-md text-body-md divide-y divide-outline-variant bg-surface-container-lowest"
+                  >
+                    {% for section in sections %}
+                    <tr class="hover:bg-surface-container transition-colors">
+                      <td class="px-4 py-3 font-code text-primary">
+                        {{ section.CourseSectionID }}
+                      </td>
+                      <td class="px-4 py-3 text-on-surface">
+                        {{ section.SubjectName }}
+                      </td>
+                      <td class="px-4 py-3 text-on-surface-variant">
+                        {{ section.Semester or 'N/A' }}
+                      </td>
+                      <td class="px-4 py-3 text-center">
+                        <span
+                          class="inline-flex items-center justify-center w-8 h-8 rounded-full bg-secondary-container text-on-secondary-fixed text-label-md font-label-md"
+                          >{{ section.student_count or 0 }}</span
+                        >
+                      </td>
+                      <td class="px-4 py-3 text-right">
+                        <form
+                          action="/lecturer/learning_records/select"
+                          method="POST"
+                          class="inline"
+                        >
+                          <input
+                            type="hidden"
+                            name="section_id"
+                            value="{{ section.CourseSectionID }}"
+                          />
+                          <button
+                            type="submit"
+                            class="inline-flex items-center gap-2 px-3 py-1.5 {% if section.CourseSectionID == selected_section %}bg-primary text-white hover:bg-primary/90{% else %}bg-surface text-on-surface-variant hover:bg-surface-container-high{% endif %} rounded-md transition-colors font-label-md text-label-md border border-transparent"
+                          >
+                            {% if section.CourseSectionID == selected_section %}
+                              Managing
+                            {% else %}
+                              Manage
+                            {% endif %}
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                      <td colspan="5" class="px-4 py-8 text-center text-on-surface-variant">
+                        No course sections assigned.
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- Currently Managing Info -->
+            <div
+              class="lg:col-span-3 bg-tertiary-container rounded-xl p-4 flex items-center justify-between"
+            >
+              <div class="flex items-center gap-3">
+                <span
+                  class="material-symbols-outlined text-on-tertiary-container text-[24px]"
+                  >info</span
+                >
+                <span
+                  class="font-body-md text-body-md text-on-tertiary-container"
+                  >Currently managing:
+                  <strong class="font-code text-on-tertiary-container"
+                    >{{ selected_section or 'None' }}</strong
+                  >
+                  {% if selected_section %}
+                    {% for s in sections %}
+                      {% if s.CourseSectionID == selected_section %}
+                        ({{ s.SubjectName }})
+                      {% endif %}
+                    {% endfor %}
+                  {% endif %}
+                </span>
+              </div>
+            </div>
+
+            <!-- Attendance Section -->
+            <div
+              class="lg:col-span-1 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0px_1px_3px_rgba(0,0,0,0.1)] flex flex-col h-full"
+            >
+              <div
+                class="p-stack_lg border-b border-outline-variant flex-shrink-0"
+              >
+                <h3
+                  class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2"
+                >
+                  <span
+                    class="material-symbols-outlined text-tertiary"
+                    style="font-variation-settings: &quot;FILL&quot; 1"
+                    >how_to_reg</span
+                  >
+                  Today's Attendance
+                </h3>
+                <p
+                  class="font-body-md text-body-md text-on-surface-variant mt-1 text-sm"
+                >
+                  {{ today.strftime('%b %d, %Y - Week %W') if today else 'Date not set' }}
+                </p>
+              </div>
+
+              <form
+                id="attendanceForm"
+                action="/lecturer/attendance/save"
+                method="POST"
+                class="flex-1 flex flex-col"
+              >
+                <input type="hidden" name="course_section_id" value="{{ selected_section }}" />
+                <input type="hidden" name="date" value="{{ today.strftime('%Y-%m-%d') if today else '' }}" />
+                <div class="flex-1 overflow-y-auto p-stack_lg space-y-4">
+                  {% if students %}
+                    {% for student in students %}
+                    {% set att = attendance_data.get(student.RegistrationID) %}
+                    <div
+                      class="flex items-center justify-between p-3 rounded-lg border border-outline-variant bg-surface hover:bg-surface-container transition-colors"
+                    >
+                      <div>
+                        <p
+                          class="font-body-md text-body-md font-medium text-on-surface"
+                        >
+                          {{ student.FullName }}
+                        </p>
+                        <p class="font-code text-code text-outline-variant">
+                          {{ student.StudentID }}
+                        </p>
+                      </div>
+                      <div class="flex gap-2">
+                        <label
+                          class="flex items-center gap-1 cursor-pointer group"
+                        >
+                          <input
+                            class="w-4 h-4 text-primary bg-surface-container-lowest border-outline-variant focus:ring-primary focus:ring-2 focus:ring-opacity-50"
+                            name="attendance_{{ student.RegistrationID }}"
+                            type="radio"
+                            value="Present"
+                            {% if att == 'Present' %}checked{% endif %}
+                          />
+                          <span
+                            class="font-label-md text-label-md text-on-surface-variant group-hover:text-primary transition-colors"
+                            >P</span
+                          >
+                        </label>
+                        <label
+                          class="flex items-center gap-1 cursor-pointer group"
+                        >
+                          <input
+                            class="w-4 h-4 text-error bg-surface-container-lowest border-outline-variant focus:ring-error focus:ring-2 focus:ring-opacity-50"
+                            name="attendance_{{ student.RegistrationID }}"
+                            type="radio"
+                            value="Absent"
+                            {% if att == 'Absent' %}checked{% endif %}
+                          />
+                          <span
+                            class="font-label-md text-label-md text-on-surface-variant group-hover:text-error transition-colors"
+                            >A</span
+                          >
+                        </label>
+                      </div>
+                    </div>
+                    {% endfor %}
+                  {% else %}
+                    <div class="text-center text-on-surface-variant py-8">
+                      No students enrolled in this section.
+                    </div>
+                  {% endif %}
+                </div>
+
+                <div class="p-stack_lg border-t border-outline-variant mt-auto">
+                  <button
+                    type="submit"
+                    class="w-full flex items-center justify-center gap-2 px-4 py-2 bg-primary text-on-primary rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors font-label-md text-label-md font-semibold"
+                    {% if not selected_section or not students %}disabled{% endif %}
+                  >
+                    <span class="material-symbols-outlined text-[18px]"
+                      >save</span
+                    >
+                    Save Attendance
+                  </button>
+                </div>
+              </form>
+            </div>
+
+            <!-- Grades Section -->
+            <div
+              class="lg:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0px_1px_3px_rgba(0,0,0,0.1)] flex flex-col"
+            >
+              <div
+                class="p-stack_lg border-b border-outline-variant flex justify-between items-center"
+              >
+                <h3
+                  class="font-headline-sm text-headline-sm text-on-surface flex items-center gap-2"
+                >
+                  <span
+                    class="material-symbols-outlined text-tertiary"
+                    style="font-variation-settings: &quot;FILL&quot; 1"
+                    >grading</span
+                  >
+                  Grade Management
+                </h3>
+                <div class="flex gap-2">
+                  <button
+                    class="px-4 py-2 bg-surface text-on-surface-variant rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors font-label-md text-label-md"
+                    onclick="alert('Export CSV feature coming soon.')"
+                  >
+                    Export CSV
+                  </button>
+                </div>
+              </div>
+
+              <form
+                id="gradesForm"
+                action="/lecturer/grades/save"
+                method="POST"
+                class="flex-1 flex flex-col"
+              >
+                <input type="hidden" name="course_section_id" value="{{ selected_section }}" />
+                <div class="flex-1 overflow-x-auto p-stack_lg">
+                  {% if students %}
+                  <table class="w-full text-left border-collapse">
+                    <thead
+                      class="bg-surface font-label-md text-label-md text-on-surface-variant border-b border-outline-variant"
+                    >
+                      <tr>
+                        <th class="px-4 py-3 font-semibold">Student ID</th>
+                        <th class="px-4 py-3 font-semibold">Student Name</th>
+                        <th class="px-4 py-3 font-semibold w-32">
+                          Process Grade (40%)
+                        </th>
+                        <th class="px-4 py-3 font-semibold w-32">
+                          Final Exam (60%)
+                        </th>
+                        <th class="px-4 py-3 font-semibold text-center w-24">
+                          Total
+                        </th>
+                      </tr>
+                    </thead>
+                    <tbody
+                      class="font-body-md text-body-md divide-y divide-outline-variant"
+                    >
+                      {% for student in students %}
+                      {% set grade = grades_data.get(student.RegistrationID) %}
+                      <tr
+                        class="hover:bg-surface-container transition-colors group"
+                      >
+                        <td class="px-4 py-3 font-code text-outline-variant">
+                          {{ student.StudentID }}
+                        </td>
+                        <td class="px-4 py-3 font-medium text-on-surface">
+                          {{ student.FullName }}
+                        </td>
+                        <td class="px-4 py-3">
+                          <input
+                            class="w-full px-2 py-1 bg-surface-container-lowest border border-outline-variant rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none font-code text-on-surface"
+                            step="0.1"
+                            type="number"
+                            name="process_{{ student.RegistrationID }}"
+                            value="{{ grade.ProcessScore if grade and grade.ProcessScore is not none else '' }}"
+                            min="0"
+                            max="10"
+                          />
+                        </td>
+                        <td class="px-4 py-3">
+                          <input
+                            class="w-full px-2 py-1 bg-surface-container-lowest border border-outline-variant rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none font-code text-on-surface"
+                            step="0.1"
+                            type="number"
+                            name="final_{{ student.RegistrationID }}"
+                            value="{{ grade.FinalScore if grade and grade.FinalScore is not none else '' }}"
+                            min="0"
+                            max="10"
+                          />
+                        </td>
+                        <td
+                          class="px-4 py-3 text-center font-semibold {% if grade and grade.AverageScore is not none %}text-primary{% else %}text-outline-variant{% endif %}"
+                        >
+                          {{ grade.AverageScore if grade and grade.AverageScore is not none else '-' }}
+                        </td>
+                      </tr>
+                      {% endfor %}
+                    </tbody>
+                  </table>
+                  {% else %}
+                  <div class="text-center text-on-surface-variant py-8">
+                    No students enrolled in this section.
+                  </div>
+                  {% endif %}
+                </div>
+
+                <div
+                  class="p-stack_lg border-t border-outline-variant bg-surface-bright flex justify-end gap-stack_md rounded-b-xl"
+                >
+                  <button
+                    type="submit"
+                    class="flex items-center gap-2 px-6 py-2 bg-primary text-on-primary rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors font-label-md text-label-md font-semibold shadow-sm"
+                    {% if not selected_section or not students %}disabled{% endif %}
+                  >
+                    <span class="material-symbols-outlined text-[18px]"
+                      >verified</span
+                    >
+                    Finalize Grades
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

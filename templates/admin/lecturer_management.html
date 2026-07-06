@@ -1,0 +1,850 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Lecturer Management</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#edeef0",
+              "on-surface": "#191c1e",
+              tertiary: "#3e3fcc",
+              "primary-fixed-dim": "#b4c5ff",
+              "tertiary-fixed-dim": "#c0c1ff",
+              "surface-container-low": "#f3f4f6",
+              "inverse-surface": "#2e3132",
+              "on-tertiary-container": "#f1eeff",
+              "secondary-fixed": "#d8e3fb",
+              "surface-container-high": "#e7e8ea",
+              "secondary-fixed-dim": "#bcc7de",
+              outline: "#737686",
+              "inverse-primary": "#b4c5ff",
+              "surface-bright": "#f8f9fb",
+              "on-background": "#191c1e",
+              "on-tertiary": "#ffffff",
+              "surface-tint": "#0053db",
+              "error-container": "#ffdad6",
+              "tertiary-container": "#585be6",
+              "surface-variant": "#e1e2e4",
+              "on-error": "#ffffff",
+              "on-secondary-fixed-variant": "#3c475a",
+              "outline-variant": "#c3c6d7",
+              "on-tertiary-fixed": "#07006c",
+              "on-secondary-fixed": "#111c2d",
+              "primary-container": "#2563eb",
+              "surface-dim": "#d9dadc",
+              "primary-fixed": "#dbe1ff",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-secondary-container": "#586377",
+              primary: "#004ac6",
+              "surface-container-lowest": "#ffffff",
+              "on-error-container": "#93000a",
+              "secondary-container": "#d5e0f8",
+              "surface-container-highest": "#e1e2e4",
+              "on-primary": "#ffffff",
+              "inverse-on-surface": "#f0f1f3",
+              "on-primary-container": "#eeefff",
+              "on-secondary": "#ffffff",
+              error: "#ba1a1a",
+              "on-primary-fixed": "#00174b",
+              secondary: "#545f73",
+              surface: "#f8f9fb",
+              "on-surface-variant": "#434655",
+              "on-tertiary-fixed-variant": "#2f2ebe",
+              background: "#f8f9fb",
+              "tertiary-fixed": "#e1e0ff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              stack_md: "16px",
+              container_padding: "32px",
+              stack_sm: "8px",
+              sidebar_width: "260px",
+              gutter: "24px",
+              topbar_height: "70px",
+              stack_lg: "24px",
+            },
+            fontFamily: {
+              "body-md": ["Inter"],
+              "display-lg-mobile": ["Inter"],
+              "headline-sm": ["Inter"],
+              code: ["Inter"],
+              "headline-md": ["Inter"],
+              "display-lg": ["Inter"],
+              "body-lg": ["Inter"],
+              "label-md": ["Inter"],
+            },
+            fontSize: {
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "display-lg-mobile": [
+                "28px",
+                {
+                  lineHeight: "34px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-sm": [
+                "20px",
+                { lineHeight: "28px", fontWeight: "600" },
+              ],
+              code: ["13px", { lineHeight: "18px", fontWeight: "400" }],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "display-lg": [
+                "36px",
+                {
+                  lineHeight: "44px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8f9fb;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .icon-fill {
+        font-variation-settings: "FILL" 1;
+      }
+
+      .sidebar-scroll::-webkit-scrollbar {
+        width: 4px;
+      }
+      .sidebar-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .sidebar-scroll::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body class="text-on-surface bg-background">
+    <!-- SideNavBar -->
+    <nav
+      class="bg-inverse-surface fixed left-0 top-0 h-screen w-[260px] shadow-sm flex flex-col h-full py-6 z-50"
+    >
+      <!-- Header -->
+      <div class="px-6 mb-8 flex items-center gap-3">
+        <div
+          class="w-10 h-10 rounded-lg bg-surface-container-lowest/10 flex items-center justify-center shrink-0"
+        >
+          <span class="material-symbols-outlined text-white">school</span>
+        </div>
+        <div>
+          <h1
+            class="font-headline-sm text-headline-sm font-bold text-white truncate"
+            title="UNIVERSITY STUDENT MANAGEMENT SYSTEM"
+          >
+            SMS
+          </h1>
+          <p
+            class="font-label-md text-[10px] leading-[14px] text-outline-variant mt-0.5 uppercase tracking-wider"
+          >
+            SMS Administration Portal
+          </p>
+        </div>
+      </div>
+      <!-- Main Navigation -->
+      <div class="flex-1 overflow-y-auto sidebar-scroll px-3 space-y-1 pb-4">
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/dashboard"
+          ><span class="material-symbols-outlined">dashboard</span>Dashboard</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/account_management"
+          ><span class="material-symbols-outlined">manage_accounts</span>Account
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/students"
+          ><span class="material-symbols-outlined">school</span>Student
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-white/10 border-l-4 border-white font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/lecturers"
+          ><span class="material-symbols-outlined">person_pin</span>Lecturer
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/academic_structure"
+          ><span class="material-symbols-outlined">account_tree</span>Academic
+          Structure Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/faculties"
+          ><span class="material-symbols-outlined">account_balance</span>Faculty
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/majors"
+          ><span class="material-symbols-outlined">domain</span>Major
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/courses"
+          ><span class="material-symbols-outlined">calendar_month</span>Course
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/statistics"
+          ><span class="material-symbols-outlined">analytics</span>Statistics</a
+        >
+        <div class="pt-4 mt-4 border-t border-white/10 space-y-1">
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+            href="/admin/profile"
+            ><span class="material-symbols-outlined">person</span>Personal
+            Profile</a
+          >
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+            href="/admin/change_password"
+            ><span class="material-symbols-outlined">lock</span>Change
+            Password</a
+          >
+          <form action="/admin/logout" method="POST" style="display: inline">
+            <button
+              type="submit"
+              class="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+            >
+              <span class="material-symbols-outlined">logout</span>
+              <span>Logout</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- TopNavBar -->
+    <header
+      class="bg-surface-container-lowest fixed top-0 right-0 h-[70px] w-[calc(100%-260px)] border-b border-outline-variant flex justify-between items-center px-8 z-40"
+    >
+      <!-- Left: Search -->
+      <div class="flex items-center w-96">
+        <div class="relative w-full">
+          <span
+            class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm"
+            >search</span
+          >
+          <input
+            class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-surface-variant rounded-lg font-body-md text-body-md focus:outline-none focus:ring-2 focus:ring-primary-container/50 focus:border-primary-container transition-all"
+            placeholder="Search lecturers..."
+            type="text"
+          />
+        </div>
+      </div>
+      <!-- Center: Page Title -->
+      <div class="absolute left-1/2 -translate-x-1/2">
+        <h2
+          class="font-headline-md text-headline-md font-semibold text-on-surface"
+        >
+          Lecturer Management
+        </h2>
+      </div>
+      <!-- Right: Actions & Profile -->
+      <div class="flex items-center space-x-4">
+        <button
+          class="w-10 h-10 rounded-full flex items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all relative"
+        >
+          <span class="material-symbols-outlined">notifications</span>
+          <span
+            class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"
+          ></span>
+        </button>
+        <div class="h-8 w-px bg-surface-variant mx-2"></div>
+        <button
+          class="flex items-center gap-3 hover:bg-surface-container-high p-1.5 rounded-lg transition-all"
+        >
+          <img
+            alt="User Avatar"
+            class="w-8 h-8 rounded-full object-cover border border-surface-variant"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuBdwURniqEjWHI4su5ov2r2dps9tF2lAdb_bYb7yyj1FJUp2iEA6PhXGAdeYJSXRcZ0Ht-v7aKdvz-E-Z9A4aerE4brhMPWJYvv5uNXi_Xwug2v32ZRFHVD7vmoISTUfmlME7U5hZgHQb7qXpLSSW8rVQb9_AVXU8W428g2bVTTqy2KAm4Wqg0T82Dhk3LgXwZJ0_kN-GJqkf0CjznfrOiC7WWREhX89yi_tqXaDf-j5hLNqvVhyf5wfEUs_ViJ976NtU0kpV8Se2-B"
+          />
+          <div class="text-left hidden md:block">
+            <p
+              class="font-body-md text-body-md text-on-surface font-semibold leading-tight"
+            >
+              Admin User
+            </p>
+            <p class="font-label-md text-label-md text-on-surface-variant">
+              System Administrator
+            </p>
+          </div>
+        </button>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main
+      class="ml-[260px] mt-[70px] p-container_padding min-h-[calc(100vh-70px)] bg-background"
+    >
+      <div class="max-w-7xl mx-auto">
+        <!-- Page Header & Actions -->
+        <div
+          class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-stack_lg"
+        >
+          <div>
+            <h2 class="font-display-lg text-display-lg text-on-surface">
+              Lecturer Management
+            </h2>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-1">
+              Manage teaching staff, assignments, and faculty directories.
+            </p>
+          </div>
+          <button
+            class="flex items-center gap-2 bg-primary-container text-on-primary border border-transparent px-5 py-2.5 rounded-lg hover:bg-surface-tint hover:shadow-md transition-all font-label-md text-label-md shadow-sm"
+            data-bs-toggle="modal"
+            data-bs-target="#lecturerModal"
+            onclick="openAddLecturer()"
+          >
+            <span class="material-symbols-outlined text-[18px]">add</span>
+            Add Lecturer
+          </button>
+        </div>
+
+        <!-- Bento Grid Layout -->
+        <div class="grid grid-cols-1 xl:grid-cols-4 gap-gutter">
+          <!-- Filters / Quick Stats Sidebar -->
+          <div class="xl:col-span-1 space-y-gutter">
+            <!-- Faculty Filter Card -->
+            <div
+              class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack_lg shadow-sm"
+            >
+              <h3
+                class="font-headline-sm text-headline-sm text-on-surface mb-stack_md flex items-center gap-2"
+              >
+                <span class="material-symbols-outlined text-primary text-[20px]"
+                  >filter_list</span
+                >
+                Filter by Faculty
+              </h3>
+              <div class="space-y-2">
+                <!-- Sẽ có JS hoặc form để lọc, nhưng ở đây ta dùng form tìm kiếm bên dưới, không cần checkbox riêng -->
+                <p class="text-sm text-on-surface-variant">Use search form below to filter by faculty.</p>
+              </div>
+            </div>
+            <!-- Quick Stats Card -->
+            <div
+              class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack_lg shadow-sm"
+            >
+              <h3
+                class="font-headline-sm text-headline-sm text-on-surface mb-stack_md flex items-center gap-2"
+              >
+                <span
+                  class="material-symbols-outlined text-tertiary text-[20px]"
+                  >bar_chart</span
+                >
+                Overview
+              </h3>
+              <div class="grid grid-cols-2 gap-4">
+                <div
+                  class="p-3 bg-primary/5 rounded-lg border border-primary/10"
+                >
+                  <div
+                    class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wide"
+                  >
+                    Total Staff
+                  </div>
+                  <div
+                    class="font-display-lg-mobile text-display-lg-mobile text-primary mt-1"
+                  >
+                    {{ lecturers|length }}
+                  </div>
+                </div>
+                <div
+                  class="p-3 bg-secondary-container/50 rounded-lg border border-secondary-container"
+                >
+                  <div
+                    class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wide"
+                  >
+                    On Leave
+                  </div>
+                  <div
+                    class="font-display-lg-mobile text-display-lg-mobile text-secondary mt-1"
+                  >
+                    0
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Main Data Table Area -->
+          <div class="xl:col-span-3">
+            <div
+              class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden flex flex-col h-full"
+            >
+              <!-- Table Toolbar -->
+              <div
+                class="p-4 border-b border-outline-variant bg-surface-container-lowest flex justify-between items-center"
+              >
+                <div class="font-headline-sm text-headline-sm text-on-surface">
+                  Lecturers
+                </div>
+                <div class="flex gap-2">
+                  <!-- Ẩn nút Export CSV và Print vì chưa có chức năng -->
+                  <!--
+                  <button
+                    class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors border border-transparent hover:border-outline-variant"
+                    title="Export CSV"
+                  >
+                    <span class="material-symbols-outlined text-[20px]">download</span>
+                  </button>
+                  <button
+                    class="p-2 text-on-surface-variant hover:bg-surface-container-high rounded-lg transition-colors border border-transparent hover:border-outline-variant"
+                    title="Print List"
+                  >
+                    <span class="material-symbols-outlined text-[20px]">print</span>
+                  </button>
+                  -->
+                </div>
+              </div>
+
+              <!-- Search & Filter Form -->
+              <div class="p-4 border-b border-outline-variant bg-surface-container-lowest">
+                <form action="/admin/lecturers" method="GET" class="flex flex-wrap gap-3 items-end">
+                  <div class="flex-1 min-w-[200px]">
+                    <label class="block font-label-md text-label-md text-on-surface-variant uppercase mb-1">Search</label>
+                    <input
+                      type="text"
+                      name="q"
+                      value="{{ search }}"
+                      class="w-full px-4 py-2 border border-outline-variant rounded-lg bg-surface-bright focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all text-body-md font-body-md"
+                      placeholder="Lecturer ID or Name..."
+                    />
+                  </div>
+                  <div class="w-48">
+                    <label class="block font-label-md text-label-md text-on-surface-variant uppercase mb-1">Faculty</label>
+                    <select
+                      name="faculty"
+                      class="w-full px-4 py-2 border border-outline-variant rounded-lg bg-surface-bright focus:bg-surface-container-lowest focus:ring-2 focus:ring-primary/50 focus:border-primary transition-all text-body-md font-body-md"
+                    >
+                      <option value="">All Faculties</option>
+                      {% for faculty in faculties %}
+                      <option value="{{ faculty.FacultyID }}" {% if faculty_filter == faculty.FacultyID %}selected{% endif %}>
+                        {{ faculty.FacultyName }}
+                      </option>
+                      {% endfor %}
+                    </select>
+                  </div>
+                  <button
+                    type="submit"
+                    class="bg-primary text-on-primary px-5 py-2 rounded-lg hover:bg-primary/90 transition-colors font-semibold"
+                  >
+                    Search
+                  </button>
+                  <a
+                    href="/admin/lecturers"
+                    class="bg-surface-bright border border-outline-variant text-on-surface px-4 py-2 rounded-lg hover:bg-surface-container-high transition-colors"
+                  >
+                    Clear
+                  </a>
+                </form>
+              </div>
+
+              <!-- Table -->
+              <div class="overflow-x-auto">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr class="bg-surface border-b border-outline-variant">
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider whitespace-nowrap"
+                      >
+                        Lecturer ID
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider whitespace-nowrap"
+                      >
+                        Full Name
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider whitespace-nowrap"
+                      >
+                        Faculty
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider whitespace-nowrap"
+                      >
+                        Email
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider whitespace-nowrap"
+                      >
+                        Phone Number
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider whitespace-nowrap text-right"
+                      >
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-outline-variant">
+                    {% for lecturer in lecturers %}
+                    <tr
+                      class="hover:bg-surface-container-low transition-colors group"
+                    >
+                      <td
+                        class="py-3 px-4 font-code text-code text-on-surface-variant"
+                      >
+                        {{ lecturer.LecturerID }}
+                      </td>
+                      <td class="py-3 px-4">
+                        <div class="flex items-center gap-3">
+                          <div
+                            class="w-8 h-8 rounded-full bg-primary-fixed text-primary font-label-md text-label-md flex items-center justify-center shrink-0"
+                          >
+                            {{ lecturer.FullName[:2].upper() }}
+                          </div>
+                          <span
+                            class="font-body-md text-body-md text-on-surface font-semibold"
+                            >{{ lecturer.FullName }}</span
+                          >
+                        </div>
+                      </td>
+                      <td class="py-3 px-4">
+                        <span
+                          class="inline-flex items-center px-2 py-1 rounded-md bg-surface-variant text-on-surface-variant font-label-md text-label-md"
+                          >{{ lecturer.FacultyName or '-' }}</span
+                        >
+                      </td>
+                      <td
+                        class="py-3 px-4 font-body-md text-body-md text-on-surface-variant"
+                      >
+                        {{ lecturer.Email or '-' }}
+                      </td>
+                      <td
+                        class="py-3 px-4 font-body-md text-body-md text-on-surface-variant"
+                      >
+                        {{ lecturer.PhoneNumber or '-' }}
+                      </td>
+                      <td class="py-3 px-4 text-right">
+                        <div
+                          class="flex items-center justify-end gap-1 opacity-0 group-hover:opacity-100 transition-opacity"
+                        >
+                          <button
+                            class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-primary/10 rounded-md transition-colors"
+                            title="Edit"
+                            data-bs-toggle="modal"
+                            data-bs-target="#lecturerModal"
+                            onclick="openEditLecturer(this)"
+                            data-lecturer_id="{{ lecturer.LecturerID }}"
+                            data-name="{{ lecturer.FullName }}"
+                            data-faculty_id="{{ lecturer.FacultyID }}"
+                            data-email="{{ lecturer.Email }}"
+                            data-phone="{{ lecturer.PhoneNumber }}"
+                          >
+                            <span class="material-symbols-outlined text-[18px]"
+                              >edit</span
+                            >
+                          </button>
+                          <button
+                            class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded-md transition-colors"
+                            title="Delete"
+                            data-bs-toggle="modal"
+                            data-bs-target="#deleteModal"
+                            onclick="openDeleteLecturer(this)"
+                            data-lecturer_id="{{ lecturer.LecturerID }}"
+                            data-name="{{ lecturer.FullName }}"
+                          >
+                            <span class="material-symbols-outlined text-[18px]"
+                              >delete</span
+                            >
+                          </button>
+                          <button
+                            class="p-1.5 text-on-surface-variant hover:text-tertiary hover:bg-tertiary/10 rounded-md transition-colors hidden"
+                            title="More options"
+                          >
+                            <span class="material-symbols-outlined text-[18px]"
+                              >more_vert</span
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                      <td colspan="6" class="py-8 text-center text-on-surface-variant">
+                        No lecturers found.
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- ===== MODAL: Add/Edit Lecturer ===== -->
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center hidden"
+      id="lecturerModal"
+    >
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+      <div
+        class="relative bg-white rounded-xl shadow-lg max-w-2xl w-full p-6 max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex justify-between items-center mb-4">
+          <h3
+            id="lecturerModalTitle"
+            class="font-headline-sm text-headline-sm text-on-surface"
+          >
+            Add Lecturer
+          </h3>
+          <button
+            class="text-on-surface-variant hover:text-on-surface"
+            onclick="closeModal('lecturerModal')"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <form id="lecturerForm" action="/admin/lecturers/create" method="POST">
+          <input type="hidden" name="edit_mode" id="edit_mode" value="0" />
+          <input type="hidden" name="original_id" id="original_id" value="" />
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Lecturer ID <span class="text-outline">(auto-generated)</span></label
+              >
+              <input
+                type="text"
+                name="lecturer_id"
+                id="lecturer_id"
+                readonly
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 bg-surface-container-low text-on-surface-variant cursor-not-allowed"
+              />
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Full Name</label
+              >
+              <input
+                type="text"
+                name="name"
+                id="lecturer_name"
+                required
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Faculty</label
+              >
+              <select
+                name="faculty"
+                id="lecturer_faculty"
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">Select Faculty</option>
+                {% for faculty in faculties %}
+                <option value="{{ faculty.FacultyID }}">
+                  {{ faculty.FacultyName }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Email</label
+              >
+              <div class="flex items-center">
+                <input
+                  type="text"
+                  name="email_local"
+                  id="lecturer_email"
+                  placeholder="username"
+                  class="w-full border border-outline-variant rounded-l-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+                />
+                <span
+                  class="px-3 py-2 border border-l-0 border-outline-variant rounded-r-lg bg-surface-container-low text-on-surface-variant whitespace-nowrap"
+                  >@gmail.com</span
+                >
+              </div>
+            </div>
+            <div class="md:col-span-2">
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Phone Number</label
+              >
+              <input
+                type="text"
+                name="phone"
+                id="lecturer_phone"
+                required
+                maxlength="10"
+                pattern="[0-9]{10}"
+                title="Phone number must be exactly 10 digits"
+                placeholder="e.g. 0901234567"
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+          </div>
+          <div class="mt-6 flex justify-end gap-3">
+            <button
+              type="button"
+              class="px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low"
+              onclick="closeModal('lecturerModal')"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- ===== MODAL: Delete Confirmation ===== -->
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center hidden"
+      id="deleteModal"
+    >
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+      <div class="relative bg-white rounded-xl shadow-lg max-w-md w-full p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">
+            Delete Lecturer
+          </h3>
+          <button
+            class="text-on-surface-variant hover:text-on-surface"
+            onclick="closeModal('deleteModal')"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <p class="text-on-surface-variant mb-4">
+          Are you sure you want to delete lecturer
+          <strong id="deleteLecturerName"></strong>? This action cannot be
+          undone.
+        </p>
+        <form action="/admin/lecturers/delete" method="POST">
+          <input type="hidden" name="lecturer_id" id="deleteLecturerId" />
+          <div class="mt-6 flex justify-end gap-3">
+            <button
+              type="button"
+              class="px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low"
+              onclick="closeModal('deleteModal')"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-error text-white rounded-lg hover:bg-error/90"
+            >
+              Delete
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function closeModal(id) {
+        document.getElementById(id).classList.add("hidden");
+      }
+
+      const NEXT_LECTURER_ID = "{{ next_lecturer_id }}";
+
+      function openAddLecturer() {
+        document.getElementById("lecturerModalTitle").textContent =
+          "Add Lecturer";
+        document.getElementById("edit_mode").value = "0";
+        document.getElementById("original_id").value = "";
+        // ID is always auto-generated by the server; just preview it here (read-only)
+        document.getElementById("lecturer_id").value = NEXT_LECTURER_ID;
+        document.getElementById("lecturer_id").readOnly = true;
+        document.getElementById("lecturer_name").value = "";
+        document.getElementById("lecturer_faculty").value = "";
+        document.getElementById("lecturer_email").value = "";
+        document.getElementById("lecturer_phone").value = "";
+        document.getElementById("lecturerForm").action =
+          "/admin/lecturers/create";
+        document.getElementById("lecturerModal").classList.remove("hidden");
+      }
+
+      function openEditLecturer(btn) {
+        document.getElementById("lecturerModalTitle").textContent =
+          "Edit Lecturer";
+        document.getElementById("edit_mode").value = "1";
+        document.getElementById("original_id").value = btn.dataset.lecturer_id;
+        document.getElementById("lecturer_id").value = btn.dataset.lecturer_id;
+        document.getElementById("lecturer_id").readOnly = true;
+        document.getElementById("lecturer_name").value = btn.dataset.name;
+        document.getElementById("lecturer_faculty").value = btn.dataset.faculty_id || "";
+        // email is stored as full "local@gmail.com"; the form only edits the local part
+        const fullEmail = btn.dataset.email || "";
+        document.getElementById("lecturer_email").value = fullEmail.includes("@")
+          ? fullEmail.split("@")[0]
+          : fullEmail;
+        document.getElementById("lecturer_phone").value = btn.dataset.phone || "";
+        document.getElementById("lecturerForm").action =
+          "/admin/lecturers/edit";
+        document.getElementById("lecturerModal").classList.remove("hidden");
+      }
+
+      function openDeleteLecturer(btn) {
+        document.getElementById("deleteLecturerId").value = btn.dataset.lecturer_id;
+        document.getElementById("deleteLecturerName").textContent =
+          btn.dataset.name || btn.dataset.lecturer_id;
+        document.getElementById("deleteModal").classList.remove("hidden");
+      }
+    </script>
+  </body>
+</html>
