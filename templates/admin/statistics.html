@@ -1,0 +1,655 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Statistics - SMS</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap"
+      rel="stylesheet"
+    />
+    <!-- Thêm Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#edeef0",
+              "on-surface": "#191c1e",
+              tertiary: "#3e3fcc",
+              "primary-fixed-dim": "#b4c5ff",
+              "tertiary-fixed-dim": "#c0c1ff",
+              "surface-container-low": "#f3f4f6",
+              "inverse-surface": "#2e3132",
+              "on-tertiary-container": "#f1eeff",
+              "secondary-fixed": "#d8e3fb",
+              "surface-container-high": "#e7e8ea",
+              "secondary-fixed-dim": "#bcc7de",
+              outline: "#737686",
+              "inverse-primary": "#b4c5ff",
+              "surface-bright": "#f8f9fb",
+              "on-background": "#191c1e",
+              "on-tertiary": "#ffffff",
+              "surface-tint": "#0053db",
+              "error-container": "#ffdad6",
+              "tertiary-container": "#585be6",
+              "surface-variant": "#e1e2e4",
+              "on-error": "#ffffff",
+              "on-secondary-fixed-variant": "#3c475a",
+              "outline-variant": "#c3c6d7",
+              "on-tertiary-fixed": "#07006c",
+              "on-secondary-fixed": "#111c2d",
+              "primary-container": "#2563eb",
+              "surface-dim": "#d9dadc",
+              "primary-fixed": "#dbe1ff",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-secondary-container": "#586377",
+              primary: "#004ac6",
+              "surface-container-lowest": "#ffffff",
+              "on-error-container": "#93000a",
+              "secondary-container": "#d5e0f8",
+              "surface-container-highest": "#e1e2e4",
+              "on-primary": "#ffffff",
+              "inverse-on-surface": "#f0f1f3",
+              "on-primary-container": "#eeefff",
+              "on-secondary": "#ffffff",
+              error: "#ba1a1a",
+              "on-primary-fixed": "#00174b",
+              secondary: "#545f73",
+              surface: "#f8f9fb",
+              "on-surface-variant": "#434655",
+              "on-tertiary-fixed-variant": "#2f2ebe",
+              background: "#f8f9fb",
+              "tertiary-fixed": "#e1e0ff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              stack_md: "16px",
+              container_padding: "32px",
+              stack_sm: "8px",
+              sidebar_width: "260px",
+              gutter: "24px",
+              topbar_height: "70px",
+              stack_lg: "24px",
+            },
+            fontFamily: {
+              "body-md": ["Inter"],
+              "display-lg-mobile": ["Inter"],
+              "headline-sm": ["Inter"],
+              code: ["Inter"],
+              "headline-md": ["Inter"],
+              "display-lg": ["Inter"],
+              "body-lg": ["Inter"],
+              "label-md": ["Inter"],
+            },
+            fontSize: {
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "display-lg-mobile": [
+                "28px",
+                {
+                  lineHeight: "34px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-sm": [
+                "20px",
+                { lineHeight: "28px", fontWeight: "600" },
+              ],
+              code: ["13px", { lineHeight: "18px", fontWeight: "400" }],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "display-lg": [
+                "36px",
+                {
+                  lineHeight: "44px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8f9fb;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .icon-fill {
+        font-variation-settings: "FILL" 1;
+      }
+
+      .sidebar-scroll::-webkit-scrollbar {
+        width: 4px;
+      }
+      .sidebar-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .sidebar-scroll::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body class="text-on-surface bg-background">
+    <!-- SideNavBar -->
+    <nav
+      class="bg-inverse-surface fixed left-0 top-0 h-screen w-[260px] shadow-sm flex flex-col h-full py-6 z-50"
+    >
+      <div class="px-6 mb-8 flex items-center gap-3">
+        <div
+          class="w-10 h-10 rounded-lg bg-surface-container-lowest/10 flex items-center justify-center shrink-0"
+        >
+          <span class="material-symbols-outlined text-white">school</span>
+        </div>
+        <div>
+          <h1
+            class="font-headline-sm text-headline-sm font-bold text-white truncate"
+            title="UNIVERSITY STUDENT MANAGEMENT SYSTEM"
+          >
+            SMS
+          </h1>
+          <p
+            class="font-label-md text-[10px] leading-[14px] text-outline-variant mt-0.5 uppercase tracking-wider"
+          >
+            SMS Administration Portal
+          </p>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto sidebar-scroll px-3 space-y-1 pb-4">
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/dashboard"
+          ><span class="material-symbols-outlined">dashboard</span>Dashboard</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/account_management"
+          ><span class="material-symbols-outlined">manage_accounts</span>Account
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/students"
+          ><span class="material-symbols-outlined">school</span>Student
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/lecturers"
+          ><span class="material-symbols-outlined">person_pin</span>Lecturer
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/academic_structure"
+          ><span class="material-symbols-outlined">account_tree</span>Academic
+          Structure Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/faculties"
+          ><span class="material-symbols-outlined">account_balance</span>Faculty
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/majors"
+          ><span class="material-symbols-outlined">domain</span>Major
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/courses"
+          ><span class="material-symbols-outlined">calendar_month</span>Course
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-white/10 border-l-4 border-white font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/statistics"
+          ><span class="material-symbols-outlined">analytics</span>Statistics</a
+        >
+        <div class="pt-4 mt-4 border-t border-white/10 space-y-1">
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+            href="/admin/profile"
+            ><span class="material-symbols-outlined">person</span>Personal
+            Profile</a
+          >
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+            href="/admin/change_password"
+            ><span class="material-symbols-outlined">lock</span>Change
+            Password</a
+          >
+          <form action="/admin/logout" method="POST" style="display: inline">
+            <button
+              type="submit"
+              class="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+            >
+              <span class="material-symbols-outlined">logout</span>
+              <span>Logout</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+    <!-- TopNavBar -->
+    <header
+      class="bg-surface-container-lowest fixed top-0 right-0 h-[70px] w-[calc(100%-260px)] border-b border-outline-variant flex justify-between items-center px-8 z-40"
+    >
+      <!-- Left: giữ khoảng trống thay vì search -->
+      <div class="flex items-center w-96">
+        <div class="w-full h-10"></div>
+      </div>
+      <!-- Center: Page Title -->
+      <div class="absolute left-1/2 -translate-x-1/2">
+        <h2
+          class="font-headline-md text-headline-md font-semibold text-on-surface"
+        >
+          Statistics
+        </h2>
+      </div>
+      <!-- Right: Actions & Profile (đã xóa notification) -->
+      <div class="flex items-center space-x-4">
+        <!-- Đã xóa nút thông báo -->
+        <div class="h-8 w-px bg-surface-variant mx-2"></div>
+        <!-- Avatar và thông tin người dùng: chuyển đến profile -->
+        <a
+          href="/admin/profile"
+          class="flex items-center gap-3 hover:bg-surface-container-high p-1.5 rounded-lg transition-all"
+        >
+          <img
+            alt="User Avatar"
+            class="w-8 h-8 rounded-full object-cover border border-surface-variant"
+            src="https://media.voguearabia.com/photos/6901d8920dcba278cec778cc/2:3/w_2560%2Cc_limit/HO25_TALENT_CKJ_M_90S_TRKR_600GRACoL_7042x9893_sRGB_Hi_Res.jpg"
+          />
+          <div class="text-left hidden md:block">
+            <p
+              class="font-body-md text-body-md text-on-surface font-semibold leading-tight"
+            >
+              {{ user_name }}
+            </p>
+            <p class="font-label-md text-label-md text-on-surface-variant">
+              System Administrator
+            </p>
+          </div>
+        </a>
+      </div>
+    </header>
+
+    <!-- Main Content -->
+    <main
+      class="ml-[260px] mt-[70px] p-container_padding min-h-[calc(100vh-70px)] bg-background"
+    >
+      <div class="max-w-7xl mx-auto space-y-stack_lg">
+        <!-- Header Section -->
+        <div
+          class="flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+        >
+          <div>
+            <h1 class="font-display-lg text-display-lg text-on-surface">
+              Statistics Overview
+            </h1>
+            <p class="font-body-lg text-body-lg text-on-surface-variant mt-1">
+              Comprehensive data analytics and reporting.
+            </p>
+          </div>
+        </div>
+
+        <!-- Key Metrics Bento Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+          <!-- Metric Card 1 -->
+          <div
+            class="bg-surface-container-lowest rounded-xl p-stack_lg border border-outline-variant shadow-[0px_1px_2px_rgba(0,0,0,0.06)] flex flex-col justify-between"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div class="p-2 bg-primary-fixed rounded-lg">
+                <span class="material-symbols-outlined text-primary icon-fill"
+                  >groups</span
+                >
+              </div>
+              
+            </div>
+            <div>
+              <p
+                class="font-label-md text-label-md text-on-surface-variant mb-1"
+              >
+                Total Students
+              </p>
+              <h3
+                id="total-students"
+                class="font-headline-md text-headline-md text-on-surface"
+              >
+                {{ total_students }}
+              </h3>
+            </div>
+          </div>
+          <!-- Metric Card 2 -->
+          <div
+            class="bg-surface-container-lowest rounded-xl p-stack_lg border border-outline-variant shadow-[0px_1px_2px_rgba(0,0,0,0.06)] flex flex-col justify-between"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div class="p-2 bg-secondary-fixed rounded-lg">
+                <span class="material-symbols-outlined text-secondary icon-fill"
+                  >person_pin</span
+                >
+              </div>
+             
+            </div>
+            <div>
+              <p
+                class="font-label-md text-label-md text-on-surface-variant mb-1"
+              >
+                Total Lecturers
+              </p>
+              <h3
+                id="total-lecturers"
+                class="font-headline-md text-headline-md text-on-surface"
+              >
+                {{ total_lecturers }}
+              </h3>
+            </div>
+          </div>
+          <!-- Metric Card 3 -->
+          <div
+            class="bg-surface-container-lowest rounded-xl p-stack_lg border border-outline-variant shadow-[0px_1px_2px_rgba(0,0,0,0.06)] flex flex-col justify-between"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div class="p-2 bg-tertiary-fixed rounded-lg">
+                <span class="material-symbols-outlined text-tertiary icon-fill"
+                  >domain</span
+                >
+              </div>
+             
+            </div>
+            <div>
+              <p
+                class="font-label-md text-label-md text-on-surface-variant mb-1"
+              >
+                Total Faculties
+              </p>
+              <h3
+                id="total-faculties"
+                class="font-headline-md text-headline-md text-on-surface"
+              >
+                {{ total_faculties }}
+              </h3>
+            </div>
+          </div>
+          <!-- Metric Card 4 -->
+          <div
+            class="bg-surface-container-lowest rounded-xl p-stack_lg border border-outline-variant shadow-[0px_1px_2px_rgba(0,0,0,0.06)] flex flex-col justify-between"
+          >
+            <div class="flex justify-between items-start mb-4">
+              <div class="p-2 bg-error-container rounded-lg">
+                <span
+                  class="material-symbols-outlined text-on-error-container icon-fill"
+                  >school</span
+                >
+              </div>
+              <span
+                class="inline-flex items-center gap-1 text-red-600 bg-red-50 px-2 py-1 rounded-full text-[12px] font-medium"
+              >
+            </div>
+            <div>
+              <p
+                class="font-label-md text-label-md text-on-surface-variant mb-1"
+              >
+                Total Majors
+              </p>
+              <h3
+                id="total-majors"
+                class="font-headline-md text-headline-md text-on-surface"
+              >
+                {{ total_majors }}
+              </h3>
+            </div>
+          </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+          <!-- Main Chart: Enrollment Trends -->
+          <div
+            class="lg:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0px_1px_2px_rgba(0,0,0,0.06)] p-stack_lg flex flex-col"
+          >
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="font-headline-sm text-headline-sm text-on-surface">
+                Enrollment Trends
+              </h3>
+              <!-- Tăng kích thước dropdown -->
+             
+            </div>
+            <!-- Chart Canvas -->
+            <div class="flex-1 min-h-[300px]">
+              <canvas id="enrollmentChart"></canvas>
+            </div>
+          </div>
+          <!-- Secondary Chart: Academic Performance -->
+          <div
+            class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0px_1px_2px_rgba(0,0,0,0.06)] p-stack_lg flex flex-col"
+          >
+            <div class="flex justify-between items-center mb-6">
+              <h3 class="font-headline-sm text-headline-sm text-on-surface">
+                Academic Performance
+              </h3>
+              <!-- Đã xóa nút ba chấm -->
+            </div>
+            <!-- Placeholder for Donut Chart (vẫn giữ nguyên như cũ) -->
+            <div
+              id="performance-chart-container"
+              class="flex-1 bg-surface-container-low rounded-lg border border-outline-variant border-dashed flex items-center justify-center min-h-[300px] relative"
+            >
+              <div
+                class="w-48 h-48 rounded-full border-[16px] border-primary-fixed opacity-50 absolute"
+              ></div>
+              <div
+                class="w-48 h-48 rounded-full border-[16px] border-transparent border-t-primary border-r-primary rotate-45 absolute opacity-80"
+              ></div>
+              <div
+                class="text-center relative z-10 bg-surface-container-low rounded-full p-4"
+              >
+                <span
+                  class="block font-headline-sm text-headline-sm text-on-surface"
+                  >3.4</span
+                >
+                <span
+                  class="block font-label-md text-label-md text-on-surface-variant"
+                  >Avg GPA</span
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Data Table Section -->
+        <div
+          class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0px_1px_2px_rgba(0,0,0,0.06)] overflow-hidden"
+        >
+          <div
+            class="p-stack_lg border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest"
+          >
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">
+              Faculty Distribution
+            </h3>
+           
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr
+                  class="bg-surface-container-low border-b border-outline-variant"
+                >
+                  <th
+                    class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Faculty Name
+                  </th>
+                  <th
+                    class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Students
+                  </th>
+                  <th
+                    class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Lecturers
+                  </th>
+                  <th
+                    class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Majors
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                id="faculty-distribution-table-body"
+                class="divide-y divide-outline-variant"
+              >
+                {% for faculty in faculty_distribution %}
+                <tr class="hover:bg-surface-container-low transition-colors">
+                  <td
+                    class="py-4 px-6 font-body-md text-on-surface flex items-center gap-3"
+                  >
+                    <div
+                      class="w-8 h-8 rounded bg-primary-fixed flex items-center justify-center text-primary"
+                    >
+                      <span class="material-symbols-outlined text-[16px]"
+                        >account_balance</span
+                      >
+                    </div>
+                    {{ faculty.FacultyName }}
+                  </td>
+                  <td class="py-4 px-6 font-body-md text-on-surface-variant">
+                    {{ faculty.student_count }}
+                  </td>
+                  <td class="py-4 px-6 font-body-md text-on-surface-variant">
+                    {{ faculty.lecturer_count }}
+                  </td>
+                  <td class="py-4 px-6 font-body-md text-on-surface-variant">
+                    {{ faculty.major_count }}
+                  </td>
+                </tr>
+                {% else %}
+                <tr>
+                  <td colspan="4" class="py-8 text-center text-on-surface-variant">
+                    No faculty data available.
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <!-- Script để vẽ biểu đồ và xử lý bộ lọc -->
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        // Lấy dữ liệu từ biến Jinja2
+        const enrollmentData = {{ enrollment_chart_data | tojson | safe }};
+        // enrollmentData có dạng [{'year': 2020, 'count': 10}, ...]
+        const labels = enrollmentData.map(item => item.year);
+        const data = enrollmentData.map(item => item.count);
+
+        const ctx = document.getElementById('enrollmentChart').getContext('2d');
+        // Khởi tạo biểu đồ toàn cục để có thể cập nhật sau
+        window.enrollmentChart = new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: labels,
+            datasets: [{
+              label: 'Number of Students Enrolled',
+              data: data,
+              backgroundColor: 'rgba(37, 99, 235, 0.7)',
+              borderColor: 'rgba(37, 99, 235, 1)',
+              borderWidth: 1,
+              borderRadius: 4
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                ticks: {
+                  stepSize: 1
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                display: false
+              }
+            }
+          }
+        });
+
+        // Xử lý sự kiện change cho dropdown năm
+        document.getElementById('enrollment-year-select').addEventListener('change', function() {
+          const year = this.value;
+          // Nếu chọn "all" hoặc giá trị rỗng thì lấy tất cả
+          let url = '/admin/statistics/enrollment_data';
+          if (year && year !== '') {
+            url += '?year=' + year;
+          }
+          fetch(url)
+            .then(res => {
+              if (!res.ok) {
+                throw new Error('Network response was not ok');
+              }
+              return res.json();
+            })
+            .then(data => {
+              // Cập nhật biểu đồ
+              const newLabels = data.map(item => item.year);
+              const newData = data.map(item => item.count);
+              window.enrollmentChart.data.labels = newLabels;
+              window.enrollmentChart.data.datasets[0].data = newData;
+              window.enrollmentChart.update();
+            })
+            .catch(err => {
+              alert('Không thể tải dữ liệu cho năm này. Vui lòng thử lại.');
+              console.error(err);
+            });
+        });
+      });
+    </script>
+  </body>
+</html>

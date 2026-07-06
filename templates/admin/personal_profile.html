@@ -1,0 +1,482 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Personal Profile - SMS</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">
+    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap" rel="stylesheet" />
+    <script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "surface-container": "#edeef0",
+                        "on-surface": "#191c1e",
+                        tertiary: "#3e3fcc",
+                        "primary-fixed-dim": "#b4c5ff",
+                        "tertiary-fixed-dim": "#c0c1ff",
+                        "surface-container-low": "#f3f4f6",
+                        "inverse-surface": "#2e3132",
+                        "on-tertiary-container": "#f1eeff",
+                        "secondary-fixed": "#d8e3fb",
+                        "surface-container-high": "#e7e8ea",
+                        "secondary-fixed-dim": "#bcc7de",
+                        outline: "#737686",
+                        "inverse-primary": "#b4c5ff",
+                        "surface-bright": "#f8f9fb",
+                        "on-background": "#191c1e",
+                        "on-tertiary": "#ffffff",
+                        "surface-tint": "#0053db",
+                        "error-container": "#ffdad6",
+                        "tertiary-container": "#585be6",
+                        "surface-variant": "#e1e2e4",
+                        "on-error": "#ffffff",
+                        "on-secondary-fixed-variant": "#3c475a",
+                        "outline-variant": "#c3c6d7",
+                        "on-tertiary-fixed": "#07006c",
+                        "on-secondary-fixed": "#111c2d",
+                        "primary-container": "#2563eb",
+                        "surface-dim": "#d9dadc",
+                        "primary-fixed": "#dbe1ff",
+                        "on-primary-fixed-variant": "#003ea8",
+                        "on-secondary-container": "#586377",
+                        primary: "#004ac6",
+                        "surface-container-lowest": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "secondary-container": "#d5e0f8",
+                        "surface-container-highest": "#e1e2e4",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#f0f1f3",
+                        "on-primary-container": "#eeefff",
+                        "on-secondary": "#ffffff",
+                        error: "#ba1a1a",
+                        "on-primary-fixed": "#00174b",
+                        secondary: "#545f73",
+                        surface: "#f8f9fb",
+                        "on-surface-variant": "#434655",
+                        "on-tertiary-fixed-variant": "#2f2ebe",
+                        background: "#f8f9fb",
+                        "tertiary-fixed": "#e1e0ff",
+                    },
+                    borderRadius: { DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px" },
+                    spacing: {
+                        stack_md: "16px", container_padding: "32px", stack_sm: "8px",
+                        sidebar_width: "260px", gutter: "24px", topbar_height: "70px", stack_lg: "24px"
+                    },
+                    fontFamily: {
+                        "body-md": ["Inter"], "display-lg-mobile": ["Inter"], "headline-sm": ["Inter"],
+                        code: ["Inter"], "headline-md": ["Inter"], "display-lg": ["Inter"],
+                        "body-lg": ["Inter"], "label-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                        "display-lg-mobile": ["28px", { lineHeight: "34px", letterSpacing: "-0.01em", fontWeight: "700" }],
+                        "headline-sm": ["20px", { lineHeight: "28px", fontWeight: "600" }],
+                        code: ["13px", { lineHeight: "18px", fontWeight: "400" }],
+                        "headline-md": ["24px", { lineHeight: "32px", fontWeight: "600" }],
+                        "display-lg": ["36px", { lineHeight: "44px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "label-md": ["12px", { lineHeight: "16px", letterSpacing: "0.05em", fontWeight: "600" }]
+                    }
+                }
+            }
+        };
+    </script>
+    <style>
+        body { font-family: "Inter", sans-serif; background-color: #f8f9fb; }
+        .material-symbols-outlined { font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24; }
+        .icon-fill { font-variation-settings: "FILL" 1; }
+        .sidebar-scroll::-webkit-scrollbar { width: 4px; }
+        .sidebar-scroll::-webkit-scrollbar-track { background: transparent; }
+        .sidebar-scroll::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); border-radius: 4px; }
+        .toast {
+            position: fixed; bottom: 24px; right: 24px; background: #1e293b; color: #f8fafc;
+            padding: 14px 24px; border-radius: 12px; font-size: 14px; font-weight: 500;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.25); z-index: 9999; opacity: 0;
+            transform: translateY(20px); transition: opacity 0.3s ease, transform 0.3s ease;
+            pointer-events: none; max-width: 420px;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        .toast.success { border-left: 4px solid #22c55e; }
+        .toast.error { border-left: 4px solid #ef4444; }
+        .toast.info { border-left: 4px solid #3b82f6; }
+        .form-field:focus { ring: 2px solid #2563eb; ring-offset: 0; border-color: #2563eb; }
+        .form-field-error { border-color: #ef4444 !important; ring: 2px solid rgba(239,68,68,0.3) !important; }
+        .form-hint { font-size: 12px; color: #737686; margin-top: 4px; display: flex; align-items: center; gap: 4px; }
+        .form-hint .material-symbols-outlined { font-size: 14px; }
+    </style>
+</head>
+<body class="text-on-surface bg-background">
+
+    <div id="toast" class="toast"></div>
+
+    <!-- SideNavBar -->
+    <nav class="bg-inverse-surface fixed left-0 top-0 h-screen w-[260px] shadow-sm flex flex-col h-full py-6 z-50">
+        <div class="px-6 mb-8 flex items-center gap-3">
+            <div class="w-10 h-10 rounded-lg bg-surface-container-lowest/10 flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-white">school</span>
+            </div>
+            <div>
+                <h1 class="font-headline-sm text-headline-sm font-bold text-white truncate" title="UNIVERSITY STUDENT MANAGEMENT SYSTEM">SMS</h1>
+                <p class="font-label-md text-[10px] leading-[14px] text-outline-variant mt-0.5 uppercase tracking-wider">SMS Administration Portal</p>
+            </div>
+        </div>
+        <div class="flex-1 overflow-y-auto sidebar-scroll px-3 space-y-1 pb-4">
+            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200" href="/admin/dashboard">
+                <span class="material-symbols-outlined">dashboard</span>Dashboard
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200" href="/admin/account_management">
+                <span class="material-symbols-outlined">manage_accounts</span>Account Management
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200" href="/admin/students">
+                <span class="material-symbols-outlined">school</span>Student Management
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200" href="/admin/lecturers">
+                <span class="material-symbols-outlined">person_pin</span>Lecturer Management
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200" href="/admin/academic_structure">
+                <span class="material-symbols-outlined">account_tree</span>Academic Structure Management
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200" href="/admin/faculties">
+                <span class="material-symbols-outlined">account_balance</span>Faculty Management
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200" href="/admin/majors">
+                <span class="material-symbols-outlined">domain</span>Major Management
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200" href="/admin/courses">
+                <span class="material-symbols-outlined">calendar_month</span>Course Management
+            </a>
+            <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200" href="/admin/statistics">
+                <span class="material-symbols-outlined">analytics</span>Statistics
+            </a>
+            <div class="pt-4 mt-4 border-t border-white/10 space-y-1">
+                <!-- Personal Profile - active -->
+                <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-white/10 border-l-4 border-white font-body-md text-body-md cursor-pointer duration-200" href="/admin/profile">
+                    <span class="material-symbols-outlined">person</span>Personal Profile
+                </a>
+                <a class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200" href="/admin/change_password">
+                    <span class="material-symbols-outlined">lock</span>Change Password
+                </a>
+                <form action="/admin/logout" method="POST" style="display: inline">
+                    <button type="submit" class="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200">
+                        <span class="material-symbols-outlined">logout</span><span>Logout</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </nav>
+
+    <!-- TopNavBar -->
+    <header class="bg-surface-container-lowest fixed top-0 right-0 h-[70px] w-[calc(100%-260px)] border-b border-outline-variant flex items-center px-8 z-40">
+        <div class="w-96 flex-shrink-0"></div>
+        <div class="absolute left-1/2 -translate-x-1/2">
+            <h2 class="font-headline-md text-headline-md font-semibold text-on-surface">Personal Profile</h2>
+        </div>
+        <div class="flex items-center ml-auto">
+            <button class="flex items-center gap-3 hover:bg-surface-container-high p-1.5 rounded-lg transition-all">
+                <img alt="User Avatar" id="avatarPreview" class="w-8 h-8 rounded-full object-cover border border-surface-variant" src="https://media.voguearabia.com/photos/6901d8920dcba278cec778cc/2:3/w_2560%2Cc_limit/HO25_TALENT_CKJ_M_90S_TRKR_600GRACoL_7042x9893_sRGB_Hi_Res.jpg" />
+                <div class="text-left hidden md:block">
+                    <p class="font-body-md text-body-md text-on-surface font-semibold leading-tight" id="topbarFullName">{{ user_name }}</p>
+                    <p class="font-label-md text-label-md text-on-surface-variant">System Administrator</p>
+                </div>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="ml-[260px] mt-[70px] p-container_padding min-h-[calc(100vh-70px)] bg-background">
+        <div class="max-w-7xl mx-auto">
+            <div class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-stack_lg">
+                <div>
+                    <h2 class="font-display-lg text-display-lg text-on-surface">Personal Profile</h2>
+                    <p class="font-body-md text-body-md text-on-surface-variant mt-1">Manage your administrative account details and preferences.</p>
+                </div>
+                <div class="flex flex-wrap gap-3">
+                    <a href="/admin/dashboard" class="px-4 py-2.5 rounded-lg bg-surface-container-lowest border border-outline-variant font-label-md text-label-md text-on-secondary-fixed-variant hover:bg-surface-container-low transition-colors">Cancel</a>
+                    <button type="submit" form="profileForm" id="saveBtn" class="px-4 py-2.5 rounded-lg bg-primary-container font-label-md text-label-md text-on-primary hover:bg-primary transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.1)]">Save Changes</button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-gutter max-w-6xl">
+                <!-- Left Column: Profile Summary -->
+                <div class="col-span-12 md:col-span-4 flex flex-col gap-gutter">
+                    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-[0px_1px_2px_rgba(0,0,0,0.06)] flex flex-col items-center text-center relative overflow-hidden">
+                        <div class="absolute top-0 left-0 w-full h-24 bg-gradient-to-r from-secondary-container to-tertiary-fixed opacity-50"></div>
+                        <div class="relative mt-8 mb-4">
+                            <img id="profileAvatar" class="w-32 h-32 rounded-full object-cover border-4 border-surface-container-lowest shadow-md" src="https://media.voguearabia.com/photos/6901d8920dcba278cec778cc/2:3/w_2560%2Cc_limit/HO25_TALENT_CKJ_M_90S_TRKR_600GRACoL_7042x9893_sRGB_Hi_Res.jpg" />
+                        </div>
+                        <h3 class="font-headline-md text-headline-md text-on-surface mb-1" id="profileNameDisplay">{{ user_name }}</h3>
+                        <p class="font-body-md text-body-md text-primary font-medium mb-4">System Administrator </p>
+                        <div class="w-full bg-surface-container-low rounded-lg p-4 space-y-3 text-left border border-outline-variant/50">
+                            <div class="flex justify-between items-center">
+                                <span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">badge</span>Admin ID</span>
+                                <span class="font-label-md text-label-md text-on-surface">{{ account.Username or account.AccountID }}</span>
+                            </div>
+                            <div class="h-px bg-outline-variant/30"></div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">verified_user</span>Role</span>
+                                <span class="font-label-md text-label-md text-on-surface">{{ account.RoleName or 'Admin' }}</span>
+                            </div>
+                            <div class="h-px bg-outline-variant/30"></div>
+                            <div class="flex justify-between items-center">
+                                <span class="font-body-md text-body-md text-on-surface-variant flex items-center gap-2"><span class="material-symbols-outlined text-[18px]">toggle_on</span>Status</span>
+                                <span class="px-2 py-1 {% if account.Status == 'Active' %}bg-green-100 text-green-800{% else %}bg-red-100 text-red-800{% endif %} rounded text-[10px] font-bold uppercase tracking-wider">{{ account.Status or 'Active' }}</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Right Column: Form -->
+                <div class="col-span-12 md:col-span-8">
+                    <div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-8 shadow-[0px_1px_2px_rgba(0,0,0,0.06)]">
+                        <div class="flex items-center gap-3 mb-6 pb-4 border-b border-outline-variant">
+                            <span class="material-symbols-outlined text-primary text-[24px]">contact_page</span>
+                            <h3 class="font-headline-sm text-headline-sm text-on-surface">Personal Information</h3>
+                        </div>
+                        <form id="profileForm" class="grid grid-cols-2 gap-x-6 gap-y-6" action="/admin/profile" method="POST" enctype="multipart/form-data">
+                            <input type="hidden" name="edit_mode" value="1" />
+                            <!-- Full Name -->
+                            <div class="col-span-2 md:col-span-1 space-y-2">
+                                <label class="font-label-md text-label-md text-on-surface-variant block" for="full_name">Full Name <span class="text-error">*</span></label>
+                                <input class="w-full px-4 py-2.5 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all form-field" type="text" name="full_name" id="full_name" value="{{ user_name }}" required />
+                            </div>
+                            <!-- Email -->
+                            <div class="col-span-2 md:col-span-1 space-y-2">
+                                <label class="font-label-md text-label-md text-on-surface-variant block" for="email">Email Address</label>
+                                <input class="w-full px-4 py-2.5 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all form-field" type="email" name="email" id="email" value="{{ account.Email or '' }}" placeholder="example@domain.com" />
+                                <div class="form-hint"><span class="material-symbols-outlined">info</span>Nhập địa chỉ email hợp lệ</div>
+                            </div>
+                            <!-- Phone -->
+                            <div class="col-span-2 md:col-span-1 space-y-2">
+                                <label class="font-label-md text-label-md text-on-surface-variant block" for="phone">Phone Number</label>
+                                <input class="w-full px-4 py-2.5 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all form-field" type="tel" name="phone" id="phone" value="{{ account.PhoneNumber or '' }}" maxlength="10" inputmode="numeric" placeholder="0123456789" />
+                                <div class="form-hint"><span class="material-symbols-outlined">info</span>Nhập đúng 10 chữ số (có thể để trống)</div>
+                            </div>
+                            <!-- DOB -->
+                            <div class="col-span-2 md:col-span-1 space-y-2">
+                                <label class="font-label-md text-label-md text-on-surface-variant block" for="dob">Date of Birth</label>
+                                <input class="w-full px-4 py-2.5 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all form-field" type="date" name="dob" id="dob" value="{{ account.DateOfBirth or '' }}" />
+                            </div>
+                            <!-- Gender -->
+                            <div class="col-span-2 md:col-span-1 space-y-2">
+                                <label class="font-label-md text-label-md text-on-surface-variant block" for="gender">Gender</label>
+                                <select class="w-full px-4 py-2.5 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all form-field appearance-none" name="gender" id="gender">
+                                    <option value="">Chọn giới tính</option>
+                                    <option value="Male" {% if account.Gender == 'Male' %}selected{% endif %}>Nam (Male)</option>
+                                    <option value="Female" {% if account.Gender == 'Female' %}selected{% endif %}>Nữ (Female)</option>
+                                    <option value="Other" {% if account.Gender == 'Other' %}selected{% endif %}>Khác (Other)</option>
+                                </select>
+                                <div class="form-hint"><span class="material-symbols-outlined">info</span>Chọn giới tính từ danh sách</div>
+                            </div>
+                            <!-- Address -->
+                            <div class="col-span-2 space-y-2">
+                                <label class="font-label-md text-label-md text-on-surface-variant block" for="address">Residential Address</label>
+                                <textarea class="w-full px-4 py-2.5 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:ring-2 focus:ring-primary/50 focus:border-primary outline-none transition-all form-field resize-none" name="address" id="address" rows="3" placeholder="Số nhà, Xã/Phường, Quận/Huyện, Thành phố/Tỉnh">{{ account.Address or '' }}</textarea>
+                                <div class="form-hint"><span class="material-symbols-outlined">info</span>Nhập theo thứ tự: Số nhà → Xã/Phường → Quận/Huyện → Thành phố/Tỉnh</div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        (function() {
+            'use strict';
+
+            const form = document.getElementById('profileForm');
+            const saveBtn = document.getElementById('saveBtn');
+            const toast = document.getElementById('toast');
+
+            const phoneInput = document.getElementById('phone');
+            const fullNameInput = document.getElementById('full_name');
+            const dobInput = document.getElementById('dob');
+            const genderSelect = document.getElementById('gender');
+            const addressTextarea = document.getElementById('address');
+
+            function showToast(message, type) {
+                toast.textContent = message;
+                toast.className = 'toast';
+                if (type === 'success') toast.classList.add('success');
+                else if (type === 'error') toast.classList.add('error');
+                else toast.classList.add('info');
+                toast.classList.add('show');
+                clearTimeout(toast._hideTimer);
+                toast._hideTimer = setTimeout(() => toast.classList.remove('show'), 4000);
+            }
+
+            // Phone validation (10 digits)
+            phoneInput.addEventListener('input', function() {
+                this.value = this.value.replace(/\D/g, '');
+                if (this.value.length > 10) this.value = this.value.slice(0, 10);
+                if (this.value.length > 0 && this.value.length !== 10) {
+                    this.classList.add('form-field-error');
+                } else {
+                    this.classList.remove('form-field-error');
+                }
+            });
+
+            phoneInput.addEventListener('blur', function() {
+                if (this.value.length > 0 && this.value.length !== 10) {
+                    this.classList.add('form-field-error');
+                    showToast('Số điện thoại phải có đúng 10 chữ số.', 'error');
+                } else {
+                    this.classList.remove('form-field-error');
+                }
+            });
+
+            // Submit handler
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                // Validate Full Name
+                const name = fullNameInput.value.trim();
+                if (!name) {
+                    showToast('Vui lòng nhập Họ và tên.', 'error');
+                    fullNameInput.classList.add('form-field-error');
+                    fullNameInput.focus();
+                    return;
+                }
+                fullNameInput.classList.remove('form-field-error');
+
+                // Phone (if filled)
+                const phone = phoneInput.value.trim();
+                if (phone && !/^\d{10}$/.test(phone)) {
+                    showToast('Số điện thoại phải có đúng 10 chữ số.', 'error');
+                    phoneInput.classList.add('form-field-error');
+                    phoneInput.focus();
+                    return;
+                }
+                phoneInput.classList.remove('form-field-error');
+
+                // Email
+                const email = document.getElementById('email').value.trim();
+                if (email && !/^[^@]+@[^@]+\.[^@]+$/.test(email)) {
+                    showToast('Email không hợp lệ.', 'error');
+                    document.getElementById('email').classList.add('form-field-error');
+                    document.getElementById('email').focus();
+                    return;
+                }
+                document.getElementById('email').classList.remove('form-field-error');
+
+                // DOB
+                const dob = dobInput.value;
+                if (dob) {
+                    const dobDate = new Date(dob);
+                    if (isNaN(dobDate.getTime())) {
+                        showToast('Ngày sinh không hợp lệ.', 'error');
+                        dobInput.classList.add('form-field-error');
+                        dobInput.focus();
+                        return;
+                    }
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    if (dobDate > today) {
+                        showToast('Ngày sinh không thể là ngày trong tương lai.', 'error');
+                        dobInput.classList.add('form-field-error');
+                        dobInput.focus();
+                        return;
+                    }
+                    dobInput.classList.remove('form-field-error');
+                }
+
+                // Gender
+                const gender = genderSelect.value;
+                if (gender && !['Male', 'Female', 'Other'].includes(gender)) {
+                    showToast('Vui lòng chọn giới tính hợp lệ.', 'error');
+                    genderSelect.classList.add('form-field-error');
+                    genderSelect.focus();
+                    return;
+                }
+                genderSelect.classList.remove('form-field-error');
+
+                // Address
+                const address = addressTextarea.value.trim();
+                if (address && address.length < 5) {
+                    showToast('Địa chỉ quá ngắn. Vui lòng nhập đầy đủ thông tin.', 'error');
+                    addressTextarea.classList.add('form-field-error');
+                    addressTextarea.focus();
+                    return;
+                }
+                addressTextarea.classList.remove('form-field-error');
+
+                // Disable button
+                saveBtn.disabled = true;
+                saveBtn.textContent = 'Đang lưu...';
+                saveBtn.classList.add('opacity-70', 'cursor-not-allowed');
+
+                const formData = new FormData(form);
+
+                fetch(form.action, {
+                        method: 'POST',
+                        body: formData,
+                    })
+                    .then(response => {
+                        if (response.redirected) {
+                            window.location.href = response.url;
+                            return;
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        if (data && data.success) {
+                            showToast(data.message || 'Cập nhật thành công!', 'success');
+                            const newName = fullNameInput.value.trim();
+                            if (newName) {
+                                document.getElementById('profileNameDisplay').textContent = newName;
+                                document.getElementById('topbarFullName').textContent = newName;
+                            }
+                        } else if (data && !data.success) {
+                            showToast(data.message || 'Có lỗi xảy ra.', 'error');
+                        } else {
+                            showToast('Cập nhật thành công!', 'success');
+                        }
+                        saveBtn.disabled = false;
+                        saveBtn.textContent = 'Save Changes';
+                        saveBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+                    })
+                    .catch(err => {
+                        console.error('Fetch error:', err);
+                        showToast('Lỗi kết nối. Vui lòng thử lại.', 'error');
+                        saveBtn.disabled = false;
+                        saveBtn.textContent = 'Save Changes';
+                        saveBtn.classList.remove('opacity-70', 'cursor-not-allowed');
+                    });
+            });
+
+            // Cancel confirmation
+            const cancelLink = document.querySelector('a[href="/admin/dashboard"]');
+            if (cancelLink) {
+                cancelLink.addEventListener('click', function(e) {
+                    const formFields = form.querySelectorAll('input:not([type="hidden"]):not([readonly]), select, textarea');
+                    let modified = false;
+                    formFields.forEach(function(field) {
+                        const initial = field.dataset.initialValue;
+                        if (initial !== undefined) {
+                            if (field.value !== initial) modified = true;
+                        } else {
+                            field.dataset.initialValue = field.value;
+                        }
+                    });
+                    if (modified) {
+                        if (!confirm('Bạn có thay đổi chưa lưu. Bạn có chắc muốn rời khỏi trang này không?')) {
+                            e.preventDefault();
+                        }
+                    }
+                });
+            }
+
+            // Store initial values
+            document.querySelectorAll('#profileForm input:not([type="hidden"]):not([readonly]), #profileForm select, #profileForm textarea')
+                .forEach(field => field.dataset.initialValue = field.value);
+
+            console.log(' Profile page ready (no avatar upload).');
+        })();
+    </script>
+</body>
+</html>
