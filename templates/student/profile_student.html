@@ -1,0 +1,514 @@
+<!doctype html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>HỆ THỐNG QUẢN LÝ SINH VIÊN - Personal Profile</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#e7e8ea",
+              "on-background": "#191c1e",
+              "on-primary-container": "#eeefff",
+              "secondary-fixed-dim": "#bcc7de",
+              "secondary-container": "#d5e0f8",
+              "on-primary-fixed": "#00174b",
+              "inverse-on-surface": "#f0f1f3",
+              "primary-container": "#2563eb",
+              "on-secondary-fixed": "#111c2d",
+              "tertiary-fixed-dim": "#c0c1ff",
+              "on-tertiary-fixed-variant": "#2f2ebe",
+              "on-tertiary-container": "#f1eeff",
+              "on-surface": "#191c1e",
+              "error-container": "#ffdad6",
+              surface: "#f8f9fb",
+              outline: "#737686",
+              "outline-variant": "#c3c6d7",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed": "#d8e3fb",
+              "on-secondary-fixed-variant": "#3c475a",
+              "surface-container": "#edeef0",
+              "on-primary": "#ffffff",
+              "inverse-surface": "#2e3132",
+              primary: "#004ac6",
+              "primary-fixed-dim": "#b4c5ff",
+              "on-error": "#ffffff",
+              error: "#ba1a1a",
+              tertiary: "#3e3fcc",
+              secondary: "#545f73",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed": "#dbe1ff",
+              "on-tertiary-fixed": "#07006c",
+              "on-secondary": "#ffffff",
+              "tertiary-container": "#585be6",
+              "surface-container-highest": "#e1e2e4",
+              "tertiary-fixed": "#e1e0ff",
+              "surface-dim": "#d9dadc",
+              "surface-tint": "#0053db",
+              "surface-bright": "#f8f9fb",
+              "surface-variant": "#e1e2e4",
+              "surface-container-low": "#f3f4f6",
+              "on-surface-variant": "#434655",
+              "on-secondary-container": "#586377",
+              "on-primary-fixed-variant": "#003ea8",
+              background: "#f8f9fb",
+              "inverse-primary": "#b4c5ff",
+              "on-error-container": "#93000a",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              stack_lg: "24px",
+              container_padding: "32px",
+              sidebar_width: "260px",
+              gutter: "24px",
+              stack_sm: "8px",
+              stack_md: "16px",
+              topbar_height: "70px",
+            },
+            fontFamily: {
+              code: ["Inter"],
+              "headline-md": ["Inter"],
+              "display-lg": ["Inter"],
+              "body-md": ["Inter"],
+              "headline-sm": ["Inter"],
+              "body-lg": ["Inter"],
+              "label-md": ["Inter"],
+              "display-lg-mobile": ["Inter"],
+            },
+            fontSize: {
+              code: ["13px", { lineHeight: "18px", fontWeight: "400" }],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "display-lg": [
+                "36px",
+                {
+                  lineHeight: "44px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "headline-sm": [
+                "20px",
+                { lineHeight: "28px", fontWeight: "600" },
+              ],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "display-lg-mobile": [
+                "28px",
+                {
+                  lineHeight: "34px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-background min-h-screen">
+    <!-- SideNavBar -->
+    <nav
+      class="fixed left-0 top-0 h-screen w-[260px] bg-inverse-surface shadow-sm z-30 flex flex-col h-full py-6"
+    >
+      <div class="px-6 mb-8 flex items-center gap-3">
+        <div
+          class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-md"
+        >
+          <span
+            class="material-symbols-outlined text-white"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >school</span
+          >
+        </div>
+        <div>
+          <h2
+            class="font-headline-sm text-headline-sm font-bold text-white tracking-tight"
+          >
+            HỆ THỐNG QUẢN LÝ SINH VIÊN
+          </h2>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto px-3 space-y-1">
+        <a
+          class="flex items-center gap-3 px-4 py-3 rounded-lg text-white bg-white/10 border-l-4 border-white font-body-md text-body-md cursor-pointer duration-200"
+          href="/student/profile"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >person</span
+          >
+          Personal Profile
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/student/learning_progress"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 0"
+            >analytics</span
+          >
+          Learning Progress
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/student/change_password"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 0"
+            >lock</span
+          >
+          Change Password
+        </a>
+      </div>
+      <div class="px-3 mt-auto pt-4 border-t border-white/10">
+        <form action="/student/logout" method="POST" style="display: inline">
+          <button
+            type="submit"
+            class="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          >
+            <span class="material-symbols-outlined">logout</span>
+            <span>Logout</span>
+          </button>
+        </form>
+      </div>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <div class="flex-1 ml-[260px] flex flex-col min-h-screen">
+      <!-- TopNavBar -->
+      <header
+        class="fixed top-0 right-0 h-[70px] w-[calc(100%-260px)] bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-8 z-20"
+      >
+        <div class="flex items-center">
+          <a href="/student/profile" class="hover:no-underline">
+            <h1
+              class="font-headline-md text-headline-md font-semibold text-on-surface"
+            >
+              Dashboard
+            </h1>
+          </a>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button
+            class="p-2 text-primary hover:bg-surface-container-high transition-all rounded-full flex items-center justify-center"
+          >
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: &quot;FILL&quot; 0"
+              >notifications</span
+            >
+          </button>
+          <div
+            class="flex items-center space-x-3 pl-4 border-l border-outline-variant"
+          >
+            <div class="text-right hidden sm:block">
+              <p class="font-body-md text-body-md font-bold text-on-surface">
+                {{ user_name }}
+              </p>
+              <p class="font-label-md text-label-md text-on-surface-variant">
+                Student
+              </p>
+            </div>
+            <img
+              alt="User Avatar"
+              class="w-10 h-10 rounded-full object-cover border border-outline-variant shadow-sm"
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuRc90TnGZ-68BvMnZ8gL3-bO-x3tXo5MoZHIa6mVvzw&s=10"     />
+          </div>
+        </div>
+      </header>
+
+      <!-- Main Content -->
+      <main class="ml-[50px] pt-[70px] p-container_padding min-h-screen">
+        <div class="max-w-5xl mx-auto space-y-stack_lg">
+          <div class="flex items-center justify-between mb-8">
+            <h2 class="font-display-lg text-display-lg text-on-surface">
+              Personal Profile
+            </h2>
+            <div class="flex gap-4">
+              <a
+                href="/student/profile"
+                class="px-6 py-2 rounded-lg bg-surface-container-lowest border border-outline-variant text-on-surface-variant font-label-md text-label-md hover:bg-surface-container-low transition-colors shadow-sm"
+              >
+                Cancel
+              </a>
+              <button
+                type="submit"
+                form="profileForm"
+                class="px-6 py-2 rounded-lg bg-primary-container text-white font-label-md text-label-md hover:bg-primary transition-colors shadow-md flex items-center gap-2"
+              >
+                <span class="material-symbols-outlined text-[18px]">save</span>
+                Save Changes
+              </button>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+            <!-- Profile Summary Card (Left Col) -->
+            <div class="lg:col-span-4 space-y-gutter">
+              <div
+                class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0px_1px_3px_rgba(0,0,0,0.1),_0px_1px_2px_rgba(0,0,0,0.06)] p-stack_lg flex flex-col items-center text-center"
+              >
+                <div class="relative mb-6">
+                  <img
+                    class="w-32 h-32 rounded-full object-cover border-4 border-surface shadow-md"
+                    src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuRc90TnGZ-68BvMnZ8gL3-bO-x3tXo5MoZHIa6mVvzw&s=10"      />
+                  <button
+                    class="absolute bottom-0 right-0 p-2 bg-primary-container text-white rounded-full shadow-lg hover:bg-primary transition-colors"
+                  >
+                    <span
+                      class="material-symbols-outlined text-[20px]"
+                      style="font-variation-settings: &quot;FILL&quot; 1"
+                      >photo_camera</span
+                    >
+                  </button>
+                </div>
+                <h3
+                  class="font-headline-sm text-headline-sm text-on-surface mb-1"
+                >
+                  {{ student.FullName }}
+                </h3>
+                <p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                  Student ID:
+                  <span class="font-bold text-on-surface">{{ student.StudentID }}</span>
+                </p>
+                <div
+                  class="w-full space-y-3 mt-4 pt-6 border-t border-surface-variant text-left"
+                >
+                  <div
+                    class="flex justify-between items-center p-3 bg-surface rounded-lg"
+                  >
+                    <div class="flex items-center gap-3 text-on-surface-variant">
+                      <span class="material-symbols-outlined text-[20px]"
+                        >domain</span
+                      >
+                      <span class="font-body-md text-body-md">Faculty</span>
+                    </div>
+                    <span
+                      class="font-body-md text-body-md font-semibold text-on-surface"
+                      >{{ faculty_name or 'N/A' }}</span
+                    >
+                  </div>
+                  <div
+                    class="flex justify-between items-center p-3 bg-surface rounded-lg"
+                  >
+                    <div class="flex items-center gap-3 text-on-surface-variant">
+                      <span class="material-symbols-outlined text-[20px]"
+                        >code</span
+                      >
+                      <span class="font-body-md text-body-md">Major</span>
+                    </div>
+                    <span
+                      class="font-body-md text-body-md font-semibold text-on-surface"
+                      >{{ major_name or 'N/A' }}</span
+                    >
+                  </div>
+                  <div
+                    class="flex justify-between items-center p-3 bg-surface rounded-lg"
+                  >
+                    <div class="flex items-center gap-3 text-on-surface-variant">
+                      <span class="material-symbols-outlined text-[20px]"
+                        >check_circle</span
+                      >
+                      <span class="font-body-md text-body-md">Status</span>
+                    </div>
+                    <span
+                      class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {% if student.Status == 'Studying' %}bg-green-100 text-green-800{% else %}bg-yellow-100 text-yellow-800{% endif %}"
+                    >
+                      {{ student.Status or 'Active' }}
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Personal Information Card (Right Col) -->
+            <div class="lg:col-span-8">
+              <div
+                class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0px_1px_3px_rgba(0,0,0,0.1),_0px_1px_2px_rgba(0,0,0,0.06)] p-stack_lg"
+              >
+                <h3
+                  class="font-headline-sm text-headline-sm text-on-surface mb-6 pb-4 border-b border-surface-variant flex items-center gap-2"
+                >
+                  <span class="material-symbols-outlined text-primary"
+                    >badge</span
+                  >
+                  Personal Information
+                </h3>
+                <form
+                  id="profileForm"
+                  action="/student/profile"
+                  method="POST"
+                  class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6"
+                >
+                  <input type="hidden" name="edit_mode" value="1" />
+                  <!-- Read-only Fields -->
+                  <div class="space-y-2">
+                    <label
+                      class="font-label-md text-label-md text-on-surface-variant block"
+                      >Full Name</label
+                    >
+                    <div
+                      class="px-4 py-2.5 bg-surface-container-low border border-surface-variant rounded-lg font-body-md text-body-md text-on-surface"
+                    >
+                      {{ student.FullName }}
+                    </div>
+                    <input type="hidden" name="full_name" value="{{ student.FullName }}" />
+                  </div>
+                  <div class="space-y-2">
+                    <label
+                      class="font-label-md text-label-md text-on-surface-variant block"
+                      >Student ID</label
+                    >
+                    <div
+                      class="px-4 py-2.5 bg-surface-container-low border border-surface-variant rounded-lg font-body-md text-body-md text-on-surface"
+                    >
+                      {{ student.StudentID }}
+                    </div>
+                    <input type="hidden" name="student_id" value="{{ student.StudentID }}" />
+                  </div>
+                  <div class="space-y-2">
+                    <label
+                      class="font-label-md text-label-md text-on-surface-variant block"
+                      >Citizen ID</label
+                    >
+                    <div
+                      class="px-4 py-2.5 bg-surface-container-low border border-surface-variant rounded-lg font-body-md text-body-md text-on-surface flex items-center justify-between"
+                    >
+                      {{ student.CCCD or 'N/A' }}
+                      <span
+                        class="material-symbols-outlined text-[16px] text-outline"
+                        >lock</span
+                      >
+                    </div>
+                    <input type="hidden" name="citizen_id" value="{{ student.CCCD or '' }}" />
+                  </div>
+                  <div class="space-y-2">
+                    <label
+                      class="font-label-md text-label-md text-on-surface-variant block"
+                      >Date of Birth</label
+                    >
+                    <div
+                      class="px-4 py-2.5 bg-surface-container-low border border-surface-variant rounded-lg font-body-md text-body-md text-on-surface"
+                    >
+                      {{ student.DateOfBirth.strftime('%d/%m/%Y') if student.DateOfBirth else 'N/A' }}
+                    </div>
+                    <input type="hidden" name="dob" value="{{ student.DateOfBirth.strftime('%Y-%m-%d') if student.DateOfBirth else '' }}" />
+                  </div>
+                  <div class="space-y-2">
+                    <label
+                      class="font-label-md text-label-md text-on-surface-variant block"
+                      >Gender</label
+                    >
+                    <div
+                      class="px-4 py-2.5 bg-surface-container-low border border-surface-variant rounded-lg font-body-md text-body-md text-on-surface"
+                    >
+                      {{ student.Gender or 'N/A' }}
+                    </div>
+                    <input type="hidden" name="gender" value="{{ student.Gender or '' }}" />
+                  </div>
+                  <!-- Divider for Editable Fields -->
+                  <div
+                    class="col-span-full my-4 border-t border-surface-variant relative"
+                  >
+                    <span
+                      class="absolute left-0 top-1/2 -translate-y-1/2 bg-surface-container-lowest pr-4 font-label-md text-label-md text-primary"
+                      >Contact Information (Editable)</span
+                    >
+                  </div>
+                  <!-- Editable Fields -->
+                  <div class="space-y-2">
+                    <label
+                      class="font-label-md text-label-md text-on-surface-variant block"
+                      >Phone Number</label
+                    >
+                    <div class="relative">
+                      <div
+                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                      >
+                        <span
+                          class="material-symbols-outlined text-[18px] text-outline"
+                          >call</span
+                        >
+                      </div>
+                      <input
+                        class="pl-10 w-full px-4 py-2.5 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container focus:border-transparent transition-shadow"
+                        type="tel"
+                        name="phone"
+                        id="phone"
+                        value="{{ student.PhoneNumber or '' }}"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div class="space-y-2">
+                    <label
+                      class="font-label-md text-label-md text-on-surface-variant block"
+                      >Personal Email</label
+                    >
+                    <div class="relative">
+                      <div
+                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                      >
+                        <span
+                          class="material-symbols-outlined text-[18px] text-outline"
+                          >mail</span
+                        >
+                      </div>
+                      <input
+                        class="pl-10 w-full px-4 py-2.5 bg-surface-container-lowest border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:ring-2 focus:ring-primary-container focus:border-transparent transition-shadow"
+                        type="email"
+                        name="email"
+                        id="email"
+                        value="{{ student.Email or '' }}"
+                        required
+                      />
+                    </div>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

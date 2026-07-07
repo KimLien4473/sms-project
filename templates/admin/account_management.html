@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+        <title>Account Management</title>
+        <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries">
+        </script>
+        <link
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+        rel="stylesheet" />
+        <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&amp;display=swap"
+        rel="stylesheet" />
+        <script id="tailwind-config">
+            tailwind.config = {
+                darkMode: "class",
+                theme: {
+                    extend: {
+                        colors: {
+                            "surface-container": "#edeef0",
+                            "on-surface": "#191c1e",
+                            tertiary: "#3e3fcc",
+                            "primary-fixed-dim": "#b4c5ff",
+                            "tertiary-fixed-dim": "#c0c1ff",
+                            "surface-container-low": "#f3f4f6",
+                            "inverse-surface": "#2e3132",
+                            "on-tertiary-container": "#f1eeff",
+                            "secondary-fixed": "#d8e3fb",
+                            "surface-container-high": "#e7e8ea",
+                            "secondary-fixed-dim": "#bcc7de",
+                            outline: "#737686",
+                            "inverse-primary": "#b4c5ff",
+                            "surface-bright": "#f8f9fb",
+                            "on-background": "#191c1e",
+                            "on-tertiary": "#ffffff",
+                            "surface-tint": "#0053db",
+                            "error-container": "#ffdad6",
+                            "tertiary-container": "#585be6",
+                            "surface-variant": "#e1e2e4",
+                            "on-error": "#ffffff",
+                            "on-secondary-fixed-variant": "#3c475a",
+                            "outline-variant": "#c3c6d7",
+                            "on-tertiary-fixed": "#07006c",
+                            "on-secondary-fixed": "#111c2d",
+                            "primary-container": "#2563eb",
+                            "surface-dim": "#d9dadc",
+                            "primary-fixed": "#dbe1ff",
+                            "on-primary-fixed-variant": "#003ea8",
+                            "on-secondary-container": "#586377",
+                            primary: "#004ac6",
+                            "surface-container-lowest": "#ffffff",
+                            "on-error-container": "#93000a",
+                            "secondary-container": "#d5e0f8",
+                            "surface-container-highest": "#e1e2e4",
+                            "on-primary": "#ffffff",
+                            "inverse-on-surface": "#f0f1f3",
+                            "on-primary-container": "#eeefff",
+                            "on-secondary": "#ffffff",
+                            error: "#ba1a1a",
+                            "on-primary-fixed": "#00174b",
+                            secondary: "#545f73",
+                            surface: "#f8f9fb",
+                            "on-surface-variant": "#434655",
+                            "on-tertiary-fixed-variant": "#2f2ebe",
+                            background: "#f8f9fb",
+                            "tertiary-fixed": "#e1e0ff",
+                        },
+                        borderRadius: {
+                            DEFAULT: "0.25rem",
+                            lg: "0.5rem",
+                            xl: "0.75rem",
+                            full: "9999px",
+                        },
+                        spacing: {
+                            stack_md: "16px",
+                            container_padding: "32px",
+                            stack_sm: "8px",
+                            sidebar_width: "260px",
+                            gutter: "24px",
+                            topbar_height: "70px",
+                            stack_lg: "24px",
+                        },
+                        fontFamily: {
+                            "body-md": ["Inter"],
+                            "display-lg-mobile": ["Inter"],
+                            "headline-sm": ["Inter"],
+                            code: ["Inter"],
+                            "headline-md": ["Inter"],
+                            "display-lg": ["Inter"],
+                            "body-lg": ["Inter"],
+                            "label-md": ["Inter"],
+                        },
+                        fontSize: {
+                            "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+                            "display-lg-mobile": [
+                                "28px",
+                                {
+                                    lineHeight: "34px",
+                                    letterSpacing: "-0.01em",
+                                    fontWeight: "700",
+                                },
+                            ],
+                            "headline-sm": [
+                                "20px",
+                                { lineHeight: "28px", fontWeight: "600" },
+                            ],
+                            code: ["13px", { lineHeight: "18px", fontWeight: "400" }],
+                            "headline-md": [
+                                "24px",
+                                { lineHeight: "32px", fontWeight: "600" },
+                            ],
+                            "display-lg": [
+                                "36px",
+                                {
+                                    lineHeight: "44px",
+                                    letterSpacing: "-0.02em",
+                                    fontWeight: "700",
+                                },
+                            ],
+                            "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                            "label-md": [
+                                "12px",
+                                {
+                                    lineHeight: "16px",
+                                    letterSpacing: "0.05em",
+                                    fontWeight: "600",
+                                },
+                            ],
+                        },
+                    },
+                },
+            };
+        </script>
+        <style>
+            body {
+                font-family: "Inter", sans-serif;
+                background-color: #f8f9fb;
+            }
+            .material-symbols-outlined {
+                font-variation-settings:
+                    "FILL" 0,
+                    "wght" 400,
+                    "GRAD" 0,
+                    "opsz" 24;
+            }
+            .icon-fill {
+                font-variation-settings: "FILL" 1;
+            }
+            .sidebar-scroll::-webkit-scrollbar {
+                width: 4px;
+            }
+            .sidebar-scroll::-webkit-scrollbar-track {
+                background: transparent;
+            }
+            .sidebar-scroll::-webkit-scrollbar-thumb {
+                background: rgba(255, 255, 255, 0.1);
+                border-radius: 4px;
+            }
+            select.role-select {
+                appearance: auto;
+                -webkit-appearance: auto;
+            }
+            .field-hint {
+                font-size: 12px;
+                color: #737686;
+                margin-top: 4px;
+            }
+            .field-hint.error {
+                color: #ba1a1a;
+            }
+        </style>
+    </head>
+    <body class="text-on-surface bg-background">
+        <!-- SideNavBar -->
+        <nav
+        class="bg-inverse-surface fixed left-0 top-0 h-screen w-[260px] shadow-sm flex flex-col h-full py-6 z-50"
+        >
+        <div class="px-6 mb-8 flex items-center gap-3">
+            <div
+            class="w-10 h-10 rounded-lg bg-surface-container-lowest/10 flex items-center justify-center shrink-0"
+            >
+            <span class="material-symbols-outlined text-white">school</span>
+        </div>
+        <div>
+            <h1
+            class="font-headline-sm text-headline-sm font-bold text-white truncate"
+            title="UNIVERSITY STUDENT MANAGEMENT SYSTEM"
+            >
+            SMS
+        </h1>
+        <p
+        class="font-label-md text-[10px] leading-[14px] text-outline-variant mt-0.5 uppercase tracking-wider"
+        >
+        SMS Administration Portal
+    </p>
+</div>
+</div>
+<div class="flex-1 overflow-y-auto sidebar-scroll px-3 space-y-1 pb-4">
+    <a
+    href="/admin/dashboard"
+    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+    >
+    <span class="material-symbols-outlined">dashboard</span>
+    <span>Dashboard</span>
+</a>
+<a
+href="/admin/account_management"
+class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-white/10 border-l-4 border-white font-body-md text-body-md cursor-pointer duration-200"
+>
+<span class="material-symbols-outlined">manage_accounts</span>
+<span>Account Management</span>
+</a>
+<a
+href="/admin/students"
+class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+>
+<span class="material-symbols-outlined">school</span>
+<span>Student Management</span>
+</a>
+<a
+href="/admin/lecturers"
+class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+>
+<span class="material-symbols-outlined">person_pin</span>
+<span>Lecturer Management</span>
+</a>
+<a
+href="/admin/academic_structure"
+class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+>
+<span class="material-symbols-outlined">account_tree</span>
+<span>Academic Structure Management</span>
+</a>
+<a
+href="/admin/faculties"
+class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+>
+<span class="material-symbols-outlined">account_balance</span>
+<span>Faculty Management</span>
+</a>
+<a
+href="/admin/majors"
+class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+>
+<span class="material-symbols-outlined">domain</span>
+<span>Major Management</span>
+</a>
+<a
+href="/admin/courses"
+class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+>
+<span class="material-symbols-outlined">calendar_month</span>
+<span>Course Management</span>
+</a>
+<a
+href="/admin/statistics"
+class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+>
+<span class="material-symbols-outlined">analytics</span>
+<span>Statistics</span>
+</a>
+<div class="pt-4 mt-4 border-t border-white/10 space-y-1">
+    <a
+    href="/admin/profile"
+    class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+    >
+    <span class="material-symbols-outlined">person</span>
+    <span>Personal Profile</span>
+</a>
+<a
+href="/admin/change_password"
+class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+>
+<span class="material-symbols-outlined">lock</span>
+<span>Change Password</span>
+</a>
+<form action="/admin/logout" method="POST" style="display: inline">
+    <button
+    type="submit"
+    class="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+    >
+    <span class="material-symbols-outlined">logout</span>
+    <span>Logout</span>
+</button>
+</form>
+</div>
+</div>
+</nav>
+
+<!-- TopNavBar -->
+<header
+class="bg-surface-container-lowest fixed top-0 right-0 h-[70px] w-[calc(100%-260px)] border-b border-outline-variant flex items-center px-8 z-40"
+>
+<div class="absolute left-1/2 -translate-x-1/2">
+    <h2
+    class="font-headline-md text-headline-md font-semibold text-on-surface"
+    >
+    System Administration
+</h2>
+</div>
+<div class="flex items-center space-x-4 ml-auto">
+    <div class="h-8 w-px bg-surface-variant mx-2"></div>
+    <a
+    href="/admin/profile"
+    class="flex items-center gap-3 hover:bg-surface-container-high p-1.5 rounded-lg transition-all"
+    >
+    <img
+    alt="User Avatar"
+    class="w-8 h-8 rounded-full object-cover border border-surface-variant"
+    src="https://media.voguearabia.com/photos/6901d8920dcba278cec778cc/2:3/w_2560%2Cc_limit/HO25_TALENT_CKJ_M_90S_TRKR_600GRACoL_7042x9893_sRGB_Hi_Res.jpg"
+    />
+    <div class="text-left hidden md:block">
+        <p
+        class="font-body-md text-body-md text-on-surface font-semibold leading-tight"
+        >
+        {{ user_name }}
+    </p>
+    <p class="font-label-md text-label-md text-on-surface-variant">
+        System Administrator
+    </p>
+</div>
+</a>
+</div>
+</header>
+
+<!-- Main Content -->
+<main
+class="ml-[260px] mt-[70px] p-container_padding min-h-[calc(100vh-70px)] bg-background"
+>
+<!-- Flash Messages -->
+{% with messages = get_flashed_messages(with_categories=true) %}
+  {% if messages %}
+    <div class="mb-4 space-y-2">
+      {% for category, message in messages %}
+        <div class="p-3 rounded-lg border {% if category == 'ok' %}bg-green-50 border-green-200 text-green-800{% elif category == 'err' %}bg-red-50 border-red-200 text-red-800{% else %}bg-blue-50 border-blue-200 text-blue-800{% endif %}">
+          {{ message }}
+        </div>
+      {% endfor %}
+    </div>
+  {% endif %}
+{% endwith %}
+<div class="max-w-7xl mx-auto">
+    <!-- Header Section -->
+    <div
+    class="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-8"
+    >
+    <div>
+        <h2 class="font-display-lg text-display-lg text-on-surface">
+            Account Management
+        </h2>
+        <p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            Manage system access, roles, and user statuses securely.
+        </p>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+        <button
+        class="flex items-center gap-2 bg-primary-container text-white px-5 py-2 rounded-lg font-label-md text-label-md hover:bg-primary transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
+        data-bs-toggle="modal"
+        data-bs-target="#createAccountModal"
+        >
+        <span class="material-symbols-outlined text-[18px]">add</span>
+        Create Account
+    </button>
+</div>
+</div>
+
+<!-- Data Table Card -->
+<div
+class="bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden shadow-[0_1px_3px_rgba(0,0,0,0.05)]"
+>
+<!-- Table Filter/Search Bar -->
+<div
+class="p-4 border-b border-outline-variant bg-surface-container-lowest flex flex-wrap items-center gap-3"
+>
+<form
+method="GET"
+action="/admin/account_management"
+class="flex flex-wrap items-center gap-3 w-full"
+>
+<div class="relative w-[800px] flex-shrink-0">
+    <span
+    class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[18px]"
+    >search</span
+    >
+    <input
+    type="text"
+    name="q"
+    value="{{ search }}"
+    class="w-full pl-9 pr-4 py-2 bg-surface border border-outline-variant rounded-lg font-body-md text-body-md text-on-surface focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+    placeholder="Search by username..."
+    />
+</div>
+
+<select
+name="role"
+class=" py-2 pl-4 pr-9 min-w-[150px] border border-outline-variant rounded-lg bg-surface text-on-surface font-body-md focus:outline-none focus:border-primary focus:ring-1 focus:ring-primary transition-colors"
+>
+<option value="">All Roles</option>
+<option value="admin" {% if role_filter == 'admin' %}selected{% endif %}>Admin</option>
+<option value="lecturer" {% if role_filter == 'lecturer' %}selected{% endif %}>Lecturer</option>
+<option value="student" {% if role_filter == 'student' %}selected{% endif %}>Student</option>
+</select>
+
+<button
+type="submit"
+class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+>
+Search
+</button>
+<a
+href="/admin/account_management"
+class="px-3 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors"
+>
+Clear
+</a>
+</form>
+</div>
+
+<div class="overflow-x-auto">
+    <table class="w-full text-left border-collapse">
+        <thead>
+            <tr
+            class="bg-surface-container-low border-b border-outline-variant"
+            >
+            <th
+            class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+            >
+            Username
+        </th>
+        <th
+        class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+        >
+        Role
+    </th>
+    <th
+    class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+    >
+    Status
+</th>
+<th
+class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+>
+Last Login
+</th>
+<th
+class="px-6 py-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right"
+>
+Actions
+</th>
+</tr>
+</thead>
+<tbody
+class="bg-surface-container-lowest divide-y divide-outline-variant"
+>
+{% for account in accounts %}
+<tr class="hover:bg-surface-bright transition-colors group">
+    <td class="px-6 py-4 whitespace-nowrap">
+        <div class="flex items-center gap-3">
+            <div
+            class="w-8 h-8 rounded bg-primary-fixed flex items-center justify-center text-on-primary-fixed font-label-md font-bold"
+            >
+            {{ account.username[:2].upper() }}
+        </div>
+        <div>
+            <div
+            class="font-body-md text-body-md font-medium text-on-surface"
+            >
+            {{ account.username }}
+        </div>
+        <div
+        class="font-code text-code text-on-surface-variant"
+        >
+        ID: {{ account.account_id or account.username|upper }}
+    </div>
+</div>
+</div>
+</td>
+<td
+class="px-6 py-4 whitespace-nowrap font-body-md text-body-md text-on-surface-variant"
+>
+{{ account.role or 'User' }}
+</td>
+<td class="px-6 py-4 whitespace-nowrap">
+    {% if account.status == 'Active' %}
+    <span
+    class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-primary-fixed text-on-primary-fixed-variant"
+    >
+    Active
+</span>
+{% else %}
+<span
+class="inline-flex items-center px-2.5 py-1 rounded-full text-xs font-medium bg-error-container text-on-error-container"
+>
+Locked
+</span>
+{% endif %}
+</td>
+<td
+class="px-6 py-4 whitespace-nowrap font-body-md text-body-md text-on-surface-variant"
+>
+{{ account.last_login or 'Never' }}
+</td>
+<td class="px-6 py-4 whitespace-nowrap text-right">
+    <div class="flex items-center justify-end gap-2">
+        <!-- Edit button -->
+        <button
+        class="p-1 text-secondary hover:bg-secondary/10 rounded transition-colors edit-btn"
+        data-account-id="{{ account.account_id }}"
+        data-username="{{ account.username }}"
+        data-role="{{ account.role }}"
+        data-phone="{{ account.phone or '' }}"
+        data-student-id="{{ account.student_id or '' }}"
+        data-lecturer-id="{{ account.lecturer_id or '' }}"
+        title="Edit Account"
+        >
+        <span class="material-symbols-outlined text-[20px]">edit</span>
+        </button>
+
+        {% if account.status == 'Active' %}
+        <!-- Lock button: màu đỏ, icon lock -->
+        <button
+        class="p-1 text-error hover:bg-error/10 rounded transition-colors lock-btn"
+        data-username="{{ account.username }}"
+        data-status="active"
+        title="Lock Account"
+        >
+        <span class="material-symbols-outlined text-[20px]">lock</span>
+        </button>
+        {% else %}
+        <!-- Unlock button: màu xanh, icon key -->
+        <button
+        class="p-1 text-primary hover:bg-primary/10 rounded transition-colors unlock-btn"
+        data-username="{{ account.username }}"
+        data-status="locked"
+        title="Unlock Account"
+        >
+        <span class="material-symbols-outlined text-[20px]">key</span>
+        </button>
+        {% endif %}
+
+        <!-- Reset Password: icon lock_reset màu đỏ -->
+        <button
+        class="p-1 text-error hover:bg-error/10 rounded transition-colors reset-btn"
+        data-username="{{ account.username }}"
+        title="Reset Password"
+        >
+        <span class="material-symbols-outlined text-[20px]">lock_reset</span>
+        </button>
+    </div>
+</td>
+</tr>
+{% endfor %}
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</main>
+
+<!-- ===== MODAL: Create Account ===== -->
+<div
+class="fixed inset-0 z-50 flex items-center justify-center hidden"
+id="createAccountModal"
+>
+<div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+<div class="relative bg-white rounded-xl shadow-lg max-w-md w-full p-6">
+    <div class="flex justify-between items-center mb-4">
+        <h3 class="font-headline-sm text-headline-sm text-on-surface">
+            Create Account
+        </h3>
+        <button
+        class="text-on-surface-variant hover:text-on-surface"
+        onclick="document.getElementById('createAccountModal').classList.add('hidden')"
+        >
+        <span class="material-symbols-outlined">close</span>
+    </button>
+</div>
+
+<form action="/admin/account_management/create" method="POST" id="createAccountForm" novalidate>
+    <div class="space-y-4">
+        <div>
+            <label class="font-label-md text-label-md text-on-surface-variant">Role *</label>
+            <select name="role" id="createRole" required class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50">
+                <option value="admin">Admin</option>
+                <option value="lecturer">Lecturer</option>
+                <option value="student">Student</option>
+            </select>
+        </div>
+        <div id="usernameGroup">
+            <label class="font-label-md text-label-md text-on-surface-variant">Username *</label>
+            <input type="text" name="username" id="createUsername" class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50" placeholder="Nhập tên đăng nhập" />
+            <div class="field-hint">Tên đăng nhập duy nhất cho Admin.</div>
+        </div>
+        <div id="studentIdGroup" style="display:none;">
+            <label class="font-label-md text-label-md text-on-surface-variant">Student ID *</label>
+            <input type="text" name="student_id" id="createStudentId" class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50" placeholder="VD: SV001" pattern="^SV.*" title="Student ID phải bắt đầu bằng 'SV'" />
+            <div class="field-hint">Phải bắt đầu bằng <strong>SV</strong> (ví dụ: SV001).</div>
+        </div>
+        <div id="lecturerIdGroup" style="display:none;">
+            <label class="font-label-md text-label-md text-on-surface-variant">Lecturer ID *</label>
+            <input type="text" name="lecturer_id" id="createLecturerId" class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50" placeholder="VD: GV001" pattern="^GV.*" title="Lecturer ID phải bắt đầu bằng 'GV'" />
+            <div class="field-hint">Phải bắt đầu bằng <strong>GV</strong> (ví dụ: GV001).</div>
+        </div>
+        <div>
+            <label class="font-label-md text-label-md text-on-surface-variant">Phone</label>
+            <input type="tel" name="phone" id="createPhone" class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50" placeholder="Số điện thoại (tối đa 20 số)" pattern="^\+?[0-9]{1,20}$" maxlength="20" title="Chỉ nhập số, có thể bắt đầu bằng +, tối đa 20 ký tự" />
+            <div class="field-hint">Chỉ nhập số, có thể có dấu + ở đầu, tối đa 20 ký tự.</div>
+        </div>
+        <div class="bg-surface-container-low rounded-lg p-3 text-sm text-on-surface-variant">
+            <span class="material-symbols-outlined text-[18px] align-middle">info</span>
+            Mật khẩu mặc định khi tạo là <strong>123</strong>. Người dùng sẽ được yêu cầu đổi sau khi đăng nhập lần đầu.
+        </div>
+    </div>
+    <div class="mt-6 flex justify-end gap-3">
+        <button type="button" class="px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low" onclick="document.getElementById('createAccountModal').classList.add('hidden')">Cancel</button>
+        <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">Create</button>
+    </div>
+</form>
+</div>
+</div>
+
+<!-- ===== MODAL: Edit Account ===== -->
+<div class="fixed inset-0 z-50 flex items-center justify-center hidden" id="editModal">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="relative bg-white rounded-xl shadow-lg max-w-md w-full p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">Edit Account</h3>
+            <button class="text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('editModal').classList.add('hidden')">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <form action="/admin/account_management/update" method="POST" id="editAccountForm">
+            <input type="hidden" name="account_id" id="editAccountId" />
+            <div class="space-y-4">
+                <div>
+                    <label class="font-label-md text-label-md text-on-surface-variant">Role *</label>
+                    <select name="role" id="editRole" required class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50">
+                        <option value="admin">Admin</option>
+                        <option value="lecturer">Lecturer</option>
+                        <option value="student">Student</option>
+                    </select>
+                </div>
+                <div id="editUsernameGroup">
+                    <label class="font-label-md text-label-md text-on-surface-variant">Username *</label>
+                    <input type="text" name="username" id="editUsername" class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50" placeholder="Nhập tên đăng nhập" />
+                    <div class="field-hint">Tên đăng nhập duy nhất cho Admin.</div>
+                </div>
+                <div id="editStudentIdGroup" style="display:none;">
+                    <label class="font-label-md text-label-md text-on-surface-variant">Student ID *</label>
+                    <input type="text" name="student_id" id="editStudentId" class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50" placeholder="VD: SV001" pattern="^SV.*" />
+                    <div class="field-hint">Phải bắt đầu bằng <strong>SV</strong> (ví dụ: SV001).</div>
+                </div>
+                <div id="editLecturerIdGroup" style="display:none;">
+                    <label class="font-label-md text-label-md text-on-surface-variant">Lecturer ID *</label>
+                    <input type="text" name="lecturer_id" id="editLecturerId" class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50" placeholder="VD: GV001" pattern="^GV.*" />
+                    <div class="field-hint">Phải bắt đầu bằng <strong>GV</strong> (ví dụ: GV001).</div>
+                </div>
+                <div>
+                    <label class="font-label-md text-label-md text-on-surface-variant">Phone</label>
+                    <input type="tel" name="phone" id="editPhone" class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50" placeholder="Số điện thoại (tối đa 20 số)" pattern="^\+?[0-9]{1,20}$" maxlength="20" />
+                    <div class="field-hint">Chỉ nhập số, có thể có dấu + ở đầu, tối đa 20 ký tự.</div>
+                </div>
+            </div>
+            <div class="mt-6 flex justify-end gap-3">
+                <button type="button" class="px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low" onclick="document.getElementById('editModal').classList.add('hidden')">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ===== MODAL: Lock/Unlock ===== -->
+<div class="fixed inset-0 z-50 flex items-center justify-center hidden" id="lockModal">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="relative bg-white rounded-xl shadow-lg max-w-md w-full p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-headline-sm text-headline-sm text-on-surface"><span id="lockModalTitle">Lock</span> Account</h3>
+            <button class="text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('lockModal').classList.add('hidden')">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <p class="text-on-surface-variant mb-4">
+            Are you sure you want to <span id="lockModalAction">lock</span> the account <strong id="lockModalUsername"></strong>?
+        </p>
+        <form action="/admin/account_management/toggle_status" method="POST">
+            <input type="hidden" name="username" id="lockModalInput" />
+            <div class="mt-6 flex justify-end gap-3">
+                <button type="button" class="px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low" onclick="document.getElementById('lockModal').classList.add('hidden')">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90">Confirm</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- ===== MODAL: Reset Password ===== -->
+<div class="fixed inset-0 z-50 flex items-center justify-center hidden" id="resetModal">
+    <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+    <div class="relative bg-white rounded-xl shadow-lg max-w-md w-full p-6">
+        <div class="flex justify-between items-center mb-4">
+            <h3 class="font-headline-sm text-headline-sm text-on-surface">Reset Password</h3>
+            <button class="text-on-surface-variant hover:text-on-surface" onclick="document.getElementById('resetModal').classList.add('hidden')">
+                <span class="material-symbols-outlined">close</span>
+            </button>
+        </div>
+        <p class="text-on-surface-variant mb-4">
+            Reset password for account <strong id="resetModalUsername"></strong>? New password will be sent to the user.
+        </p>
+        <form action="/admin/account_management/resetpassword" method="POST">
+            <input type="hidden" name="username" id="resetModalInput" />
+            <div class="mt-6 flex justify-end gap-3">
+                <button type="button" class="px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low" onclick="document.getElementById('resetModal').classList.add('hidden')">Cancel</button>
+                <button type="submit" class="px-4 py-2 bg-error text-white rounded-lg hover:bg-error/90">Reset</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+    // ===== LOCK/UNLOCK MODAL =====
+    document.querySelectorAll(".lock-btn, .unlock-btn").forEach((btn) => {
+        btn.addEventListener("click", function(e) {
+            const username = this.dataset.username;
+            const status = this.dataset.status;
+            const isLock = status === "active";
+            document.getElementById("lockModalTitle").textContent = isLock ? "Lock" : "Unlock";
+            document.getElementById("lockModalAction").textContent = isLock ? "lock" : "unlock";
+            document.getElementById("lockModalUsername").textContent = username;
+            document.getElementById("lockModalInput").value = username;
+            document.getElementById("lockModal").classList.remove('hidden');
+        });
+    });
+
+    // ===== RESET MODAL =====
+    document.querySelectorAll(".reset-btn").forEach((btn) => {
+        btn.addEventListener("click", function() {
+            const username = this.dataset.username;
+            document.getElementById("resetModalUsername").textContent = username;
+            document.getElementById("resetModalInput").value = username;
+            document.getElementById("resetModal").classList.remove('hidden');
+        });
+    });
+
+    // ===== EDIT MODAL =====
+    document.querySelectorAll(".edit-btn").forEach((btn) => {
+        btn.addEventListener("click", function() {
+            const accountId = this.dataset.accountId;
+            const username = this.dataset.username;
+            const role = this.dataset.role;
+            const phone = this.dataset.phone;
+            const studentId = this.dataset.studentId || '';
+            const lecturerId = this.dataset.lecturerId || '';
+
+            document.getElementById("editAccountId").value = accountId;
+            document.getElementById("editUsername").value = username;
+            document.getElementById("editPhone").value = phone;
+            document.getElementById("editStudentId").value = studentId;
+            document.getElementById("editLecturerId").value = lecturerId;
+
+            // Set role và trigger toggle
+            const roleSelect = document.getElementById("editRole");
+            roleSelect.value = role;
+            toggleEditFields(role);
+
+            document.getElementById("editModal").classList.remove('hidden');
+        });
+    });
+
+    function toggleEditFields(role) {
+        const usernameGroup = document.getElementById('editUsernameGroup');
+        const studentGroup = document.getElementById('editStudentIdGroup');
+        const lecturerGroup = document.getElementById('editLecturerIdGroup');
+        const usernameInput = document.getElementById('editUsername');
+        const studentInput = document.getElementById('editStudentId');
+        const lecturerInput = document.getElementById('editLecturerId');
+
+        usernameGroup.style.display = 'none';
+        studentGroup.style.display = 'none';
+        lecturerGroup.style.display = 'none';
+        usernameInput.removeAttribute('required');
+        studentInput.removeAttribute('required');
+        lecturerInput.removeAttribute('required');
+
+        if (role === 'admin') {
+            usernameGroup.style.display = 'block';
+            usernameInput.setAttribute('required', 'required');
+        } else if (role === 'student') {
+            studentGroup.style.display = 'block';
+            studentInput.setAttribute('required', 'required');
+        } else if (role === 'lecturer') {
+            lecturerGroup.style.display = 'block';
+            lecturerInput.setAttribute('required', 'required');
+        }
+    }
+
+    // Lắng nghe sự kiện change trên role trong edit modal
+    document.getElementById("editRole").addEventListener("change", function() {
+        toggleEditFields(this.value);
+    });
+
+    // ===== CREATE MODAL TOGGLE FIELDS =====
+    document.addEventListener('DOMContentLoaded', function() {
+        const createRole = document.getElementById('createRole');
+        const usernameGroup = document.getElementById('usernameGroup');
+        const studentGroup = document.getElementById('studentIdGroup');
+        const lecturerGroup = document.getElementById('lecturerIdGroup');
+        const usernameInput = document.getElementById('createUsername');
+        const studentInput = document.getElementById('createStudentId');
+        const lecturerInput = document.getElementById('createLecturerId');
+
+        function toggleCreateFields() {
+            const role = createRole.value;
+            usernameGroup.style.display = 'none';
+            studentGroup.style.display = 'none';
+            lecturerGroup.style.display = 'none';
+            usernameInput.removeAttribute('required');
+            studentInput.removeAttribute('required');
+            lecturerInput.removeAttribute('required');
+
+            if (role === 'admin') {
+                usernameGroup.style.display = 'block';
+                usernameInput.setAttribute('required', 'required');
+            } else if (role === 'student') {
+                studentGroup.style.display = 'block';
+                studentInput.setAttribute('required', 'required');
+            } else if (role === 'lecturer') {
+                lecturerGroup.style.display = 'block';
+                lecturerInput.setAttribute('required', 'required');
+            }
+        }
+
+        createRole.addEventListener('change', toggleCreateFields);
+        toggleCreateFields();
+
+        // Mở/đóng modal Create
+        const createBtn = document.querySelector('[data-bs-target="#createAccountModal"]');
+        const createModal = document.getElementById('createAccountModal');
+        const closeBtns = createModal.querySelectorAll('[onclick*="hidden"]');
+
+        createBtn.addEventListener('click', function() {
+            createModal.classList.remove('hidden');
+        });
+
+        closeBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                createModal.classList.add('hidden');
+            });
+        });
+
+        createModal.querySelector('.absolute.inset-0.bg-black').addEventListener('click', function() {
+            createModal.classList.add('hidden');
+        });
+
+        // Đóng modal Edit khi click bên ngoài
+        const editModal = document.getElementById('editModal');
+        editModal.querySelector('.absolute.inset-0.bg-black').addEventListener('click', function() {
+            editModal.classList.add('hidden');
+        });
+
+        // Đóng modal Lock và Reset khi click bên ngoài
+        document.querySelectorAll('#lockModal .absolute.inset-0.bg-black, #resetModal .absolute.inset-0.bg-black').forEach(el => {
+            el.addEventListener('click', function() {
+                this.closest('.fixed.inset-0').classList.add('hidden');
+            });
+        });
+
+        // Validate form create
+        document.getElementById('createAccountForm').addEventListener('submit', function(e) {
+            const role = createRole.value;
+            let error = false;
+
+            if (role === 'admin') {
+                const val = usernameInput.value.trim();
+                if (!val) { alert('Vui lòng nhập Username.'); error = true; }
+            } else if (role === 'student') {
+                const val = studentInput.value.trim();
+                if (!val) { alert('Vui lòng nhập Student ID.'); error = true; }
+                else if (!val.startsWith('SV')) { alert('Student ID phải bắt đầu bằng "SV".'); error = true; }
+            } else if (role === 'lecturer') {
+                const val = lecturerInput.value.trim();
+                if (!val) { alert('Vui lòng nhập Lecturer ID.'); error = true; }
+                else if (!val.startsWith('GV')) { alert('Lecturer ID phải bắt đầu bằng "GV".'); error = true; }
+            }
+
+            const phone = document.getElementById('createPhone').value.trim();
+            if (phone && !/^\+?[0-9]{1,20}$/.test(phone)) {
+                alert('Số điện thoại không hợp lệ.');
+                error = true;
+            }
+
+            if (error) e.preventDefault();
+        });
+    });
+</script>
+</body>
+</html>

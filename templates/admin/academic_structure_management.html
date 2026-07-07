@@ -1,0 +1,1063 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Academic Structure Management - SMS</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#edeef0",
+              "on-surface": "#191c1e",
+              tertiary: "#3e3fcc",
+              "primary-fixed-dim": "#b4c5ff",
+              "tertiary-fixed-dim": "#c0c1ff",
+              "surface-container-low": "#f3f4f6",
+              "inverse-surface": "#2e3132",
+              "on-tertiary-container": "#f1eeff",
+              "secondary-fixed": "#d8e3fb",
+              "surface-container-high": "#e7e8ea",
+              "secondary-fixed-dim": "#bcc7de",
+              outline: "#737686",
+              "inverse-primary": "#b4c5ff",
+              "surface-bright": "#f8f9fb",
+              "on-background": "#191c1e",
+              "on-tertiary": "#ffffff",
+              "surface-tint": "#0053db",
+              "error-container": "#ffdad6",
+              "tertiary-container": "#585be6",
+              "surface-variant": "#e1e2e4",
+              "on-error": "#ffffff",
+              "on-secondary-fixed-variant": "#3c475a",
+              "outline-variant": "#c3c6d7",
+              "on-tertiary-fixed": "#07006c",
+              "on-secondary-fixed": "#111c2d",
+              "primary-container": "#2563eb",
+              "surface-dim": "#d9dadc",
+              "primary-fixed": "#dbe1ff",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-secondary-container": "#586377",
+              primary: "#004ac6",
+              "surface-container-lowest": "#ffffff",
+              "on-error-container": "#93000a",
+              "secondary-container": "#d5e0f8",
+              "surface-container-highest": "#e1e2e4",
+              "on-primary": "#ffffff",
+              "inverse-on-surface": "#f0f1f3",
+              "on-primary-container": "#eeefff",
+              "on-secondary": "#ffffff",
+              error: "#ba1a1a",
+              "on-primary-fixed": "#00174b",
+              secondary: "#545f73",
+              surface: "#f8f9fb",
+              "on-surface-variant": "#434655",
+              "on-tertiary-fixed-variant": "#2f2ebe",
+              background: "#f8f9fb",
+              "tertiary-fixed": "#e1e0ff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              stack_md: "16px",
+              container_padding: "32px",
+              stack_sm: "8px",
+              sidebar_width: "260px",
+              gutter: "24px",
+              topbar_height: "70px",
+              stack_lg: "24px",
+            },
+            fontFamily: {
+              "body-md": ["Inter"],
+              "display-lg-mobile": ["Inter"],
+              "headline-sm": ["Inter"],
+              code: ["Inter"],
+              "headline-md": ["Inter"],
+              "display-lg": ["Inter"],
+              "body-lg": ["Inter"],
+              "label-md": ["Inter"],
+            },
+            fontSize: {
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "display-lg-mobile": [
+                "28px",
+                {
+                  lineHeight: "34px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-sm": [
+                "20px",
+                { lineHeight: "28px", fontWeight: "600" },
+              ],
+              code: ["13px", { lineHeight: "18px", fontWeight: "400" }],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "display-lg": [
+                "36px",
+                {
+                  lineHeight: "44px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8f9fb;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .icon-fill {
+        font-variation-settings: "FILL" 1;
+      }
+      .sidebar-scroll::-webkit-scrollbar {
+        width: 4px;
+      }
+      .sidebar-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .sidebar-scroll::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+      }
+      .tab-btn.active {
+        background-color: #ffffff;
+        border-bottom: 2px solid #2563eb;
+        color: #1e293b;
+      }
+      .tab-btn {
+        background-color: transparent;
+        border-bottom: 2px solid transparent;
+        color: #64748b;
+        transition: all 0.2s;
+      }
+      .tab-btn:hover {
+        background-color: #f1f5f9;
+        color: #1e293b;
+      }
+    </style>
+  </head>
+  <body class="text-on-surface bg-background">
+    <nav
+      class="bg-inverse-surface fixed left-0 top-0 h-screen w-[260px] shadow-sm flex flex-col h-full py-6 z-50"
+    >
+      <div class="px-6 mb-8 flex items-center gap-3">
+        <div
+          class="w-10 h-10 rounded-lg bg-surface-container-lowest/10 flex items-center justify-center shrink-0"
+        >
+          <span class="material-symbols-outlined text-white">school</span>
+        </div>
+        <div>
+          <h1
+            class="font-headline-sm text-headline-sm font-bold text-white truncate"
+            title="UNIVERSITY STUDENT MANAGEMENT SYSTEM"
+          >
+            SMS
+          </h1>
+          <p
+            class="font-label-md text-[10px] leading-[14px] text-outline-variant mt-0.5 uppercase tracking-wider"
+          >
+            SMS Administration Portal
+          </p>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto sidebar-scroll px-3 space-y-1 pb-4">
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/dashboard"
+          ><span class="material-symbols-outlined">dashboard</span>Dashboard</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/account_management"
+          ><span class="material-symbols-outlined">manage_accounts</span>Account
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/students"
+          ><span class="material-symbols-outlined">school</span>Student
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/lecturers"
+          ><span class="material-symbols-outlined">person_pin</span>Lecturer
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-white/10 border-l-4 border-white font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/academic_structure"
+          ><span class="material-symbols-outlined">account_tree</span>Academic
+          Structure Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/faculties"
+          ><span class="material-symbols-outlined">account_balance</span>Faculty
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/majors"
+          ><span class="material-symbols-outlined">domain</span>Major
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/courses"
+          ><span class="material-symbols-outlined">calendar_month</span>Course
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/statistics"
+          ><span class="material-symbols-outlined">analytics</span>Statistics</a
+        >
+        <div class="pt-4 mt-4 border-t border-white/10 space-y-1">
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+            href="/admin/profile"
+            ><span class="material-symbols-outlined">person</span>Personal
+            Profile</a
+          >
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+            href="/admin/change_password"
+            ><span class="material-symbols-outlined">lock</span>Change
+            Password</a
+          >
+          <form action="/admin/logout" method="POST" style="display: inline">
+            <button
+              type="submit"
+              class="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+            >
+              <span class="material-symbols-outlined">logout</span>
+              <span>Logout</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+<header
+  class="bg-surface-container-lowest fixed top-0 right-0 h-[70px] w-[calc(100%-260px)] border-b border-outline-variant flex items-center px-8 z-40"
+>
+  <div class="absolute left-1/2 -translate-x-1/2">
+    <h2 class="font-headline-md text-headline-md font-semibold text-on-surface">
+      Academic Structure Management
+    </h2>
+  </div>
+  <div class="flex items-center ml-auto">
+    <a
+      href="/admin/profile"
+      class="flex items-center gap-3 hover:bg-surface-container-high p-1.5 rounded-lg transition-all"
+    >
+      <img
+        alt="User Avatar"
+        class="w-8 h-8 rounded-full object-cover border border-surface-variant"
+        src="https://media.voguearabia.com/photos/6901d8920dcba278cec778cc/2:3/w_2560%2Cc_limit/HO25_TALENT_CKJ_M_90S_TRKR_600GRACoL_7042x9893_sRGB_Hi_Res.jpg"
+      />
+      <div class="text-left hidden md:block">
+        <p class="font-body-md text-body-md text-on-surface font-semibold leading-tight">
+          Admin User
+        </p>
+        <p class="font-label-md text-label-md text-on-surface-variant">
+          System Administrator
+        </p>
+      </div>
+    </a>
+  </div>
+</header>
+
+    <main
+      class="ml-[260px] mt-[70px] p-container_padding min-h-[calc(100vh-70px)] bg-background"
+    >
+      <div class="max-w-7xl mx-auto">
+        <div
+          class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-stack_lg"
+        >
+          <div>
+            <h2 class="font-display-lg text-display-lg text-on-surface">
+              Academic Structure Management
+            </h2>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-1">
+              Manage homeroom classes and course sections across departments.
+            </p>
+          </div>
+          <div class="flex flex-wrap gap-3">
+            <button
+              class="flex items-center gap-2 bg-primary-container text-white px-5 py-2.5 rounded-lg font-label-md text-label-md hover:bg-primary transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
+              id="addBtn"
+            >
+              <span class="material-symbols-outlined text-[18px]">add</span>
+              Create New
+            </button>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 xl:grid-cols-3 gap-gutter">
+          <div class="xl:col-span-1 flex flex-col gap-gutter flex-initial">
+            <div
+              class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-[0px_1px_2px_rgba(0,0,0,0.06)] flex items-center gap-4 hover:shadow-md transition-shadow"
+            >
+              <div
+                class="w-12 h-12 rounded-full bg-secondary-container flex items-center justify-center text-primary-fixed-variant shrink-0"
+              >
+                <span class="material-symbols-outlined icon-fill text-[24px]"
+                  >groups</span
+                >
+              </div>
+              <div>
+                <p
+                  class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-1"
+                >
+                  Total Homerooms
+                </p>
+                <p
+                  id="total-homerooms"
+                  class="font-display-lg text-display-lg text-on-surface"
+                >
+                  {{ homerooms|length }}
+                </p>
+              </div>
+            </div>
+            <div
+              class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-[0px_1px_2px_rgba(0,0,0,0.06)] flex items-center gap-4 hover:shadow-md transition-shadow"
+            >
+              <div
+                class="w-12 h-12 rounded-full bg-tertiary-container/20 flex items-center justify-center text-tertiary shrink-0"
+              >
+                <span class="material-symbols-outlined icon-fill text-[24px]"
+                  >school</span
+                >
+              </div>
+              <div>
+                <p
+                  class="font-label-md text-label-md text-on-surface-variant uppercase tracking-wider mb-1"
+                >
+                  Active Course Sections
+                </p>
+                <p
+                  id="total-sections"
+                  class="font-display-lg text-display-lg text-on-surface"
+                >
+                  {{ course_sections|length }}
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="xl:col-span-2 flex flex-col gap-gutter h-full">
+            <div
+              class="bg-surface-container-lowest border-b border-outline-variant rounded-t-xl px-2 pt-2 flex gap-2"
+            >
+              <button
+                class="tab-btn active px-6 py-3 font-label-md text-label-md rounded-t-lg transition-colors"
+                id="tabHomeroom"
+                onclick="switchTab('homeroom')"
+              >
+                Homeroom Classes
+              </button>
+              <button
+                class="tab-btn px-6 py-3 font-label-md text-label-md rounded-t-lg transition-colors"
+                id="tabCourseSection"
+                onclick="switchTab('course_section')"
+              >
+                Course Sections
+              </button>
+            </div>
+            <div
+              class="bg-surface-container-lowest rounded-b-xl border border-t-0 border-outline-variant shadow-[0px_1px_2px_rgba(0,0,0,0.06)] flex-1 flex flex-col overflow-hidden pt-4"
+            >
+              <!-- ĐÃ XÓA BLOCK CHỨA THANH TÌM KIẾM VÀ NÚT LỌC Ở ĐÂY THEO YÊU CẦU -->
+              <div class="overflow-x-auto flex-1">
+                <table
+                  id="homeroomTable"
+                  class="w-full text-left border-collapse"
+                >
+                  <thead>
+                    <tr
+                      class="bg-surface-container-low border-b border-outline-variant"
+                    >
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                      >
+                        Class Code
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                      >
+                        Class Name
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                      >
+                        Advisor
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right"
+                      >
+                        Student Count
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-center"
+                      >
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-outline-variant">
+                    {% for homeroom in homerooms %}
+                    <tr
+                      class="hover:bg-surface-container-low transition-colors group"
+                    >
+                      <td class="py-3 px-4 font-code font-medium text-primary">
+                        {{ homeroom.ClassID }}
+                      </td>
+                      <td class="py-3 px-4">{{ homeroom.ClassName }}</td>
+                      <td class="py-3 px-4">
+                        <div class="flex items-center gap-2">
+                          <div
+                            class="w-6 h-6 rounded-full bg-tertiary-container text-white flex items-center justify-center text-xs font-bold"
+                          >
+                            {{ homeroom.AdvisorName[:1].upper() if
+                            homeroom.AdvisorName else '?' }}
+                          </div>
+                          <span class=""
+                            >{{ homeroom.AdvisorName or 'N/A' }}</span
+                          >
+                        </div>
+                      </td>
+                      <td class="py-3 px-4 text-right">
+                        {{ homeroom.StudentCount or 0 }}
+                      </td>
+                      <td class="py-3 px-4 text-center">
+                        <div class="flex items-center justify-center gap-2">
+                          <button
+                            type="button"
+                            class="text-outline hover:text-primary transition-colors edit-homeroom-btn"
+                            onclick="openEditHomeroom(this)"
+                            data-code="{{ homeroom.ClassID }}"
+                            data-name="{{ homeroom.ClassName }}"
+                            data-lecturer-id="{{ homeroom.HomeroomLecturerID or '' }}"
+                            data-capacity="{{ homeroom.MaxSize or '' }}"
+                            data-academic-year="{{ homeroom.AcademicYear or '' }}"
+                            data-semester="{{ homeroom.Semester or '' }}"
+                          >
+                            <span class="material-symbols-outlined text-[20px]"
+                              >edit</span
+                            >
+                          </button>
+                          <button
+                            type="button"
+                            class="text-outline hover:text-error transition-colors delete-btn"
+                            onclick="openDeleteItem('homeroom', this)"
+                            data-code="{{ homeroom.ClassID }}"
+                            data-name="{{ homeroom.ClassName or homeroom.ClassID }}"
+                          >
+                            <span class="material-symbols-outlined text-[20px]"
+                              >delete</span
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                      <td
+                        colspan="5"
+                        class="py-8 text-center text-on-surface-variant"
+                      >
+                        No homeroom classes found.
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+                <table
+                  id="courseSectionTable"
+                  class="w-full text-left border-collapse hidden"
+                >
+                  <thead>
+                    <tr
+                      class="bg-surface-container-low border-b border-outline-variant"
+                    >
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                      >
+                        Section Code
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                      >
+                        Course
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                      >
+                        Lecturer
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                      >
+                        Semester
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right"
+                      >
+                        Capacity
+                      </th>
+                      <th
+                        class="py-3 px-4 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-center"
+                      >
+                        Actions
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody class="divide-y divide-outline-variant">
+                    {% for section in course_sections %}
+                    <tr
+                      class="hover:bg-surface-container-low transition-colors group"
+                    >
+                      <td class="py-3 px-4 font-code font-medium text-primary">
+                        {{ section.CourseSectionID }}
+                      </td>
+                      <td class="py-3 px-4">{{ section.SubjectName }}</td>
+                      <td class="py-3 px-4">
+                        {{ section.LecturerName or 'N/A' }}
+                      </td>
+                      <td class="py-3 px-4">{{ section.Semester }}</td>
+                      <td class="py-3 px-4 text-right">
+                        {{ section.MaxSize or '-' }}
+                      </td>
+                      <td class="py-3 px-4 text-center">
+                        <div class="flex items-center justify-center gap-2">
+                          <button
+                            type="button"
+                            class="text-outline hover:text-primary transition-colors edit-section-btn"
+                            onclick="openEditSection(this)"
+                            data-code="{{ section.CourseSectionID }}"
+                            data-subject-id="{{ section.SubjectID }}"
+                            data-lecturer-id="{{ section.LecturerID }}"
+                            data-semester="{{ section.Semester }}"
+                            data-capacity="{{ section.MaxSize or '' }}"
+                          >
+                            <span class="material-symbols-outlined text-[20px]"
+                              >edit</span
+                            >
+                          </button>
+                          <button
+                            type="button"
+                            class="text-outline hover:text-error transition-colors delete-btn"
+                            onclick="openDeleteItem('section', this)"
+                            data-code="{{ section.CourseSectionID }}"
+                            data-name="{{ section.SubjectName or section.CourseSectionID }}"
+                          >
+                            <span class="material-symbols-outlined text-[20px]"
+                              >delete</span
+                            >
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                      <td
+                        colspan="6"
+                        class="py-8 text-center text-on-surface-variant"
+                      >
+                        No course sections found.
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center hidden"
+      id="homeroomModal"
+    >
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+      <div
+        class="relative bg-white rounded-xl shadow-lg max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex justify-between items-center mb-4">
+          <h3
+            id="homeroomModalTitle"
+            class="font-headline-sm text-headline-sm text-on-surface"
+          >
+            Add Homeroom
+          </h3>
+          <button
+            class="text-on-surface-variant hover:text-on-surface"
+            onclick="closeModal('homeroomModal')"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <form
+          id="homeroomForm"
+          action="/admin/academic_structure/homeroom/create"
+          method="POST"
+        >
+          <input
+            type="hidden"
+            name="edit_mode"
+            id="homeroom_edit_mode"
+            value="0"
+          />
+          <input
+            type="hidden"
+            name="original_id"
+            id="homeroom_original_id"
+            value=""
+          />
+          <div class="space-y-4">
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Class Code</label
+              >
+              <input
+                type="text"
+                name="code"
+                id="homeroom_code"
+                required
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Class Name</label
+              >
+              <input
+                type="text"
+                name="name"
+                id="homeroom_name"
+                required
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Advisor (Lecturer ID)</label
+              >
+              <input
+                type="text"
+                name="advisor"
+                id="homeroom_advisor"
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+                placeholder="Enter Lecturer ID"
+              />
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Capacity</label
+              >
+              <input
+                type="number"
+                name="capacity"
+                id="homeroom_capacity"
+                min="0"
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Academic Year</label
+              >
+              <input
+                type="text"
+                name="academic_year"
+                id="homeroom_academic_year"
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+                placeholder="2024-2025"
+              />
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Semester</label
+              >
+              <input
+                type="text"
+                name="semester"
+                id="homeroom_semester"
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+                placeholder="Fall 2024"
+              />
+            </div>
+          </div>
+          <div class="mt-6 flex justify-end gap-3">
+            <button
+              type="button"
+              class="px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low"
+              onclick="closeModal('homeroomModal')"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center hidden"
+      id="sectionModal"
+    >
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+      <div
+        class="relative bg-white rounded-xl shadow-lg max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex justify-between items-center mb-4">
+          <h3
+            id="sectionModalTitle"
+            class="font-headline-sm text-headline-sm text-on-surface"
+          >
+            Add Course Section
+          </h3>
+          <button
+            class="text-on-surface-variant hover:text-on-surface"
+            onclick="closeModal('sectionModal')"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <form
+          id="sectionForm"
+          action="/admin/academic_structure/course_section/create"
+          method="POST"
+        >
+          <input
+            type="hidden"
+            name="edit_mode"
+            id="section_edit_mode"
+            value="0"
+          />
+          <input
+            type="hidden"
+            name="original_id"
+            id="section_original_id"
+            value=""
+          />
+          <div class="space-y-4">
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Section Code</label
+              >
+              <input
+                type="text"
+                name="code"
+                id="section_code"
+                required
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Course</label
+              >
+              <select
+                name="course"
+                id="section_course"
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">Select Course</option>
+                {% for subject in subjects %}
+                <option value="{{ subject.SubjectID }}">
+                  {{ subject.SubjectName }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Lecturer</label
+              >
+              <select
+                name="lecturer"
+                id="section_lecturer"
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">Select Lecturer</option>
+                {% for lecturer in lecturers %}
+                <option value="{{ lecturer.LecturerID }}">
+                  {{ lecturer.FullName }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Semester</label
+              >
+              <input
+                type="text"
+                name="semester"
+                id="section_semester"
+                required
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+                placeholder="Fall 2024"
+              />
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Capacity</label
+              >
+              <input
+                type="number"
+                name="capacity"
+                id="section_capacity"
+                min="0"
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+          </div>
+          <div class="mt-6 flex justify-end gap-3">
+            <button
+              type="button"
+              class="px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low"
+              onclick="closeModal('sectionModal')"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center hidden"
+      id="deleteModal"
+    >
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+      <div class="relative bg-white rounded-xl shadow-lg max-w-md w-full p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">
+            Delete Record
+          </h3>
+          <button
+            class="text-on-surface-variant hover:text-on-surface"
+            onclick="closeModal('deleteModal')"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <p class="text-on-surface-variant mb-4">
+          Are you sure you want to delete <strong id="deleteItemName"></strong>?
+          This action cannot be undone.
+        </p>
+        <form id="deleteForm" action="#" method="POST">
+          <input type="hidden" name="code" id="deleteItemCode" />
+          <input type="hidden" name="type" id="deleteItemType" />
+          <div class="mt-6 flex justify-end gap-3">
+            <button
+              type="button"
+              class="px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low"
+              onclick="closeModal('deleteModal')"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-error text-white rounded-lg hover:bg-error/90"
+            >
+              Delete
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Modal helpers
+      function closeModal(id) {
+        document.getElementById(id).classList.add("hidden");
+      }
+
+      // Tab switching
+      function switchTab(tab) {
+        const homeroomBtn = document.getElementById("tabHomeroom");
+        const sectionBtn = document.getElementById("tabCourseSection");
+        const homeroomTable = document.getElementById("homeroomTable");
+        const sectionTable = document.getElementById("courseSectionTable");
+        const addBtn = document.getElementById("addBtn");
+
+        if (tab === "homeroom") {
+          homeroomBtn.classList.add("active");
+          homeroomBtn.classList.remove("text-on-surface-variant");
+          sectionBtn.classList.remove("active");
+          sectionBtn.classList.add("text-on-surface-variant");
+          homeroomTable.classList.remove("hidden");
+          sectionTable.classList.add("hidden");
+          addBtn.onclick = function () {
+            openAddHomeroom();
+          };
+        } else {
+          sectionBtn.classList.add("active");
+          sectionBtn.classList.remove("text-on-surface-variant");
+          homeroomBtn.classList.remove("active");
+          homeroomBtn.classList.add("text-on-surface-variant");
+          sectionTable.classList.remove("hidden");
+          homeroomTable.classList.add("hidden");
+          addBtn.onclick = function () {
+            openAddSection();
+          };
+        }
+      }
+
+      // Homeroom CRUD
+      function openAddHomeroom() {
+        document.getElementById("homeroomModalTitle").textContent =
+          "Add Homeroom";
+        document.getElementById("homeroom_edit_mode").value = "0";
+        document.getElementById("homeroom_original_id").value = "";
+        document.getElementById("homeroom_code").value = "";
+        document.getElementById("homeroom_code").readOnly = false;
+        document.getElementById("homeroom_name").value = "";
+        document.getElementById("homeroom_advisor").value = "";
+        document.getElementById("homeroom_capacity").value = "";
+        document.getElementById("homeroom_academic_year").value = "";
+        document.getElementById("homeroom_semester").value = "";
+        document.getElementById("homeroomForm").action =
+          "/admin/academic_structure/homeroom/create";
+        document.getElementById("homeroomModal").classList.remove("hidden");
+      }
+
+      function openEditHomeroom(btn) {
+        document.getElementById("homeroomModalTitle").textContent =
+          "Edit Homeroom";
+        document.getElementById("homeroom_edit_mode").value = "1";
+        document.getElementById("homeroom_original_id").value =
+          btn.dataset.code;
+        document.getElementById("homeroom_code").value = btn.dataset.code;
+        document.getElementById("homeroom_code").readOnly = true;
+        document.getElementById("homeroom_name").value = btn.dataset.name || "";
+        document.getElementById("homeroom_advisor").value =
+          btn.dataset.lecturerId || "";
+        document.getElementById("homeroom_capacity").value =
+          btn.dataset.capacity || "";
+        document.getElementById("homeroom_academic_year").value =
+          btn.dataset.academicYear || "";
+        document.getElementById("homeroom_semester").value =
+          btn.dataset.semester || "";
+        document.getElementById("homeroomForm").action =
+          "/admin/academic_structure/homeroom/edit";
+        document.getElementById("homeroomModal").classList.remove("hidden");
+      }
+
+      // Course Section CRUD
+      function openAddSection() {
+        document.getElementById("sectionModalTitle").textContent =
+          "Add Course Section";
+        document.getElementById("section_edit_mode").value = "0";
+        document.getElementById("section_original_id").value = "";
+        document.getElementById("section_code").value = "";
+        document.getElementById("section_code").readOnly = false;
+        document.getElementById("section_course").value = "";
+        document.getElementById("section_lecturer").value = "";
+        document.getElementById("section_semester").value = "";
+        document.getElementById("section_capacity").value = "";
+        document.getElementById("sectionForm").action =
+          "/admin/academic_structure/course_section/create";
+        document.getElementById("sectionModal").classList.remove("hidden");
+      }
+
+      function openEditSection(btn) {
+        document.getElementById("sectionModalTitle").textContent =
+          "Edit Course Section";
+        document.getElementById("section_edit_mode").value = "1";
+        document.getElementById("section_original_id").value = btn.dataset.code;
+        document.getElementById("section_code").value = btn.dataset.code;
+        document.getElementById("section_code").readOnly = true;
+        document.getElementById("section_course").value =
+          btn.dataset.subjectId || "";
+        document.getElementById("section_lecturer").value =
+          btn.dataset.lecturerId || "";
+        document.getElementById("section_semester").value =
+          btn.dataset.semester || "";
+        document.getElementById("section_capacity").value =
+          btn.dataset.capacity || "";
+        document.getElementById("sectionForm").action =
+          "/admin/academic_structure/course_section/edit";
+        document.getElementById("sectionModal").classList.remove("hidden");
+      }
+
+      // Delete handler
+      function openDeleteItem(type, btn) {
+        const code = btn.dataset.code;
+        const name = btn.dataset.name || code;
+        document.getElementById("deleteItemCode").value = code;
+        document.getElementById("deleteItemName").textContent = name;
+        document.getElementById("deleteItemType").value = type;
+        const action =
+          type === "homeroom"
+            ? "/admin/academic_structure/homeroom/delete"
+            : "/admin/academic_structure/course_section/delete";
+        document.getElementById("deleteForm").action = action;
+        document.getElementById("deleteModal").classList.remove("hidden");
+      }
+
+      // Init: default to homeroom tab
+      document.addEventListener("DOMContentLoaded", function () {
+        document.getElementById("addBtn").onclick = function () {
+          openAddHomeroom();
+        };
+      });
+    </script>
+  </body>
+</html>

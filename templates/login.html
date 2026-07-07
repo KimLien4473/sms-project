@@ -1,0 +1,399 @@
+<!doctype html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Login - Student Management System</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#edeef0",
+              "on-surface": "#191c1e",
+              tertiary: "#3e3fcc",
+              "primary-fixed-dim": "#b4c5ff",
+              "tertiary-fixed-dim": "#c0c1ff",
+              "surface-container-low": "#f3f4f6",
+              "inverse-surface": "#2e3132",
+              "on-tertiary-container": "#f1eeff",
+              "secondary-fixed": "#d8e3fb",
+              "surface-container-high": "#e7e8ea",
+              "secondary-fixed-dim": "#bcc7de",
+              outline: "#737686",
+              "inverse-primary": "#b4c5ff",
+              "surface-bright": "#f8f9fb",
+              "on-background": "#191c1e",
+              "on-tertiary": "#ffffff",
+              "surface-tint": "#0053db",
+              "error-container": "#ffdad6",
+              "tertiary-container": "#585be6",
+              "surface-variant": "#e1e2e4",
+              "on-error": "#ffffff",
+              "on-secondary-fixed-variant": "#3c475a",
+              "outline-variant": "#c3c6d7",
+              "on-tertiary-fixed": "#07006c",
+              "on-secondary-fixed": "#111c2d",
+              "primary-container": "#2563eb",
+              "surface-dim": "#d9dadc",
+              "primary-fixed": "#dbe1ff",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-secondary-container": "#586377",
+              primary: "#004ac6",
+              "surface-container-lowest": "#ffffff",
+              "on-error-container": "#93000a",
+              "secondary-container": "#d5e0f8",
+              "surface-container-highest": "#e1e2e4",
+              "on-primary": "#ffffff",
+              "inverse-on-surface": "#f0f1f3",
+              "on-primary-container": "#eeefff",
+              "on-secondary": "#ffffff",
+              error: "#ba1a1a",
+              "on-primary-fixed": "#00174b",
+              secondary: "#545f73",
+              surface: "#f8f9fb",
+              "on-surface-variant": "#434655",
+              "on-tertiary-fixed-variant": "#2f2ebe",
+              background: "#f8f9fb",
+              "tertiary-fixed": "#e1e0ff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              stack_md: "16px",
+              container_padding: "32px",
+              stack_sm: "8px",
+              sidebar_width: "260px",
+              gutter: "24px",
+              topbar_height: "70px",
+              stack_lg: "24px",
+            },
+            fontFamily: {
+              "body-md": ["Inter"],
+              "display-lg-mobile": ["Inter"],
+              "headline-sm": ["Inter"],
+              code: ["Inter"],
+              "headline-md": ["Inter"],
+              "display-lg": ["Inter"],
+              "body-lg": ["Inter"],
+              "label-md": ["Inter"],
+            },
+            fontSize: {
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "display-lg-mobile": [
+                "28px",
+                {
+                  lineHeight: "34px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-sm": [
+                "20px",
+                { lineHeight: "28px", fontWeight: "600" },
+              ],
+              code: ["13px", { lineHeight: "18px", fontWeight: "400" }],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "display-lg": [
+                "36px",
+                {
+                  lineHeight: "44px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      .role-radio {
+        display: none;
+      }
+      .role-label {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        padding: 0.5rem 1rem;
+        border: 1px solid #c3c6d7;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: all 0.2s;
+        background-color: #ffffff;
+        color: #434655;
+        font-weight: 600;
+        width: 100%;
+      }
+      .role-radio:checked + .role-label {
+        background-color: #2563eb;
+        color: #ffffff;
+        border-color: #2563eb;
+      }
+      .role-radio:checked + .role-label .material-symbols-outlined {
+        color: #ffffff;
+      }
+      .role-label:hover {
+        background-color: #f3f4f6;
+      }
+    </style>
+  </head>
+  <body
+    class="bg-background min-h-screen flex items-center justify-center m-0 p-0 overflow-hidden font-body-md text-on-background"
+  >
+    <div class="flex w-full h-screen">
+      <!-- Left Side: Branding & Aesthetics -->
+      <div
+        class="hidden md:flex flex-col justify-center items-center w-1/2 bg-gradient-to-br from-primary-container to-primary relative overflow-hidden text-on-primary"
+      >
+        <div
+          class="absolute inset-0 opacity-20 bg-cover bg-center"
+          style="background-image: url(&quot;...&quot;)"
+        ></div>
+        <div class="z-10 text-center max-w-lg px-container_padding">
+          <div class="mb-stack_lg flex justify-center">
+            <span
+              class="material-symbols-outlined text-[80px]"
+              data-icon="school"
+              style="font-variation-settings: &quot;FILL&quot; 1"
+              >school</span
+            >
+          </div>
+          <h1
+            class="font-display-lg text-display-lg mb-stack_md tracking-tight"
+          >
+            Student Management System
+          </h1>
+          <p class="font-body-lg text-body-lg text-primary-fixed opacity-90">
+            A comprehensive platform for administrators, faculty, and students
+            to manage academic life with efficiency and clarity.
+          </p>
+        </div>
+        <div
+          class="absolute top-0 left-0 w-64 h-64 bg-white opacity-5 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2"
+        ></div>
+        <div
+          class="absolute bottom-0 right-0 w-96 h-96 bg-white opacity-5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3"
+        ></div>
+      </div>
+      <!-- Right Side: Login Form -->
+      <div
+        class="flex flex-col justify-center items-center w-full md:w-1/2 bg-surface p-container_padding"
+      >
+        <div
+          class="w-full max-w-[420px] bg-surface-container-lowest rounded-xl shadow-[0px_10px_15px_-3px_rgba(0,0,0,0.1)] border border-outline-variant p-container_padding"
+        >
+          <!-- Mobile Branding -->
+          <div class="md:hidden flex flex-col items-center mb-stack_lg">
+            <span
+              class="material-symbols-outlined text-primary-container text-[48px] mb-stack_sm"
+              data-icon="school"
+              style="font-variation-settings: &quot;FILL&quot; 1"
+              >school</span
+            >
+            <h2
+              class="font-headline-md text-headline-md text-on-surface text-center"
+            >
+              Student Management System
+            </h2>
+          </div>
+
+          <!-- Flash Messages -->
+          {% with messages = get_flashed_messages(with_categories=true) %} {% if
+          messages %}
+          <div class="mb-4 space-y-2">
+            {% for category, message in messages %}
+            <div
+              class="p-3 rounded-lg text-sm font-medium {% if category == 'ok' %}bg-green-100 text-green-800 border border-green-300 {% elif category == 'err' %}bg-red-100 text-red-800 border border-red-300 {% elif category == 'warn' %}bg-yellow-100 text-yellow-800 border border-yellow-300 {% else %}bg-blue-100 text-blue-800 border border-blue-300{% endif %}"
+            >
+              {{ message }}
+            </div>
+            {% endfor %}
+          </div>
+          {% endif %} {% endwith %}
+
+          <div class="mb-stack_lg text-center md:text-left">
+            <h2
+              class="font-headline-md text-headline-md text-on-surface mb-stack_sm hidden md:block"
+            >
+              Welcome Back
+            </h2>
+            <p class="font-body-md text-body-md text-on-surface-variant">
+              Please log in to your account.
+            </p>
+          </div>
+          <form action="/login" method="POST" class="space-y-stack_md">
+            <!-- Role Selection -->
+            <div>
+              <label
+                class="block font-label-md text-label-md text-on-surface-variant mb-stack_sm uppercase tracking-wider"
+                >Select Role</label
+              >
+              <div class="flex flex-row items-center justify-center gap-4">
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="admin"
+                    class="h-4 w-4 text-primary-container focus:ring-primary-container border-outline-variant"
+                  />
+                  <span
+                    class="font-body-md text-body-md font-medium text-on-surface"
+                    >Admin</span
+                  >
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="lecturer"
+                    class="h-4 w-4 text-primary-container focus:ring-primary-container border-outline-variant"
+                  />
+                  <span
+                    class="font-body-md text-body-md font-medium text-on-surface"
+                    >Lecturer</span
+                  >
+                </label>
+                <label class="flex items-center gap-2 cursor-pointer">
+                  <input
+                    type="radio"
+                    name="role"
+                    value="student"
+                    class="h-4 w-4 text-primary-container focus:ring-primary-container border-outline-variant"
+                  />
+                  <span
+                    class="font-body-md text-body-md font-medium text-on-surface"
+                    >Student</span
+                  >
+                </label>
+              </div>
+            </div>
+            <!-- Username Input -->
+            <div>
+              <label
+                class="block font-label-md text-label-md text-on-surface-variant mb-stack_sm uppercase tracking-wider"
+                for="username"
+                >Username</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <span
+                    class="material-symbols-outlined text-outline"
+                    data-icon="person"
+                    >person</span
+                  >
+                </div>
+                <input
+                  class="block w-full pl-10 pr-3 py-2 border border-outline-variant rounded-lg bg-surface-container-lowest text-on-surface font-body-md focus:ring-2 focus:ring-primary-container focus:ring-opacity-50 focus:border-primary-container transition-shadow"
+                  id="username"
+                  name="username"
+                  placeholder="Enter your username"
+                  type="text"
+                  required
+                />
+              </div>
+            </div>
+            <!-- Password Input -->
+            <div>
+              <label
+                class="block font-label-md text-label-md text-on-surface-variant mb-stack_sm uppercase tracking-wider"
+                for="password"
+                >Password</label
+              >
+              <div class="relative">
+                <div
+                  class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                >
+                  <span
+                    class="material-symbols-outlined text-outline"
+                    data-icon="lock"
+                    >lock</span
+                  >
+                </div>
+                <input
+                  class="block w-full pl-10 pr-3 py-2 border border-outline-variant rounded-lg bg-surface-container-lowest text-on-surface font-body-md focus:ring-2 focus:ring-primary-container focus:ring-opacity-50 focus:border-primary-container transition-shadow"
+                  id="password"
+                  name="password"
+                  placeholder="Enter your password"
+                  type="password"
+                  required
+                />
+              </div>
+            </div>
+            <!-- Options Row -->
+            <div class="flex items-center justify-between">
+              <div class="flex items-center">
+                <input
+                  class="h-4 w-4 text-primary-container focus:ring-primary-container border-outline-variant rounded cursor-pointer"
+                  id="remember-me"
+                  name="remember"
+                  type="checkbox"
+                />
+                <label
+                  class="ml-2 block font-body-md text-body-md text-on-surface-variant cursor-pointer"
+                  for="remember-me"
+                >
+                  Remember me
+                </label>
+              </div>
+              <div class="text-sm">
+                <a
+                  class="font-body-md text-body-md font-semibold text-primary-container hover:text-primary transition-colors"
+                  href="/resetpassword"
+                >
+                  Forgot password?
+                </a>
+              </div>
+            </div>
+            <!-- Submit Button -->
+            <div class="pt-stack_sm">
+              <button
+                class="w-full flex justify-center items-center py-2.5 px-4 border border-transparent rounded-lg shadow-sm font-body-lg text-body-lg font-semibold text-on-primary bg-primary-container hover:bg-primary focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-container transition-colors"
+                type="submit"
+              >
+                Sign In
+                <span
+                  class="material-symbols-outlined ml-2 text-[20px]"
+                  data-icon="login"
+                  >login</span
+                >
+              </button>
+            </div>
+          </form>
+          <div class="mt-stack_lg text-center">
+            <p class="font-label-md text-label-md text-outline"><br /></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

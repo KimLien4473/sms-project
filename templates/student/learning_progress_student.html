@@ -1,0 +1,581 @@
+<!doctype html>
+<html class="light" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Learning Progress - {{ user_name }}</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#e7e8ea",
+              "on-background": "#191c1e",
+              "on-primary-container": "#eeefff",
+              "secondary-fixed-dim": "#bcc7de",
+              "secondary-container": "#d5e0f8",
+              "on-primary-fixed": "#00174b",
+              "inverse-on-surface": "#f0f1f3",
+              "primary-container": "#2563eb",
+              "on-secondary-fixed": "#111c2d",
+              "tertiary-fixed-dim": "#c0c1ff",
+              "on-tertiary-fixed-variant": "#2f2ebe",
+              "on-tertiary-container": "#f1eeff",
+              "on-surface": "#191c1e",
+              "error-container": "#ffdad6",
+              surface: "#f8f9fb",
+              outline: "#737686",
+              "outline-variant": "#c3c6d7",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed": "#d8e3fb",
+              "on-secondary-fixed-variant": "#3c475a",
+              "surface-container": "#edeef0",
+              "on-primary": "#ffffff",
+              "inverse-surface": "#2e3132",
+              primary: "#004ac6",
+              "primary-fixed-dim": "#b4c5ff",
+              "on-error": "#ffffff",
+              error: "#ba1a1a",
+              tertiary: "#3e3fcc",
+              secondary: "#545f73",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed": "#dbe1ff",
+              "on-tertiary-fixed": "#07006c",
+              "on-secondary": "#ffffff",
+              "tertiary-container": "#585be6",
+              "surface-container-highest": "#e1e2e4",
+              "tertiary-fixed": "#e1e0ff",
+              "surface-dim": "#d9dadc",
+              "surface-tint": "#0053db",
+              "surface-bright": "#f8f9fb",
+              "surface-variant": "#e1e2e4",
+              "surface-container-low": "#f3f4f6",
+              "on-surface-variant": "#434655",
+              "on-secondary-container": "#586377",
+              "on-primary-fixed-variant": "#003ea8",
+              background: "#f8f9fb",
+              "inverse-primary": "#b4c5ff",
+              "on-error-container": "#93000a",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              stack_lg: "24px",
+              container_padding: "32px",
+              sidebar_width: "260px",
+              gutter: "24px",
+              stack_sm: "8px",
+              stack_md: "16px",
+              topbar_height: "70px",
+            },
+            fontFamily: {
+              code: ["Inter"],
+              "headline-md": ["Inter"],
+              "display-lg": ["Inter"],
+              "body-md": ["Inter"],
+              "headline-sm": ["Inter"],
+              "body-lg": ["Inter"],
+              "label-md": ["Inter"],
+              "display-lg-mobile": ["Inter"],
+            },
+            fontSize: {
+              code: ["13px", { lineHeight: "18px", fontWeight: "400" }],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "display-lg": [
+                "36px",
+                {
+                  lineHeight: "44px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "headline-sm": [
+                "20px",
+                { lineHeight: "28px", fontWeight: "600" },
+              ],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "display-lg-mobile": [
+                "28px",
+                {
+                  lineHeight: "34px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
+  </head>
+  <body class="bg-background text-on-background min-h-screen">
+    <!-- SideNavBar (Giống file profile_student.html) -->
+    <nav
+      class="fixed left-0 top-0 h-screen w-[260px] bg-inverse-surface shadow-sm z-30 flex flex-col h-full py-6"
+    >
+      <div class="px-6 mb-8 flex items-center gap-3">
+        <div
+          class="w-10 h-10 bg-primary rounded-lg flex items-center justify-center shadow-md"
+        >
+          <span
+            class="material-symbols-outlined text-white"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >school</span
+          >
+        </div>
+        <div>
+          <h2
+            class="font-headline-sm text-headline-sm font-bold text-white tracking-tight"
+          >
+            HỆ THỐNG QUẢN LÝ SINH VIÊN
+          </h2>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto px-3 space-y-1">
+        <!-- Các mục menu giống profile_student.html -->
+        <a
+          class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/student/profile"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 0"
+            >person</span
+          >
+          Personal Profile
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-3 rounded-lg text-white bg-white/10 border-l-4 border-white font-body-md text-body-md cursor-pointer duration-200"
+          href="/student/learning_progress"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >analytics</span
+          >
+          Learning Progress
+        </a>
+        <a
+          class="flex items-center gap-3 px-4 py-3 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/student/change_password"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 0"
+            >lock_reset</span
+          >
+          Change Password
+        </a>
+      </div>
+      <div class="px-3 mt-auto pt-4 border-t border-white/10">
+        <form action="/student/logout" method="POST" style="display: inline">
+          <button
+            type="submit"
+            class="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          >
+            <span class="material-symbols-outlined">logout</span>
+            <span>Logout</span>
+          </button>
+        </form>
+      </div>
+    </nav>
+
+    <!-- Main Content Wrapper -->
+    <div class="flex-1 ml-[260px] flex flex-col min-h-screen">
+      <!-- TopNavBar (Giống file profile_student.html) -->
+      <header
+        class="fixed top-0 right-0 h-[70px] w-[calc(100%-260px)] bg-surface-container-lowest border-b border-outline-variant flex justify-between items-center px-8 z-20"
+      >
+        <div class="flex items-center">
+          <a href="/student/learning_progress" class="hover:no-underline">
+            <h1
+              class="font-headline-md text-headline-md font-semibold text-on-surface"
+            >
+              Learning Progress
+            </h1>
+          </a>
+        </div>
+        <div class="flex items-center space-x-4">
+          <button
+            class="p-2 text-primary hover:bg-surface-container-high transition-all rounded-full flex items-center justify-center"
+          >
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: &quot;FILL&quot; 0"
+              >notifications</span
+            >
+          </button>
+          <div
+            class="flex items-center space-x-3 pl-4 border-l border-outline-variant"
+          >
+            <div class="text-right hidden sm:block">
+              <p class="font-body-md text-body-md font-bold text-on-surface">
+                {{ user_name }}
+              </p>
+              <p class="font-label-md text-label-md text-on-surface-variant">
+                Student
+              </p>
+            </div>
+            <img
+              alt="User Avatar"
+              class="w-10 h-10 rounded-full object-cover shadow-sm"
+              data-alt="..."
+              src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTuRc90TnGZ-68BvMnZ8gL3-bO-x3tXo5MoZHIa6mVvzw&s=10"     />
+          </div>
+        </div>
+      </header>
+
+      <!-- Canvas (Nội dung Learning Progress đã sửa) -->
+      <main
+        class="flex-1 mt-[70px] p-container_padding bg-background overflow-y-auto"
+      >
+        <div class="max-w-5xl mx-auto space-y-stack_lg">
+          <!-- Header -->
+          <div class="flex justify-between items-end mb-6">
+            <div>
+              <h1 class="font-display-lg text-display-lg text-on-surface mb-2">
+                Learning Progress
+              </h1>
+              <p class="font-body-lg text-body-lg text-on-surface-variant">
+                Overview of academic performance and attendance for {{ user_name }}.
+              </p>
+            </div>
+            <button
+              class="bg-primary text-on-primary px-4 py-2 rounded-lg font-label-md text-label-md shadow-sm hover:bg-primary-fixed-variant transition-colors flex items-center space-x-2"
+              onclick="alert('Export Transcript feature coming soon.')"
+            >
+              <span class="material-symbols-outlined text-[18px]"
+                >download</span
+              >
+              <span>Export Transcript</span>
+            </button>
+          </div>
+          <!-- Summary Cards Bento -->
+          <div
+            class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter"
+          >
+            <!-- GPA Card -->
+            <div
+              class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-[0_1px_3px_rgba(0,0,0,0.1)] relative overflow-hidden group hover:shadow-md transition-shadow"
+            >
+              <div
+                class="absolute -right-6 -top-6 w-24 h-24 bg-primary/5 rounded-full group-hover:scale-150 transition-transform duration-500"
+              ></div>
+              <div class="flex justify-between items-start mb-4 relative">
+                <h3 class="font-body-md text-body-md text-on-surface-variant">
+                  Cumulative GPA
+                </h3>
+                <span
+                  class="material-symbols-outlined text-primary"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >workspace_premium</span
+                >
+              </div>
+              <div class="relative">
+                <p
+                  id="student-gpa"
+                  class="font-display-lg text-display-lg text-on-surface"
+                >
+                  {{ gpa }}<span class="text-headline-md text-outline-variant"
+                    >/4.0</span
+                  >
+                </p>
+                <div class="mt-2 flex items-center space-x-2">
+                  <span
+                    class="material-symbols-outlined text-green-600 text-[16px]"
+                    >trending_up</span
+                  >
+                  <span class="font-label-md text-label-md text-green-600"
+                    >Top 15% of cohort</span
+                  >
+                </div>
+              </div>
+            </div>
+            <!-- Academic Standing -->
+            <div
+              class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-[0_1px_3px_rgba(0,0,0,0.1)] relative overflow-hidden group hover:shadow-md transition-shadow"
+            >
+              <div
+                class="absolute -right-6 -top-6 w-24 h-24 bg-tertiary-container/10 rounded-full group-hover:scale-150 transition-transform duration-500"
+              ></div>
+              <div class="flex justify-between items-start mb-4 relative">
+                <h3 class="font-body-md text-body-md text-on-surface-variant">
+                  Academic Standing
+                </h3>
+                <span
+                  class="material-symbols-outlined text-tertiary-container"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >school</span
+                >
+              </div>
+              <div class="relative">
+                <p
+                  id="student-standing"
+                  class="font-display-lg text-display-lg text-on-surface"
+                >
+                  {{ standing }}
+                </p>
+                <div
+                  class="mt-2 w-full bg-surface-container h-1.5 rounded-full overflow-hidden"
+                >
+                  <div
+                    class="bg-tertiary-container h-full rounded-full"
+                    style="width: {% if standing == 'Excellent' %}90{% elif standing == 'Good' %}75{% elif standing == 'Fair' %}60{% elif standing == 'Average' %}45{% else %}30{% endif %}%"
+                  ></div>
+                </div>
+              </div>
+            </div>
+            <!-- Total Credits -->
+            <div
+              class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-[0_1px_3px_rgba(0,0,0,0.1)] relative overflow-hidden group hover:shadow-md transition-shadow"
+            >
+              <div
+                class="absolute -right-6 -top-6 w-24 h-24 bg-secondary-container/20 rounded-full group-hover:scale-150 transition-transform duration-500"
+              ></div>
+              <div class="flex justify-between items-start mb-4 relative">
+                <h3 class="font-body-md text-body-md text-on-surface-variant">
+                  Total Credits
+                </h3>
+                <span
+                  class="material-symbols-outlined text-secondary"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >book</span
+                >
+              </div>
+              <div class="relative">
+                <p
+                  id="student-credits"
+                  class="font-display-lg text-display-lg text-on-surface"
+                >
+                  {{ earned_credits }}<span class="text-headline-md text-outline-variant"
+                    >/120</span
+                  >
+                </p>
+                <p class="mt-2 font-code text-code text-on-surface-variant">
+                  Expected graduation: 2025
+                </p>
+              </div>
+            </div>
+            <!-- Attendance Rate -->
+            <div
+              class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-[0_1px_3px_rgba(0,0,0,0.1)] relative overflow-hidden group hover:shadow-md transition-shadow"
+            >
+              <div
+                class="absolute -right-6 -top-6 w-24 h-24 bg-primary-fixed-dim/30 rounded-full group-hover:scale-150 transition-transform duration-500"
+              ></div>
+              <div class="flex justify-between items-start mb-4 relative">
+                <h3 class="font-body-md text-body-md text-on-surface-variant">
+                  Attendance Rate
+                </h3>
+                <span
+                  class="material-symbols-outlined text-primary"
+                  style="font-variation-settings: &quot;FILL&quot; 1"
+                  >event_available</span
+                >
+              </div>
+              <div class="relative">
+                <p
+                  id="student-attendance"
+                  class="font-display-lg text-display-lg text-on-surface"
+                >
+                  {{ attendance_rate }}%
+                </p>
+                <p class="mt-2 font-code text-code text-on-surface-variant">
+                  Across all active courses
+                </p>
+              </div>
+            </div>
+          </div>
+          <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+            <!-- Finalized Grades Table (Takes up 2 columns) -->
+            <div
+              class="lg:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_1px_3px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col"
+            >
+              <div
+                class="p-6 border-b border-outline-variant flex justify-between items-center bg-surface-bright"
+              >
+                <h2 class="font-headline-sm text-headline-sm text-on-surface">
+                  Finalized Grades
+                </h2>
+                <button
+                  class="text-primary hover:text-primary-fixed-variant font-label-md text-label-md flex items-center space-x-1"
+                  onclick="alert('View Transcript feature coming soon.')"
+                >
+                  <span>View Transcript</span>
+                  <span class="material-symbols-outlined text-[16px]"
+                    >arrow_forward</span
+                  >
+                </button>
+              </div>
+              <div class="overflow-x-auto flex-1">
+                <table class="w-full text-left border-collapse">
+                  <thead>
+                    <tr
+                      class="bg-surface-container-low font-label-md text-label-md text-on-surface-variant"
+                    >
+                      <th
+                        class="px-6 py-4 font-semibold uppercase tracking-wider border-b border-outline-variant"
+                      >
+                        Course
+                      </th>
+                      <th
+                        class="px-6 py-4 font-semibold uppercase tracking-wider border-b border-outline-variant text-center"
+                      >
+                        Credits
+                      </th>
+                      <th
+                        class="px-6 py-4 font-semibold uppercase tracking-wider border-b border-outline-variant text-center"
+                      >
+                        Process
+                      </th>
+                      <th
+                        class="px-6 py-4 font-semibold uppercase tracking-wider border-b border-outline-variant text-center"
+                      >
+                        Final
+                      </th>
+                      <th
+                        class="px-6 py-4 font-semibold uppercase tracking-wider border-b border-outline-variant text-center"
+                      >
+                        Result
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody
+                    id="grades-table-body"
+                    class="font-body-md text-body-md text-on-surface divide-y divide-outline-variant"
+                  >
+                    {% for grade in grades %}
+                    <tr class="hover:bg-surface-bright transition-colors">
+                      <td class="px-6 py-4">
+                        <div class="font-semibold">{{ grade.SubjectName }}</div>
+                        <div
+                          class="font-code text-code text-on-surface-variant"
+                        >
+                          {{ grade.SubjectCode }}
+                        </div>
+                      </td>
+                      <td class="px-6 py-4 text-center">{{ grade.Credits }}</td>
+                      <td class="px-6 py-4 text-center">{{ grade.ProcessScore }}</td>
+                      <td class="px-6 py-4 text-center font-semibold">{{ grade.FinalScore }}</td>
+                      <td class="px-6 py-4 text-center">
+                        {% if grade.Result == 'Pass' %}
+                        <span
+                          class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800"
+                          >Pass</span
+                        >
+                        {% elif grade.Result == 'Fail' %}
+                        <span
+                          class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-red-100 text-red-800"
+                          >Fail</span
+                        >
+                        {% else %}
+                        <span
+                          class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800"
+                          >Pending</span
+                        >
+                        {% endif %}
+                      </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                      <td colspan="5" class="px-6 py-4 text-center text-on-surface-variant">
+                        No grades available.
+                      </td>
+                    </tr>
+                    {% endfor %}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <!-- Attendance History (Takes up 1 column) -->
+            <div
+              class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_1px_3px_rgba(0,0,0,0.1)] overflow-hidden flex flex-col"
+            >
+              <div
+                class="p-6 border-b border-outline-variant bg-surface-bright"
+              >
+                <h2 class="font-headline-sm text-headline-sm text-on-surface">
+                  Recent Attendance
+                </h2>
+              </div>
+              <div class="p-0 flex-1 overflow-y-auto">
+                <ul
+                  id="attendance-list"
+                  class="divide-y divide-outline-variant"
+                >
+                  {% for att in attendances %}
+                  <li
+                    class="p-4 hover:bg-surface-bright transition-colors flex items-center justify-between"
+                  >
+                    <div>
+                      <p
+                        class="font-body-md text-body-md font-semibold text-on-surface"
+                      >
+                        {{ att.SubjectName }}
+                      </p>
+                      <p class="font-code text-code text-on-surface-variant">
+                        {{ att.AttendanceDate.strftime('%b %d, %Y') if att.AttendanceDate else 'N/A' }}
+                      </p>
+                    </div>
+                    <span
+                      class="material-symbols-outlined {% if att.Status == 'Present' %}text-green-600 bg-green-50{% else %}text-error bg-error-container/50{% endif %} p-1.5 rounded-full"
+                      style="font-variation-settings: &quot;FILL&quot; 1"
+                    >
+                      {% if att.Status == 'Present' %}check_circle{% else %}cancel{% endif %}
+                    </span>
+                  </li>
+                  {% else %}
+                  <li class="p-4 text-center text-on-surface-variant">
+                    No attendance records.
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <div
+                class="p-4 border-t border-outline-variant bg-surface-container-low text-center"
+              >
+                <button
+                  class="text-primary hover:text-primary-fixed-variant font-label-md text-label-md"
+                  onclick="alert('View Full History feature coming soon.')"
+                >
+                  View Full History
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

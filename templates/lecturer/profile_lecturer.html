@@ -1,0 +1,502 @@
+<!doctype html>
+<html class="h-full" lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Lecturer Portal - Personal Profile</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container-high": "#e7e8ea",
+              "on-background": "#191c1e",
+              "on-primary-container": "#eeefff",
+              "secondary-fixed-dim": "#bcc7de",
+              "secondary-container": "#d5e0f8",
+              "on-primary-fixed": "#00174b",
+              "inverse-on-surface": "#f0f1f3",
+              "primary-container": "#2563eb",
+              "on-secondary-fixed": "#111c2d",
+              "tertiary-fixed-dim": "#c0c1ff",
+              "on-tertiary-fixed-variant": "#2f2ebe",
+              "on-tertiary-container": "#f1eeff",
+              "on-surface": "#191c1e",
+              "error-container": "#ffdad6",
+              surface: "#f8f9fb",
+              outline: "#737686",
+              "outline-variant": "#c3c6d7",
+              "on-tertiary": "#ffffff",
+              "secondary-fixed": "#d8e3fb",
+              "on-secondary-fixed-variant": "#3c475a",
+              "surface-container": "#edeef0",
+              "on-primary": "#ffffff",
+              "inverse-surface": "#2e3132",
+              primary: "#004ac6",
+              "primary-fixed-dim": "#b4c5ff",
+              "on-error": "#ffffff",
+              error: "#ba1a1a",
+              tertiary: "#3e3fcc",
+              secondary: "#545f73",
+              "surface-container-lowest": "#ffffff",
+              "primary-fixed": "#dbe1ff",
+              "on-tertiary-fixed": "#07006c",
+              "on-secondary": "#ffffff",
+              "tertiary-container": "#585be6",
+              "surface-container-highest": "#e1e2e4",
+              "tertiary-fixed": "#e1e0ff",
+              "surface-dim": "#d9dadc",
+              "surface-tint": "#0053db",
+              "surface-bright": "#f8f9fb",
+              "surface-variant": "#e1e2e4",
+              "surface-container-low": "#f3f4f6",
+              "on-surface-variant": "#434655",
+              "on-secondary-container": "#586377",
+              "on-primary-fixed-variant": "#003ea8",
+              background: "#f8f9fb",
+              "inverse-primary": "#b4c5ff",
+              "on-error-container": "#93000a",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              stack_lg: "24px",
+              container_padding: "32px",
+              sidebar_width: "260px",
+              gutter: "24px",
+              stack_sm: "8px",
+              stack_md: "16px",
+              topbar_height: "70px",
+            },
+            fontFamily: {
+              code: ["Inter"],
+              "headline-md": ["Inter"],
+              "display-lg": ["Inter"],
+              "body-md": ["Inter"],
+              "headline-sm": ["Inter"],
+              "body-lg": ["Inter"],
+              "label-md": ["Inter"],
+              "display-lg-mobile": ["Inter"],
+            },
+            fontSize: {
+              code: ["13px", { lineHeight: "18px", fontWeight: "400" }],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "display-lg": [
+                "36px",
+                {
+                  lineHeight: "44px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "headline-sm": [
+                "20px",
+                { lineHeight: "28px", fontWeight: "600" },
+              ],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+              "display-lg-mobile": [
+                "28px",
+                {
+                  lineHeight: "34px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap");
+    </style>
+  </head>
+  <body
+    class="bg-background text-on-background h-full font-sans antialiased overflow-hidden"
+  >
+    <!-- TopNavBar -->
+    <header
+      class="bg-surface-container-lowest border-b border-outline-variant fixed top-0 right-0 h-[70px] w-[calc(100%-260px)] flex justify-between items-center px-8 z-20"
+    >
+      <div class="flex items-center">
+        <span
+          class="font-headline-md text-headline-md font-semibold text-on-surface"
+          >Lecturer Portal</span
+        >
+      </div>
+      <div class="flex items-center space-x-4">
+        <button
+          class="p-2 text-primary hover:bg-surface-container-high transition-all rounded-full flex items-center justify-center"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 0"
+            >notifications</span
+          >
+        </button>
+        <div
+          class="flex items-center gap-3 pl-4 border-l border-outline-variant"
+        >
+          <div class="text-right hidden sm:block">
+            <p class="font-body-md text-body-md font-semibold text-on-surface">
+              {{ user_name }}
+            </p>
+            <p class="font-label-md text-label-md text-on-surface-variant">
+              Lecturer
+            </p>
+          </div>
+          <img
+            alt="User Avatar"
+            class="w-10 h-10 rounded-full object-cover border border-outline-variant"
+            data-alt="..."
+            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfss54andzkjSP5Y5nUPzifC_E3Nlr3PhDyP_ISI42yQ&s=10"    />
+        </div>
+      </div>
+    </header>
+    <!-- SideNavBar -->
+    <nav
+      class="bg-inverse-surface text-primary-fixed fixed left-0 top-0 h-screen w-[260px] flex flex-col py-6 shadow-sm z-30"
+    >
+      <div class="px-6 mb-8 flex items-center gap-4">
+        <div
+          class="w-10 h-10 bg-primary-container rounded-lg flex items-center justify-center shrink-0"
+        >
+          <span
+            class="material-symbols-outlined text-white"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >school</span
+          >
+        </div>
+        <div>
+          <h1
+            class="font-headline-sm text-headline-sm font-bold text-white leading-tight"
+          >
+            HỆ THỐNG QUẢN LÝ SINH VIÊN
+          </h1>
+          <p
+            class="font-label-md text-label-md text-secondary-fixed-dim mt-1 opacity-80"
+          >
+            University Management
+          </p>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto px-3 space-y-1">
+        <!-- Navigation items -->
+        <a
+          class="flex items-center gap-3 px-3 py-2 rounded-lg text-white bg-white/10 border-l-4 border-white cursor-pointer duration-200"
+          href="/lecturer/profile"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 1"
+            >account_circle</span
+          >
+          <span class="font-body-md text-body-md font-medium"
+            >Personal Profile</span
+          >
+        </a>
+        <a
+          class="flex items-center gap-3 px-3 py-2 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors cursor-pointer duration-200"
+          href="/lecturer/learning_records"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 0"
+            >book</span
+          >
+          <span class="font-body-md text-body-md"
+            >Learning Records Management</span
+          >
+        </a>
+        <a
+          class="flex items-center gap-3 px-3 py-2 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors cursor-pointer duration-200"
+          href="/lecturer/change_password"
+        >
+          <span
+            class="material-symbols-outlined"
+            style="font-variation-settings: &quot;FILL&quot; 0"
+            >lock_reset</span
+          >
+          <span class="font-body-md text-body-md">Change Password</span>
+        </a>
+      </div>
+      <div class="mt-auto px-3 pt-4 border-t border-white/10">
+        <!-- Logout: chuyển từ link GET thành form POST -->
+        <form action="/lecturer/logout" method="POST" style="display: inline">
+          <button
+            type="submit"
+            class="flex items-center gap-3 px-3 py-2 w-full rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors cursor-pointer duration-200"
+          >
+            <span
+              class="material-symbols-outlined"
+              style="font-variation-settings: &quot;FILL&quot; 0"
+              >logout</span
+            >
+            <span class="font-body-md text-body-md">Logout</span>
+          </button>
+        </form>
+      </div>
+    </nav>
+    <!-- Main Content Area -->
+    <main
+      class="ml-[260px] mt-[70px] h-[calc(100vh-70px)] overflow-y-auto bg-background p-container_padding"
+    >
+      <div class="max-w-5xl mx-auto space-y-stack_lg">
+        <!-- Page Header -->
+        <div>
+          <h2 class="font-headline-md text-headline-md text-on-background">
+            Profile Settings
+          </h2>
+          <p class="font-body-md text-body-md text-on-surface-variant mt-1">
+            Manage your personal information and contact details.
+          </p>
+        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-gutter">
+          <!-- Left Column: Profile Summary Card -->
+          <div class="lg:col-span-1">
+            <div
+              class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-[0px_1px_3px_rgba(0,0,0,0.1)] flex flex-col items-center text-center"
+            >
+              <div class="relative mb-4 group">
+                <img
+                  alt="{{ lecturer.FullName }}"
+                  class="w-32 h-32 rounded-full object-cover border-4 border-surface"
+                  src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTfss54andzkjSP5Y5nUPzifC_E3Nlr3PhDyP_ISI42yQ&s=10"   />
+                <button
+                  class="absolute bottom-0 right-0 bg-primary-container text-white p-2 rounded-full shadow-sm hover:bg-primary transition-colors opacity-0 group-hover:opacity-100"
+                >
+                  <span class="material-symbols-outlined text-[18px]"
+                    >edit</span
+                  >
+                </button>
+              </div>
+              <h3
+                class="font-headline-sm text-headline-sm text-on-surface mb-1"
+              >
+                {{ lecturer.FullName }}
+              </h3>
+              <p class="font-body-md text-body-md text-on-surface-variant mb-4">
+                {{ lecturer.Title or 'Lecturer' }}
+              </p>
+              <div
+                class="w-full space-y-3 pt-4 border-t border-surface-variant text-left"
+              >
+                <div class="flex justify-between items-center">
+                  <span
+                    class="font-label-md text-label-md text-on-surface-variant"
+                    >Lecturer ID</span
+                  >
+                  <span class="font-code text-code text-on-surface font-medium"
+                    >{{ lecturer.LecturerID }}</span
+                  >
+                </div>
+                <div class="flex justify-between items-center">
+                  <span
+                    class="font-label-md text-label-md text-on-surface-variant"
+                    >Faculty</span
+                  >
+                  <span class="font-body-md text-body-md text-on-surface"
+                    >{{ lecturer.FacultyID or 'N/A' }}</span
+                  >
+                </div>
+                <div class="flex justify-between items-center">
+                  <span
+                    class="font-label-md text-label-md text-on-surface-variant"
+                    >Status</span
+                  >
+                  <span
+                    class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-[#ecfdf5] text-[#059669] font-label-md text-label-md"
+                  >
+                    <span class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span>
+                    {{ lecturer.Status or 'Active' }}
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- Right Column: Personal Information Form -->
+          <div class="lg:col-span-2">
+            <div
+              class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0px_1px_3px_rgba(0,0,0,0.1)] overflow-hidden"
+            >
+              <div
+                class="p-6 border-b border-surface-variant bg-surface-bright"
+              >
+                <h3 class="font-headline-sm text-headline-sm text-on-surface">
+                  Personal Information
+                </h3>
+                <p
+                  class="font-body-md text-body-md text-on-surface-variant mt-1"
+                >
+                  Update your contact details to stay informed.
+                </p>
+              </div>
+              <form
+                class="p-6 space-y-6"
+                action="/lecturer/profile"
+                method="POST"
+              >
+                <input type="hidden" name="edit_mode" value="1" />
+                <!-- Read-only Section -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label
+                      class="block font-label-md text-label-md text-on-surface-variant mb-2"
+                      >Full Name</label
+                    >
+                    <input
+                      class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface-variant font-body-md text-body-md cursor-not-allowed"
+                      disabled
+                      type="text"
+                      name="full_name"
+                      id="full_name"
+                      value="{{ lecturer.FullName }}"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      class="block font-label-md text-label-md text-on-surface-variant mb-2"
+                      >Citizen ID</label
+                    >
+                    <input
+                      class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface-variant font-code text-code cursor-not-allowed"
+                      disabled
+                      type="text"
+                      name="citizen_id"
+                      id="citizen_id"
+                      value="{{ lecturer.CCCD or 'N/A' }}"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      class="block font-label-md text-label-md text-on-surface-variant mb-2"
+                      >Date of Birth</label
+                    >
+                    <input
+                      class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface-variant font-body-md text-body-md cursor-not-allowed"
+                      disabled
+                      type="text"
+                      name="date_of_birth"
+                      id="date_of_birth"
+                      value="{{ lecturer.DateOfBirth.strftime('%d/%m/%Y') if lecturer.DateOfBirth else 'N/A' }}"
+                    />
+                  </div>
+                  <div>
+                    <label
+                      class="block font-label-md text-label-md text-on-surface-variant mb-2"
+                      >Lecturer ID</label
+                    >
+                    <input
+                      class="w-full bg-surface-container-low border border-outline-variant rounded-lg px-4 py-2.5 text-on-surface-variant font-code text-code cursor-not-allowed"
+                      disabled
+                      type="text"
+                      name="lecturer_id"
+                      id="lecturer_id"
+                      value="{{ lecturer.LecturerID }}"
+                    />
+                  </div>
+                </div>
+                <hr class="border-surface-variant" />
+                <!-- Editable Section -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <div>
+                    <label
+                      class="block font-label-md text-label-md text-on-surface mb-2"
+                      >Phone Number</label
+                    >
+                    <div class="relative">
+                      <div
+                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                      >
+                        <span class="material-symbols-outlined text-outline"
+                          >call</span
+                        >
+                      </div>
+                      <input
+                        class="w-full bg-surface-container-lowest border border-outline rounded-lg pl-10 pr-4 py-2.5 text-on-surface font-body-md text-body-md focus:border-primary-container focus:ring-2 focus:ring-primary-container/50 outline-none transition-all"
+                        type="tel"
+                        name="phone"
+                        id="phone"
+                        value="{{ lecturer.PhoneNumber or '' }}"
+                        required
+                      />
+                    </div>
+                  </div>
+                  <div>
+                    <label
+                      class="block font-label-md text-label-md text-on-surface mb-2"
+                      >Personal Email</label
+                    >
+                    <div class="relative">
+                      <div
+                        class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none"
+                      >
+                        <span class="material-symbols-outlined text-outline"
+                          >mail</span
+                        >
+                      </div>
+                      <input
+                        class="w-full bg-surface-container-lowest border border-outline rounded-lg pl-10 pr-4 py-2.5 text-on-surface font-body-md text-body-md focus:border-primary-container focus:ring-2 focus:ring-primary-container/50 outline-none transition-all"
+                        type="email"
+                        name="email"
+                        id="email"
+                        value="{{ lecturer.Email or '' }}"
+                        required
+                      />
+                    </div>
+                  </div>
+                </div>
+                <!-- Form Actions -->
+                <div
+                  class="flex justify-end gap-4 pt-4 border-t border-surface-variant mt-6"
+                >
+                  <a
+                    href="/lecturer/profile"
+                    class="px-5 py-2.5 rounded-lg bg-surface-container-lowest border border-outline-variant text-[#374151] font-label-md text-label-md hover:bg-surface-container-low transition-colors"
+                  >
+                    Cancel
+                  </a>
+                  <button
+                    class="px-5 py-2.5 rounded-lg bg-[#2563EB] text-white font-label-md text-label-md hover:bg-[#1d4ed8] shadow-sm transition-colors flex items-center gap-2"
+                    type="submit"
+                  >
+                    <span class="material-symbols-outlined text-[18px]"
+                      >save</span
+                    >
+                    Save Changes
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>

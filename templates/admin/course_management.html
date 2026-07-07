@@ -1,0 +1,653 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Course Management - SMS</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap"
+      rel="stylesheet"
+    />
+    <script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "surface-container": "#edeef0",
+              "on-surface": "#191c1e",
+              tertiary: "#3e3fcc",
+              "primary-fixed-dim": "#b4c5ff",
+              "tertiary-fixed-dim": "#c0c1ff",
+              "surface-container-low": "#f3f4f6",
+              "inverse-surface": "#2e3132",
+              "on-tertiary-container": "#f1eeff",
+              "secondary-fixed": "#d8e3fb",
+              "surface-container-high": "#e7e8ea",
+              "secondary-fixed-dim": "#bcc7de",
+              outline: "#737686",
+              "inverse-primary": "#b4c5ff",
+              "surface-bright": "#f8f9fb",
+              "on-background": "#191c1e",
+              "on-tertiary": "#ffffff",
+              "surface-tint": "#0053db",
+              "error-container": "#ffdad6",
+              "tertiary-container": "#585be6",
+              "surface-variant": "#e1e2e4",
+              "on-error": "#ffffff",
+              "on-secondary-fixed-variant": "#3c475a",
+              "outline-variant": "#c3c6d7",
+              "on-tertiary-fixed": "#07006c",
+              "on-secondary-fixed": "#111c2d",
+              "primary-container": "#2563eb",
+              "surface-dim": "#d9dadc",
+              "primary-fixed": "#dbe1ff",
+              "on-primary-fixed-variant": "#003ea8",
+              "on-secondary-container": "#586377",
+              primary: "#004ac6",
+              "surface-container-lowest": "#ffffff",
+              "on-error-container": "#93000a",
+              "secondary-container": "#d5e0f8",
+              "surface-container-highest": "#e1e2e4",
+              "on-primary": "#ffffff",
+              "inverse-on-surface": "#f0f1f3",
+              "on-primary-container": "#eeefff",
+              "on-secondary": "#ffffff",
+              error: "#ba1a1a",
+              "on-primary-fixed": "#00174b",
+              secondary: "#545f73",
+              surface: "#f8f9fb",
+              "on-surface-variant": "#434655",
+              "on-tertiary-fixed-variant": "#2f2ebe",
+              background: "#f8f9fb",
+              "tertiary-fixed": "#e1e0ff",
+            },
+            borderRadius: {
+              DEFAULT: "0.25rem",
+              lg: "0.5rem",
+              xl: "0.75rem",
+              full: "9999px",
+            },
+            spacing: {
+              stack_md: "16px",
+              container_padding: "32px",
+              stack_sm: "8px",
+              sidebar_width: "260px",
+              gutter: "24px",
+              topbar_height: "70px",
+              stack_lg: "24px",
+            },
+            fontFamily: {
+              "body-md": ["Inter"],
+              "display-lg-mobile": ["Inter"],
+              "headline-sm": ["Inter"],
+              code: ["Inter"],
+              "headline-md": ["Inter"],
+              "display-lg": ["Inter"],
+              "body-lg": ["Inter"],
+              "label-md": ["Inter"],
+            },
+            fontSize: {
+              "body-md": ["14px", { lineHeight: "20px", fontWeight: "400" }],
+              "display-lg-mobile": [
+                "28px",
+                {
+                  lineHeight: "34px",
+                  letterSpacing: "-0.01em",
+                  fontWeight: "700",
+                },
+              ],
+              "headline-sm": [
+                "20px",
+                { lineHeight: "28px", fontWeight: "600" },
+              ],
+              code: ["13px", { lineHeight: "18px", fontWeight: "400" }],
+              "headline-md": [
+                "24px",
+                { lineHeight: "32px", fontWeight: "600" },
+              ],
+              "display-lg": [
+                "36px",
+                {
+                  lineHeight: "44px",
+                  letterSpacing: "-0.02em",
+                  fontWeight: "700",
+                },
+              ],
+              "body-lg": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+              "label-md": [
+                "12px",
+                {
+                  lineHeight: "16px",
+                  letterSpacing: "0.05em",
+                  fontWeight: "600",
+                },
+              ],
+            },
+          },
+        },
+      };
+    </script>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background-color: #f8f9fb;
+      }
+      .material-symbols-outlined {
+        font-variation-settings:
+          "FILL" 0,
+          "wght" 400,
+          "GRAD" 0,
+          "opsz" 24;
+      }
+      .icon-fill {
+        font-variation-settings: "FILL" 1;
+      }
+
+      /* Custom scrollbar for sidebar */
+      .sidebar-scroll::-webkit-scrollbar {
+        width: 4px;
+      }
+      .sidebar-scroll::-webkit-scrollbar-track {
+        background: transparent;
+      }
+      .sidebar-scroll::-webkit-scrollbar-thumb {
+        background: rgba(255, 255, 255, 0.1);
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body class="text-on-surface bg-background">
+    <nav
+      class="bg-inverse-surface fixed left-0 top-0 h-screen w-[260px] shadow-sm flex flex-col h-full py-6 z-50"
+    >
+      <div class="px-6 mb-8 flex items-center gap-3">
+        <div
+          class="w-10 h-10 rounded-lg bg-surface-container-lowest/10 flex items-center justify-center shrink-0"
+        >
+          <span class="material-symbols-outlined text-white">school</span>
+        </div>
+        <div>
+          <h1
+            class="font-headline-sm text-headline-sm font-bold text-white truncate"
+            title="UNIVERSITY STUDENT MANAGEMENT SYSTEM"
+          >
+            SMS
+          </h1>
+          <p
+            class="font-label-md text-[10px] leading-[14px] text-outline-variant mt-0.5 uppercase tracking-wider"
+          >
+            SMS Administration Portal
+          </p>
+        </div>
+      </div>
+      <div class="flex-1 overflow-y-auto sidebar-scroll px-3 space-y-1 pb-4">
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/dashboard"
+          ><span class="material-symbols-outlined">dashboard</span>Dashboard</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/account_management"
+          ><span class="material-symbols-outlined">manage_accounts</span>Account
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/students"
+          ><span class="material-symbols-outlined">school</span>Student
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/lecturers"
+          ><span class="material-symbols-outlined">person_pin</span>Lecturer
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/academic_structure"
+          ><span class="material-symbols-outlined">account_tree</span>Academic
+          Structure Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/faculties"
+          ><span class="material-symbols-outlined">account_balance</span>Faculty
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/majors"
+          ><span class="material-symbols-outlined">domain</span>Major
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-white bg-white/10 border-l-4 border-white font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/courses"
+          ><span class="material-symbols-outlined">calendar_month</span>Course
+          Management</a
+        >
+        <a
+          class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+          href="/admin/statistics"
+          ><span class="material-symbols-outlined">analytics</span>Statistics</a
+        >
+        <div class="pt-4 mt-4 border-t border-white/10 space-y-1">
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+            href="/admin/profile"
+            ><span class="material-symbols-outlined">person</span>Personal
+            Profile</a
+          >
+          <a
+            class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+            href="/admin/change_password"
+            ><span class="material-symbols-outlined">lock</span>Change
+            Password</a
+          >
+          <form action="/admin/logout" method="POST" style="display: inline">
+            <button
+              type="submit"
+              class="flex items-center gap-3 px-3 py-2.5 w-full text-left rounded-lg text-outline-variant hover:text-white hover:bg-white/5 transition-colors font-body-md text-body-md cursor-pointer duration-200"
+            >
+              <span class="material-symbols-outlined">logout</span>
+              <span>Logout</span>
+            </button>
+          </form>
+        </div>
+      </div>
+    </nav>
+
+<header
+  class="bg-surface-container-lowest fixed top-0 right-0 h-[70px] w-[calc(100%-260px)] border-b border-outline-variant flex items-center px-8 z-40"
+>
+  <div class="absolute left-1/2 -translate-x-1/2">
+    <h2 class="font-headline-md text-headline-md font-semibold text-on-surface">
+      Course Management
+    </h2>
+  </div>
+  <div class="flex items-center ml-auto">
+    <a
+      href="/admin/profile"
+      class="flex items-center gap-3 hover:bg-surface-container-high p-1.5 rounded-lg transition-all"
+    >
+      <img
+        alt="User Avatar"
+        class="w-8 h-8 rounded-full object-cover border border-surface-variant"
+        src="https://media.voguearabia.com/photos/6901d8920dcba278cec778cc/2:3/w_2560%2Cc_limit/HO25_TALENT_CKJ_M_90S_TRKR_600GRACoL_7042x9893_sRGB_Hi_Res.jpg"
+      />
+      <div class="text-left hidden md:block">
+        <p class="font-body-md text-body-md text-on-surface font-semibold leading-tight">
+          {{ user_name }}
+        </p>
+        <p class="font-label-md text-label-md text-on-surface-variant">
+          {{ role_name }}
+        </p>
+      </div>
+    </a>
+  </div>
+</header>
+
+    <main
+      class="ml-[260px] mt-[70px] p-container_padding min-h-[calc(100vh-70px)] bg-background"
+    >
+      <div class="max-w-7xl mx-auto">
+        <div
+          class="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-stack_lg"
+        >
+          <div>
+            <h2 class="font-headline-md text-headline-md text-on-surface">
+              Course Management
+            </h2>
+            <p class="font-body-md text-body-md text-on-surface-variant mt-1">
+              Manage university courses, assign credits, and oversee curriculum
+              structures.
+            </p>
+          </div>
+          <button
+            class="flex items-center gap-2 bg-primary-container text-white px-5 py-2.5 rounded-lg font-label-md text-label-md hover:bg-primary transition-colors shadow-[0_1px_3px_rgba(0,0,0,0.1)]"
+            data-bs-toggle="modal"
+            data-bs-target="#courseModal"
+            onclick="openAddCourse()"
+          >
+            <span class="material-symbols-outlined text-[18px]">add</span>
+            Add Course
+          </button>
+        </div>
+
+        <div
+          class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0px_1px_3px_rgba(0,0,0,0.1)] overflow-hidden"
+        >
+          <div
+            class="p-stack_md border-b border-outline-variant flex justify-between items-center bg-surface-container-lowest"
+          >
+            <form
+              action="/admin/courses"
+              method="GET"
+              class="flex flex-wrap items-center gap-3 w-full"
+            >
+              <div class="relative flex-1 min-w-[180px]">
+                <span
+                  class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm"
+                  >search</span
+                >
+                <input
+                  type="text"
+                  name="q"
+                  value="{{ search }}"
+                  class="w-full pl-10 pr-3 py-1.5 bg-surface-bright border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary/50 focus:border-primary focus:bg-surface-container-lowest transition-all font-body-md text-body-md text-on-surface"
+                  placeholder="Search courses..."
+                />
+              </div>
+              <button
+                type="submit"
+                class="px-4 py-1.5 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
+              >
+                Search
+              </button>
+              <a
+                href="/admin/courses"
+                class="px-3 py-1.5 border border-outline-variant rounded-lg hover:bg-surface-container-low transition-colors"
+              >
+                Clear
+              </a>
+            </form>
+          </div>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse">
+              <thead>
+                <tr
+                  class="bg-surface-container-low border-b border-outline-variant"
+                >
+                  <th
+                    class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Course Code
+                  </th>
+                  <th
+                    class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Course Name
+                  </th>
+                  <th
+                    class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-center"
+                  >
+                    Credits
+                  </th>
+                  <th
+                    class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider"
+                  >
+                    Faculty
+                  </th>
+                  <th
+                    class="py-3 px-6 font-label-md text-label-md text-on-surface-variant uppercase tracking-wider text-right"
+                  >
+                    Actions
+                  </th>
+                </tr>
+              </thead>
+              <tbody
+                class="divide-y divide-outline-variant font-body-md text-body-md text-on-surface"
+              >
+                {% for course in courses %}
+                <tr class="hover:bg-surface-container-low transition-colors">
+                  <td class="py-4 px-6 font-code text-code text-primary">
+                    {{ course.SubjectID }}
+                  </td>
+                  <td class="py-4 px-6 font-semibold">
+                    {{ course.SubjectName }}
+                  </td>
+                  <td class="py-4 px-6 text-center">
+                    <span
+                      class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-secondary-container text-on-secondary-container"
+                    >
+                      {{ course.Credits }}
+                    </span>
+                  </td>
+                  <td class="py-4 px-6 text-on-surface-variant">
+                    {{ course.FacultyName or '-' }}
+                  </td>
+                  <td class="py-4 px-6 text-right">
+                    <div class="flex items-center justify-end gap-2">
+                      <button
+                        class="p-1.5 text-on-surface-variant hover:text-primary hover:bg-primary/10 rounded transition-colors"
+                        title="Edit"
+                        data-bs-toggle="modal"
+                        data-bs-target="#courseModal"
+                        onclick="openEditCourse(this)"
+                        data-code="{{ course.SubjectID }}"
+                        data-name="{{ course.SubjectName }}"
+                        data-credits="{{ course.Credits }}"
+                        data-faculty="{{ course.FacultyID }}"
+                      >
+                        <span class="material-symbols-outlined text-sm"
+                          >edit</span
+                        >
+                      </button>
+                      <button
+                        class="p-1.5 text-on-surface-variant hover:text-error hover:bg-error/10 rounded transition-colors"
+                        title="Delete"
+                        data-bs-toggle="modal"
+                        data-bs-target="#deleteModal"
+                        onclick="openDeleteCourse(this)"
+                        data-code="{{ course.SubjectID }}"
+                        data-name="{{ course.SubjectName }}"
+                      >
+                        <span class="material-symbols-outlined text-sm"
+                          >delete</span
+                        >
+                      </button>
+                    </div>
+                  </td>
+                </tr>
+                {% else %}
+                <tr>
+                  <td
+                    colspan="5"
+                    class="py-8 text-center text-on-surface-variant"
+                  >
+                    No courses found.
+                  </td>
+                </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center hidden"
+      id="courseModal"
+    >
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+      <div
+        class="relative bg-white rounded-xl shadow-lg max-w-lg w-full p-6 max-h-[90vh] overflow-y-auto"
+      >
+        <div class="flex justify-between items-center mb-4">
+          <h3
+            id="courseModalTitle"
+            class="font-headline-sm text-headline-sm text-on-surface"
+          >
+            Add Course
+          </h3>
+          <button
+            class="text-on-surface-variant hover:text-on-surface"
+            onclick="closeModal('courseModal')"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <form id="courseForm" action="/admin/courses/create" method="POST">
+          <input type="hidden" name="edit_mode" id="edit_mode" value="0" />
+          <input type="hidden" name="original_id" id="original_id" value="" />
+          <div class="space-y-4">
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Course Code</label
+              >
+              <input
+                type="text"
+                name="code"
+                id="course_code"
+                required
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Course Name</label
+              >
+              <input
+                type="text"
+                name="name"
+                id="course_name"
+                required
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Credits</label
+              >
+              <input
+                type="number"
+                name="credits"
+                id="course_credits"
+                required
+                min="1"
+                max="10"
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              />
+            </div>
+            <div>
+              <label class="font-label-md text-label-md text-on-surface-variant"
+                >Faculty</label
+              >
+              <select
+                name="faculty"
+                id="course_faculty"
+                class="w-full border border-outline-variant rounded-lg px-4 py-2 focus:ring-2 focus:ring-primary/50"
+              >
+                <option value="">Select Faculty</option>
+                {% for faculty in faculties %}
+                <option value="{{ faculty.FacultyID }}">
+                  {{ faculty.FacultyName }}
+                </option>
+                {% endfor %}
+              </select>
+            </div>
+          </div>
+          <div class="mt-6 flex justify-end gap-3">
+            <button
+              type="button"
+              class="px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low"
+              onclick="closeModal('courseModal')"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90"
+            >
+              Save
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div
+      class="fixed inset-0 z-50 flex items-center justify-center hidden"
+      id="deleteModal"
+    >
+      <div class="absolute inset-0 bg-black/50 backdrop-blur-sm"></div>
+      <div class="relative bg-white rounded-xl shadow-lg max-w-md w-full p-6">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="font-headline-sm text-headline-sm text-on-surface">
+            Delete Course
+          </h3>
+          <button
+            class="text-on-surface-variant hover:text-on-surface"
+            onclick="closeModal('deleteModal')"
+          >
+            <span class="material-symbols-outlined">close</span>
+          </button>
+        </div>
+        <p class="text-on-surface-variant mb-4">
+          Are you sure you want to delete course
+          <strong id="deleteCourseName"></strong>? This action cannot be undone.
+        </p>
+        <form action="/admin/courses/delete" method="POST">
+          <input type="hidden" name="code" id="deleteCourseCode" />
+          <div class="mt-6 flex justify-end gap-3">
+            <button
+              type="button"
+              class="px-4 py-2 border border-outline-variant rounded-lg hover:bg-surface-container-low"
+              onclick="closeModal('deleteModal')"
+            >
+              Cancel
+            </button>
+            <button
+              type="submit"
+              class="px-4 py-2 bg-error text-white rounded-lg hover:bg-error/90"
+            >
+              Delete
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      function closeModal(id) {
+        document.getElementById(id).classList.add("hidden");
+      }
+
+      var userPersonalData = null;
+
+      function openAddCourse() {
+        document.getElementById("courseModalTitle").textContent = "Add Course";
+        document.getElementById("edit_mode").value = "0";
+        document.getElementById("original_id").value = "";
+        document.getElementById("course_code").value = "";
+        document.getElementById("course_code").readOnly = false;
+        document.getElementById("course_name").value = "";
+        document.getElementById("course_credits").value = "";
+        document.getElementById("course_faculty").value = "";
+        document.getElementById("courseForm").action = "/admin/courses/create";
+        document.getElementById("courseModal").classList.remove("hidden");
+      }
+
+      function openEditCourse(btn) {
+        document.getElementById("courseModalTitle").textContent = "Edit Course";
+        document.getElementById("edit_mode").value = "1";
+        document.getElementById("original_id").value = btn.dataset.code;
+        document.getElementById("course_code").value = btn.dataset.code;
+        document.getElementById("course_code").readOnly = true;
+        document.getElementById("course_name").value = btn.dataset.name;
+        document.getElementById("course_credits").value = btn.dataset.credits;
+        document.getElementById("course_faculty").value =
+          btn.dataset.faculty || "";
+        document.getElementById("courseForm").action = "/admin/courses/edit";
+        document.getElementById("courseModal").classList.remove("hidden");
+      }
+
+      function openDeleteCourse(btn) {
+        document.getElementById("deleteCourseCode").value = btn.dataset.code;
+        document.getElementById("deleteCourseName").textContent =
+          btn.dataset.name || btn.dataset.code;
+        document.getElementById("deleteModal").classList.remove("hidden");
+      }
+    </script>
+  </body>
+</html>
