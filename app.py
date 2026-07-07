@@ -19,7 +19,7 @@ os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], 'avatars'), exist_ok=True)
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
-    'password': 'Huy@216412',
+    'password': '123456',
     'database': 'sms_db',
     'charset': 'utf8mb4',
     'cursorclass': DictCursor,
