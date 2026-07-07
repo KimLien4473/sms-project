@@ -809,6 +809,8 @@
       }
 
       function openAddStudent() {
+
+
         document.getElementById("studentModalTitle").textContent =
           "Add Student";
         document.getElementById("edit_mode").value = "0";
@@ -829,6 +831,8 @@
       }
 
       function openEditStudent(btn) {
+
+
         document.getElementById("studentModalTitle").textContent =
           "Edit Student";
         document.getElementById("edit_mode").value = "1";
@@ -863,6 +867,10 @@
           ? nameCell.textContent.trim()
           : btn.dataset.student_id;
         document.getElementById("deleteModal").classList.remove("hidden");
+      }
+      function openAddStudentModal() {
+    // Đổi action về route thêm mới
+        document.getElementById("studentForm").action = "/admin/students/add";
       }
     </script>
   </body>

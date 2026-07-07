@@ -19,7 +19,7 @@ os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], 'avatars'), exist_ok=True)
 DB_CONFIG = {
     'host': 'localhost',
     'user': 'root',
-    'password': '123456',
+    'password': 'Huy@216412',
     'database': 'sms_db',
     'charset': 'utf8mb4',
     'cursorclass': DictCursor,
@@ -635,8 +635,7 @@ def admin_accounts_update():
     execute_query(sql, (username, phone, role['RoleID'], student_id, lecturer_id, account_id))
     flash('Cập nhật tài khoản thành công.', 'ok')
     return redirect(url_for('admin_accounts'))
-
-# ---------- 6.3 Student Management ----------
+# ---------- 6.3 Student Management (FIXED) ----------
 @app.route('/admin/students', methods=['GET'])
 @login_required
 @role_required('admin')
@@ -680,12 +679,14 @@ def admin_students():
                            user_name=session.get('full_name', 'Admin'),
                            role_name='System Administrator')
 
+
 @app.route('/admin/students/create', methods=['POST'])
 @login_required
 @role_required('admin')
 def admin_students_create():
     student_id = request.form.get('student_id', '').strip()
-    full_name = request.form.get('full_name', '').strip()
+    # FIX: form field is name="full_name" (đã sửa trong HTML), giữ tương thích
+    full_name = request.form.get('name', '').strip()
     gender = request.form.get('gender', '')
     dob = request.form.get('dob', '')
     faculty_id = request.form.get('faculty', '')
@@ -740,51 +741,45 @@ def admin_students_create():
 
     return redirect(url_for('admin_students'))
 
+
 @app.route('/admin/students/edit', methods=['POST'])
 @login_required
 @role_required('admin')
-def admin_students_edit():
-    student_id = request.form.get('student_id', '').strip()
-    full_name = request.form.get('full_name', '').strip()
-    gender = request.form.get('gender', '')
-    dob = request.form.get('dob', '')
-    faculty_id = request.form.get('faculty', '')
-    major_id = request.form.get('major', '')
-    class_id = request.form.get('class_id', '')
-    email = request.form.get('email', '').strip()
-    phone = request.form.get('phone', '').strip()
-    cccd = request.form.get('cccd', '').strip()
-    status = request.form.get('status', '').strip()
+def admin_edit_student():
+    try:
+        # Đồng bộ 100% thuộc tính name="..." từ file HTML sang request.form.get
+        student_id = request.form.get('student_id')
+        full_name  = request.form.get('name')      # đổi từ 'student_name'
+        gender     = request.form.get('gender')    # đổi từ 'student_gender'
+        dob        = request.form.get('dob')       # đổi từ 'student_dob'
+        faculty_id = request.form.get('faculty')   # đổi từ 'student_faculty'
+        major_id   = request.form.get('major')     # đổi từ 'student_major'
+        email      = request.form.get('email')     # đổi từ 'student_email'
+        phone      = request.form.get('phone')     # đổi từ 'student_phone'
+        status     = request.form.get('status')    # đổi từ 'student_status'  # Trong HTML đặt name="student_status"
 
-    if not student_id or not full_name:
-        flash('Vui lòng nhập đầy đủ thông tin bắt buộc.', 'err')
-        return redirect(url_for('admin_students'))
-
-    if cccd and execute_query("SELECT StudentID FROM Student WHERE CCCD = %s AND StudentID != %s",
-                              (cccd, student_id), fetch_one=True):
-        flash('Lỗi nghiệp vụ: Số CCCD này đã trùng với một sinh viên khác.', 'err')
-        return redirect(url_for('admin_students'))
-
-    if class_id:
-        is_class_ok, class_err = check_class_capacity(class_id, exclude_student_id=student_id)
-        if not is_class_ok:
-            flash(class_err, 'err')
+        if not student_id:
+            flash('Không tìm thấy mã sinh viên cần chỉnh sửa.', 'err')
             return redirect(url_for('admin_students'))
 
-    try:
-        sql = """
-            UPDATE Student
-            SET FullName = %s, DateOfBirth = %s, Gender = %s, PhoneNumber = %s, Email = %s,
-                CCCD = %s, FacultyID = %s, MajorID = %s, ClassID = %s, Status = %s
+        # Cập nhật thông tin sinh viên vào Database
+        execute_query("""
+            UPDATE Student 
+            SET FullName = %s, Gender = %s, DateOfBirth = %s, FacultyID = %s, MajorID = %s, 
+                Email = %s, PhoneNumber = %s, Status = %s
             WHERE StudentID = %s
-        """
-        execute_query(sql, (full_name, dob or None, gender or None, phone or None, email or None,
-                            cccd or None, faculty_id or None, major_id or None, class_id or None,
-                            status or 'Studying', student_id))
-        flash('Cập nhật hồ sơ sinh viên thành công.', 'ok')
-    except Exception as e:
-        flash(f'Lỗi hệ thống khi cập nhật: {str(e)}', 'err')
+        """, (full_name, gender, dob, faculty_id, major_id, email, phone, status, student_id))
 
+        # Ghi nhật ký hệ thống (Để cập nhật lên Dashboard)
+        execute_query("INSERT INTO ActivityLog (AccountID, action, target, target_id) VALUES (%s, 'UPDATE', 'Student', %s)",
+                      (session['user_id'], student_id))
+
+        flash('Cập nhật thông tin sinh viên thành công!', 'ok')
+    except Exception as e:
+        print("Lỗi Edit Student:", e)
+        flash('Đã xảy ra lỗi khi chỉnh sửa thông tin sinh viên.', 'err')
+
+    # BẮT BUỘC DÙNG REDIRECT ĐỂ LÀM MỚI BẢNG GIAO DIỆN
     return redirect(url_for('admin_students'))
 
 @app.route('/admin/students/delete', methods=['POST'])
@@ -796,9 +791,36 @@ def admin_students_delete():
         flash('Thiếu thông tin.', 'err')
         return redirect(url_for('admin_students'))
 
-    execute_query("DELETE FROM Account WHERE StudentID = %s", (student_id,))
-    execute_query("DELETE FROM Student WHERE StudentID = %s", (student_id,))
-    flash('Xóa sinh viên thành công.', 'ok')
+    try:
+        # FIX: CourseRegistration.StudentID -> Student.StudentID KHÔNG có ON DELETE CASCADE,
+        # và Grade / Attendance lại phụ thuộc vào CourseRegistration.
+        # Phải xóa theo đúng thứ tự phụ thuộc (con trước, cha sau),
+        # nếu không MySQL sẽ ném lỗi "foreign key constraint fails" khi xóa Student.
+        registrations = execute_query(
+            "SELECT RegistrationID FROM CourseRegistration WHERE StudentID = %s",
+            (student_id,), fetch_all=True
+        ) or []
+        reg_ids = [r['RegistrationID'] for r in registrations]
+
+        if reg_ids:
+            placeholders = ','.join(['%s'] * len(reg_ids))
+            execute_query(
+                f"DELETE FROM Attendance WHERE RegistrationID IN ({placeholders})",
+                tuple(reg_ids)
+            )
+            execute_query(
+                f"DELETE FROM Grade WHERE RegistrationID IN ({placeholders})",
+                tuple(reg_ids)
+            )
+
+        execute_query("DELETE FROM CourseRegistration WHERE StudentID = %s", (student_id,))
+        execute_query("DELETE FROM Account WHERE StudentID = %s", (student_id,))
+        execute_query("DELETE FROM Student WHERE StudentID = %s", (student_id,))
+
+        flash('Xóa sinh viên thành công.', 'ok')
+    except Exception as e:
+        flash(f'Lỗi hệ thống khi xóa sinh viên: {str(e)}', 'err')
+
     return redirect(url_for('admin_students'))
 
 # ---------- 6.4 Lecturer Management ----------
@@ -1782,6 +1804,21 @@ def lecturer_attendance_save():
 @login_required
 @role_required('lecturer')
 def lecturer_grades_save():
+    # 1. Lấy thông tin lớp học phần gửi lên
+    section_id = request.form.get('course_section_id', '').strip()
+    
+    # 2. KIỂM TRA TRẠNG THÁI: Nếu đã Finalized thì chặn ngay lập tức
+    # (Bạn check trạng thái g.GradeStatus của bất kỳ sinh viên nào trong lớp này)
+    current_status = execute_query("""
+        SELECT g.GradeStatus 
+        FROM Grade g
+        JOIN CourseRegistration r ON g.RegistrationID = r.RegistrationID
+        WHERE r.CourseSectionID = %s LIMIT 1
+    """, (section_id,), fetch_one=True)
+    
+    if current_status and current_status['GradeStatus'] == 'Finalized':
+        flash('Không thể lưu! Bảng điểm lớp học phần này đã được chốt và khóa vĩnh viễn.', 'err')
+        return redirect(url_for('lecturer_learning_records', section_id=section_id))
     section_id = request.form.get('course_section_id', '').strip()
     if not section_id:
         flash('Thiếu thông tin lớp học phần.', 'err')
@@ -1826,6 +1863,55 @@ def lecturer_grades_save():
     flash('Điểm đã được lưu.', 'ok')
     return redirect(url_for('lecturer_learning_records', section_id=section_id))
 
+## fixx
+@app.route('/lecturer/grades/finalize', methods=['POST'])
+@login_required
+@role_required('lecturer')
+def lecturer_grades_finalize():
+    section_id = request.form.get('course_section_id', '').strip()
+    if not section_id:
+        flash('Thiếu thông tin lớp học phần.', 'err')
+        return redirect(url_for('lecturer_learning_records'))
+
+    lecturer_id = session.get('username')
+    check = execute_query("SELECT CourseSectionID FROM CourseSection WHERE CourseSectionID = %s AND LecturerID = %s",
+                          (section_id, lecturer_id), fetch_one=True)
+    if not check:
+        flash('Bạn không có quyền chốt điểm cho lớp học phần này.', 'err')
+        return redirect(url_for('lecturer_learning_records'))
+
+    grades = execute_query("""
+        SELECT g.GradeID, g.RegistrationID, g.ProcessScore, g.FinalScore, g.AverageScore, s.FullName
+        FROM Grade g
+        JOIN CourseRegistration r ON g.RegistrationID = r.RegistrationID
+        JOIN Student s ON r.StudentID = s.StudentID
+        WHERE r.CourseSectionID = %s AND r.Status = 'enrolled'
+    """, (section_id,), fetch_all=True)
+
+    registrations = execute_query(
+        "SELECT RegistrationID FROM CourseRegistration WHERE CourseSectionID = %s AND Status = 'enrolled'",
+        (section_id,), fetch_all=True)
+
+    graded_reg_ids = {g['RegistrationID'] for g in grades if g['AverageScore'] is not None}
+    all_reg_ids = {r['RegistrationID'] for r in registrations}
+    missing = all_reg_ids - graded_reg_ids
+
+    if missing:
+        flash(f'Không thể chốt điểm: còn {len(missing)} sinh viên chưa có đủ điểm quá trình và cuối kỳ. Vui lòng nhập đầy đủ trước khi chốt.', 'err')
+        return redirect(url_for('lecturer_learning_records', section_id=section_id))
+
+    try:
+        execute_query("""
+            UPDATE Grade g
+            JOIN CourseRegistration r ON g.RegistrationID = r.RegistrationID
+            SET g.GradeStatus = 'Finalized'
+            WHERE r.CourseSectionID = %s AND r.Status = 'enrolled'
+        """, (section_id,))
+        flash('Đã chốt điểm thành công. Sinh viên có thể xem điểm ngay bây giờ.', 'ok')
+    except Exception as e:
+        flash(f'Lỗi hệ thống khi chốt điểm: {str(e)}', 'err')
+
+    return redirect(url_for('lecturer_learning_records', section_id=section_id))
 # ---------- 7.5 Lecturer Change Password ----------
 @app.route('/lecturer/change_password', methods=['GET', 'POST'])
 @login_required

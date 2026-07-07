@@ -588,6 +588,7 @@
                         </td>
                         <td class="px-4 py-3">
                           <input
+                            {% if grade_status == 'Finalized' %}disabled{% endif %}
                             class="w-full px-2 py-1 bg-surface-container-lowest border border-outline-variant rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none font-code text-on-surface"
                             step="0.1"
                             type="number"
@@ -599,6 +600,7 @@
                         </td>
                         <td class="px-4 py-3">
                           <input
+                            {% if grade_status == 'Finalized' %}disabled{% endif %}
                             class="w-full px-2 py-1 bg-surface-container-lowest border border-outline-variant rounded focus:border-primary focus:ring-1 focus:ring-primary outline-none font-code text-on-surface"
                             step="0.1"
                             type="number"
@@ -624,22 +626,57 @@
                   {% endif %}
                 </div>
 
-                <div
-                  class="p-stack_lg border-t border-outline-variant bg-surface-bright flex justify-end gap-stack_md rounded-b-xl"
+<div
+                  class="p-stack_lg border-t border-outline-variant bg-surface-bright flex flex-col sm:flex-row justify-between items-center gap-4 rounded-b-xl"
                 >
-                  <button
-                    type="submit"
-                    class="flex items-center gap-2 px-6 py-2 bg-primary text-on-primary rounded-lg hover:bg-primary-container hover:text-on-primary-container transition-colors font-label-md text-label-md font-semibold shadow-sm"
-                    {% if not selected_section or not students %}disabled{% endif %}
-                  >
-                    <span class="material-symbols-outlined text-[18px]"
-                      >verified</span
+                  <div class="flex items-center gap-2">
+                    <span class="font-label-md text-on-surface-variant uppercase tracking-wider text-xs">Trạng thái:</span>
+                    {% if grade_status == 'Finalized' %}
+                      <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[#ecfdf5] text-[#059669] font-medium text-xs border border-emerald-200">
+                        <span class="w-1.5 h-1.5 rounded-full bg-[#10b981]"></span>
+                        Đã khóa & Công bố
+                      </span>
+                    {% else %}
+                      <span class="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-700 font-medium text-xs border border-amber-200">
+                        <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+                        Bản nháp (Draft)
+                      </span>
+                    {% endif %}
+                  </div>
+
+                  <div class="flex justify-end gap-stack_md w-full sm:w-auto">
+                    <button
+                      type="submit"
+                      class="flex items-center gap-2 px-5 py-2 bg-surface text-on-surface-variant rounded-lg hover:bg-surface-container-high transition-colors font-label-md text-label-md font-semibold border border-outline-variant disabled:opacity-50 disabled:cursor-not-allowed"
+                      {% if not selected_section or not students or grade_status == 'Finalized' %}disabled{% endif %}
                     >
-                    Finalize Grades
-                  </button>
+                      <span class="material-symbols-outlined text-[18px]">save</span>
+                      Lưu bản nháp
+                    </button>
+
+                    {% if grade_status != 'Finalized' %}
+                      <button
+                        type="submit"
+                        formaction="/lecturer/grades/finalize"
+                        onclick="return confirm('Xác nhận chốt điểm? Hệ thống sẽ kiểm tra tính đầy đủ, tiến hành khóa sửa đổi dữ liệu và công bố kết quả trực tiếp đến sinh viên.');"
+                        class="flex items-center gap-2 px-6 py-2 bg-error text-white rounded-lg hover:bg-red-700 transition-colors font-label-md text-label-md font-semibold shadow-sm disabled:opacity-50"
+                        {% if not selected_section or not students %}disabled{% endif %}
+                      >
+                        <span class="material-symbols-outlined text-[18px]">lock</span>
+                        Chốt & Công bố điểm
+                      </button>
+                    {% else %}
+                      <button
+                        type="button"
+                        disabled
+                        class="flex items-center gap-2 px-6 py-2 bg-surface-container-high text-on-surface-variant rounded-lg cursor-not-allowed font-label-md text-label-md font-semibold border border-outline-variant"
+                      >
+                        <span class="material-symbols-outlined text-[18px]">lock_clock</span>
+                        Bảng điểm đã chốt
+                      </button>
+                    {% endif %}
+                  </div>
                 </div>
-              </form>
-            </div>
           </div>
         </div>
       </main>

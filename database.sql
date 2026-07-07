@@ -566,3 +566,7 @@ USE sms_db;
 SHOW TABLES;
 SELECT * FROM account;
 DESCRIBE Account;
+ALTER TABLE Student
+ADD COLUMN Status VARCHAR(20) NOT NULL DEFAULT 'Studying'
+AFTER EnrollmentYear;
+SHOW COLUMNS FROM Student;
