@@ -17,10 +17,10 @@ app.config.setdefault('UPLOAD_FOLDER', os.path.join(app.root_path, 'static'))
 os.makedirs(os.path.join(app.config['UPLOAD_FOLDER'], 'avatars'), exist_ok=True)
 
 DB_CONFIG = {
-    'host': 'localhost',
-    'user': 'root',
-    'password': '123456',
-    'database': 'sms_db',
+    'host': os.getenv('DB_HOST', 'localhost'),
+    'user': os.getenv('DB_USER', 'root'),
+    'password': os.getenv('DB_PASSWORD', '123456'),
+    'database': os.getenv('DB_NAME', 'sms_db'),
     'charset': 'utf8mb4',
     'cursorclass': DictCursor,
     'autocommit': True
@@ -2175,4 +2175,4 @@ def student_logout():
 # 9. CHẠY ỨNG DỤNG
 # ============================================================
 if __name__ == '__main__':
-    app.run(debug=True, host='127.0.0.1', port=9999)
+    app.run(debug=True, host='0.0.0.0', port=9999)

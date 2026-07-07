@@ -1,6 +1,6 @@
 
 DROP DATABASE IF EXISTS sms_db;
-
+SET NAMES utf8mb4;
 -- Tạo database mới
 CREATE DATABASE sms_db
 CHARACTER SET utf8mb4
@@ -81,6 +81,7 @@ CREATE TABLE Student (
     MajorID VARCHAR(20) NULL,
     ClassID VARCHAR(20) NULL,
     Gender ENUM('Male','Female','Other') NULL,
+    Status VARCHAR(20) NOT NULL DEFAULT 'Studying',
     EnrollmentYear YEAR NULL,
     CONSTRAINT fk_student_faculty FOREIGN KEY (FacultyID) REFERENCES Faculty(FacultyID),
     CONSTRAINT fk_student_major FOREIGN KEY (MajorID) REFERENCES Major(MajorID),
@@ -561,12 +562,3 @@ INSERT INTO Attendance (RegistrationID, AttendanceDate, Status) VALUES
 (25, '2024-10-24', 'Absent'),
 (25, '2024-10-31', 'Present');
 
-SHOW DATABASES;
-USE sms_db;
-SHOW TABLES;
-SELECT * FROM account;
-DESCRIBE Account;
-ALTER TABLE Student
-ADD COLUMN Status VARCHAR(20) NOT NULL DEFAULT 'Studying'
-AFTER EnrollmentYear;
-SHOW COLUMNS FROM Student;
